@@ -1,0 +1,106 @@
+.home{
+    margin-top: 4.6em;
+    .home-banner{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        width: 100%;
+        height: 90vh;
+        background-image:linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)), linear-gradient(rgba(255, 255, 255, 20%) 50%,white 90% ), url("https://cdn.baogiaothong.vn/files/hang.truong/2017/06/26/203010-bao-hiem-suc-khoe-toan-dien-bao-viet.jpg");
+        // background-image: url("https://vhnbio.vn/assets/upload/images/news/cach_de_tang_cuong_suc_khoe.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        .home-search{
+            align-items: center;
+            justify-content: center;
+            .title{
+                color: white;
+                h1{
+                    font-weight: 300;
+                }
+                b{
+                    font-weight: 400;
+                }
+            }
+            .home-search-box{
+                width: 100%;
+                height: 50px;
+                background-color: rgb(255, 225, 0);
+                border-radius: 3em;
+                display: flex;
+                align-items: center;
+                .icon-search{
+                    width: 20px;
+                    height: 20px;
+                    padding: 0 1em;
+                }
+                input{
+                    background-color: rgba(0, 0, 0, 0);
+                    border: none;
+                    outline: 0;
+                    width: 85%;
+                    font-size: 1em;
+                }
+            }
+
+        }
+        .list-service{
+            width: 80%;
+            margin-top: auto;
+            ul{
+                gap: 60px;
+                li{
+                    font-weight: 500;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    .icon-service{
+                        width: 3em;
+                        height: 3em;
+                        background-color: white;
+                        border-radius: 2em;
+                        background-size: 35px;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                    .service1{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/133537-khamchuyenkhoa.png);
+                    }
+                    .service2{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/133657-khamtuxa.png);
+                    }
+                    .service3{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/133744-khamtongquat.png);
+                    }
+                    .service4{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/133744-dichvuxetnghiem.png);
+                    }
+                    .service5{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/133744-suckhoetinhthan.png);
+                    }
+                    .service6{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/133537-khamchuyenkhoa.png);
+                    }
+                    .service7{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/134356-goi-phau-thuat.png);
+                    }
+                    .service8{
+                        background-image:url(https://cdn.bookingcare.vn/fo/2021/12/08/133744-khamtainha.png);
+                    }
+                }
+
+            }
+        }
+    }
+
+    .home-news{
+        width: 100%;
+        height: 100vh;
+    }
+
+    
+
+}
