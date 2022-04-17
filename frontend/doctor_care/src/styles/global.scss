@@ -1,16 +1,44 @@
-button{
+button {
     padding: 0;
     background-color: rgba(0, 0, 0, 0);
     border: none;
     cursor: pointer;
 }
-ul{
+
+ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
 }
-a{
+
+a {
     text-decoration: none;
     color: black;
+}
+
+.slick-dots {
+    display: none;
+}
+
+.container {
+    padding: 2em 0;
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-bg-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 130px;
+}
+.slick-prev:before, .slick-next:before {
+    color: gray;
+    font-size: 40px;
+}
+h1{
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 30px;
 }

@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import * as ROUTES from "./constants/routes";
 import { LoadingPage } from "./pages/loading";
 import "./styles/global.scss"
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { BlogsPage } from "./pages/blogs";
 
 function App() {
   const LoginPage = lazy(() =>
@@ -23,6 +25,7 @@ function App() {
         <Routes>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.HOME} element={<HomePage />} />
+          <Route path={ROUTES.BLOG} element={<BlogsPage />} />
         </Routes>
       </Suspense>
     </Router>

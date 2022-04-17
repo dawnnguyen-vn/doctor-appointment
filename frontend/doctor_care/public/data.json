@@ -1,0 +1,65 @@
+{
+    "specialties": [
+        {   
+            "id":"coxuongkhop",
+            "name": "Cơ xương khớp",
+            "description":"co-xuong-khop",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg"
+        },
+        {   
+            "id":"thankinh",
+            "name": "Thần kinh",
+            "description":"than-kinh",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/13/121042-than-kinh.jpg"
+        },
+        {   
+            "id":"tieuhoa",
+            "name": "Tiêu hóa",
+            "description":"tieu-hoa",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/13/120933-tieu-hoa.jpg"
+        },
+        
+        {   
+            "id":"timmach",
+            "name": "Tim mạch",
+            "description":"tim-mach",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/13/120741-tim-mach.jpg"
+        },
+        {   
+            "id":"taimuihong",
+            "name": "Tai mũi họng",
+            "description":"tieu-hoa",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/13/121146-tai-mui-hong.jpg"
+        },
+        {   
+            "id":"nhikhoa",
+            "name": "Nhi khoa",
+            "description":"nhi-khoa",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/16/175620-nhi-khoa.jpg"
+        },
+        {   
+            "id":"sanphukhoa",
+            "name": "Sản phụ khoa",
+            "description":"san-phu-khoa",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/16/181822-san-phu-khoa.jpg"
+        },
+        {   
+            "id":"dalieu",
+            "name": "Da liễu",
+            "description":"da-lieu",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/16/175809-da-lieu.jpg"
+        },
+        {   
+            "id":"namkhoa",
+            "name": "Nam khoa",
+            "description":"nam-khoa",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/16/184456-nam-hoc.jpg"
+        },
+        {   
+            "id":"chuyenkhoamat",
+            "name": "Chuyên khoa mắt",
+            "description":"chuyen-khoa-mat",
+            "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/16/190150-chuyen-khoa-mat.jpg"
+        }
+    ]
+}

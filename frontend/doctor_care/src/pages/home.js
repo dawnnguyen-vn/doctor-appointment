@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar } from "../components/navbar";
 import { Icon_Search } from "../constants/icons";
 import "../styles/home.scss";
+import { searchKeys } from "../fake_data/searchkey";
+import { Card } from "../components/card";
+import Slider from "react-slick";
+import { settingSlider } from "../constants/setting_slider";
+import { listNews } from "../fake_data/data";
+import { Specialty } from "../components/specialties";
+import "../styles/global.scss";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { SliderDoctor } from "../components/sliderDoctor";
 
 export const HomePage = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    document.title = "DoctorCare";
+    const time = setTimeout(
+      () =>
+        setIndex((prevIndex) =>
+          prevIndex === searchKeys.length - 1 ? 0 : prevIndex + 1
+        ),
+      3000
+    ); // Change image every 2 seconds
+    return () => {
+      clearTimeout(time);
+    };
+  }, [index]);
+
   return (
     <div className="home">
       <Navbar />
@@ -19,10 +45,7 @@ export const HomePage = () => {
             <div className="icon-search">
               <Icon_Search />
             </div>
-            <input
-              type="text"
-              placeholder="Tìm chuyên khoa,Tìm bác sĩ,Tìm phòng khám..."
-            />
+            <input type="text" placeholder={searchKeys[index]} />
           </div>
         </div>
         <div className="list-service">
@@ -52,7 +75,7 @@ export const HomePage = () => {
               Khám nha khoa
             </li>
             <li className="item">
-              <div className="icon-service service7"  />
+              <div className="icon-service service7" />
               Gói phẩu thuật
             </li>
             <li className="item">
@@ -63,8 +86,20 @@ export const HomePage = () => {
         </div>
       </div>
       <div className="home-news">
-        
+        <div className="container">
+          <Slider {...settingSlider}>
+            {listNews.map((e)=>(
+              <Card key={e.id} aNew={e}/>
+            ))}
+            {listNews.map((e)=>(
+              <Card key={e.id+'s'} aNew={e}/>
+            ))}
+          </Slider>
+        </div>
       </div>
+      <Specialty/>
+      <SliderDoctor/>
+      <div style={{height:"300px"}}></div>
     </div>
   );
 };
