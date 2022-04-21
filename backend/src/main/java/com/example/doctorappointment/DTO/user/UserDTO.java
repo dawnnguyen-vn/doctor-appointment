@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Data @NoArgsConstructor
 public class UserDTO {
+    private int id;
     private String name;
     private String username;
     private int createdAt;

@@ -3,7 +3,7 @@ package com.example.doctorappointment.utility;
 public class Config {
     public enum ROLE {
         USER("USER"),
-        ADMIN("AMIN");
+        ADMIN("ADMIN");
         private String value;
         ROLE(String s) {
             this.value = s;

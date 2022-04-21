@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Slider from 'react-slick';
-import { settingSlider } from '../constants/setting_slider';
-import { CardImage } from './card_image';
-import '../styles/specialty.scss'
+import { settingSliderNotAuto } from '../../constants/setting_slider';
+import { SpecialtyCard } from '../card/specialty_card';
+import '../../styles/specialty.scss'
 
-export const Specialty = () => {
+export const SliderSpecialty = () => {
     const [specialties, setSpecialties] = useState(null);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ export const Specialty = () => {
         "/data.json"
       );
       return () => {};
-    }, []);
+    },[]);
   
     const getContentFromURL = (url) => {
       fetch(url)
@@ -22,16 +22,14 @@ export const Specialty = () => {
           err => alert(err)
         );
     };
-  
-    console.log(specialties)
-  
+    
     return specialties && (
       <div className="specialties">
         <div className="container">
         <h1>Chuyên khoa phổ biến</h1>
-          <Slider {...settingSlider}>
+          <Slider {...settingSliderNotAuto}>
             {specialties.map((e)=>(
-              <CardImage key={e.id} description={e.description} title={e.name} imageURL={e.imageURL}/>
+              <SpecialtyCard key={e.id} description={e.description} title={e.name} imageURL={e.imageURL}/>
             ))}
           </Slider>
         </div>

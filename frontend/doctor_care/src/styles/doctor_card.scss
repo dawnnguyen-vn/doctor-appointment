@@ -1,0 +1,27 @@
+.doctor-card {
+    border: 1px solid rgba(128, 128, 128, 0.198);
+    width: 260px;
+    height: 230px;
+    text-align: center;
+    padding-top: 10px;
+    img {
+        margin-top: 10px;
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 80px;
+        margin: 0 auto;
+    }
+    h3{
+        margin-bottom: 0;
+        transition: all 0.15s ease-in;
+    }
+
+    p {
+        font-size: 0.77em;
+        margin: 0;
+    }
+}
+.doctor-card:hover > h3{
+    color: rgb(0, 162, 255);
+}

@@ -16,24 +16,24 @@ export const Navbar = () => {
       });
     }
     return () => {
-      
     };
   });
+
   return (
     <div className="navbar">
       <div style={showMenu?{display:"block"}:{display:"none"}} id="menu" className="menu">
         <div id="menu-content" className="menu-content">
           <ul>
-            <li><Link to={"#"}>Trang chủ </Link></li>
-            <li><Link to={"#"}>Cẩm nang</Link></li>
-            <li><Link to={"#"}>Liên hệ hợp tác</Link></li>
-            <li><Link to={"#"}>Quy chế hoạt động</Link></li>
-            <li><Link to={"#"}>Câu hỏi thường gặp</Link></li>
-            <li><Link to={"#"}>Trang chủ </Link></li>
-            <li><Link to={"#"}>Cẩm nang</Link></li>
-            <li><Link to={"#"}>Liên hệ hợp tác</Link></li>
-            <li><Link to={"#"}>Quy chế hoạt động</Link></li>
-            <li><Link to={"#"}>Câu hỏi thường gặp</Link></li>
+            <li><Link to={"/#"}>Trang chủ </Link></li>
+            <li><Link to={"/#"}>Cẩm nang</Link></li>
+            <li><Link to={"/#"}>Liên hệ hợp tác</Link></li>
+            <li><Link to={"/#"}>Quy chế hoạt động</Link></li>
+            <li><Link to={"/#"}>Câu hỏi thường gặp</Link></li>
+            <li><Link to={"/#"}>Trang chủ </Link></li>
+            <li><Link to={"/#"}>Cẩm nang</Link></li>
+            <li><Link to={"/#"}>Liên hệ hợp tác</Link></li>
+            <li><Link to={"/#"}>Quy chế hoạt động</Link></li>
+            <li><Link to={"/#"}>Câu hỏi thường gặp</Link></li>
           </ul>
         </div>
       </div>
@@ -53,25 +53,25 @@ export const Navbar = () => {
         <div className="navbar-menu">
           <ul className="">
             <li className="menu-item">
-              <Link to={"#"}>
+              <Link to={"/#"}>
                 <span>Chuyên khoa</span>
                 <p>tìm bác sĩ theo chuyên khoa</p>
               </Link>
             </li>
             <li className="menu-item">
-              <Link to={"#"}>
+              <Link to={"/#"}>
                 <span>Cơ sở y tế</span>
                 <p>Chọn bệnh viện phòng khám</p>
               </Link>
             </li>
             <li className="menu-item">
-              <Link to={"#"}>
+              <Link to={"/#"}>
                 <span>Bác sĩ</span>
                 <p>Chọn bác sĩ giỏi</p>
               </Link>
             </li>
             <li className="menu-item">
-              <Link to={"#"}>
+              <Link to={"/#"}>
                 <span>Gói khám</span>
                 <p>Khám sức khỏe tổng quát</p>
               </Link>

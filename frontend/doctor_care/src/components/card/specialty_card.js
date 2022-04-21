@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const CardImage = ({ title, imageURL, description }) => {
+export const SpecialtyCard = ({ title, imageURL, description }) => {
   return (
     <div className="">
       <div
@@ -9,16 +9,7 @@ export const CardImage = ({ title, imageURL, description }) => {
         className="image card-bg-image"
       ></div>
       <Link to={`/${description}`}>
-        <h3
-          style={{
-            fontSize: "0.8em",
-            textDecoration: "none",
-            color: "black",
-            fontWeight: "500",
-          }}
-        >
-          {title}
-        </h3>
+        <h3 className="mt-3">{title}</h3>
       </Link>
     </div>
   );

@@ -1,7 +1,9 @@
 package com.example.doctorappointment;
 
 import com.example.doctorappointment.entity.RoleEntity;
+import com.example.doctorappointment.entity.SpecialtyEntity;
 import com.example.doctorappointment.entity.UserEntity;
+import com.example.doctorappointment.repository.SpecialtyRepo;
 import com.example.doctorappointment.service.UserService;
 import com.example.doctorappointment.utility.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,17 +43,20 @@ public class DoctorAppointmentApplication {
     public ObjectMapper objectMapper() {return  new ObjectMapper();}
 
     @Bean
-    CommandLineRunner run(UserService userService){
+    CommandLineRunner run(UserService userService, SpecialtyRepo repo){
         return args -> {
-            userService.saveRole(new RoleEntity( Config.ROLE.USER.getValue()));
-            userService.saveRole(new RoleEntity( Config.ROLE.ADMIN.getValue()));
-
-            userService.saveUser(new UserEntity("fds sdf fsd ", "baobao","0988766765" ,"1234", true,new HashSet<>()));
-            //userService.addRoleToUser("john", Config.ROLE.USER.getValue());
-            userService.addRoleToUser("baobao", Config.ROLE.ADMIN.getValue());
-
-            userService.saveUser(new UserEntity("sdf dsfsd sdf", "john", "8767898789","1234",true, new HashSet<>()));
-            userService.addRoleToUser("john", Config.ROLE.USER.getValue());
+//            userService.saveRole(new RoleEntity( Config.ROLE.USER.getValue()));
+//            userService.saveRole(new RoleEntity( Config.ROLE.ADMIN.getValue()));
+//
+//            userService.saveUser(new UserEntity("Nguyen Huu Canh ", "canh","0988766765" ,"1234", true,new HashSet<>()));
+//            //userService.addRoleToUser("john", Config.ROLE.USER.getValue());
+//            userService.addRoleToUser("canh", Config.ROLE.ADMIN.getValue());
+//            userService.addRoleToUser("canh", Config.ROLE.USER.getValue());
+//
+//            userService.saveUser(new UserEntity("sdf dsfsd sdf", "john", "8767898789","1234",true, new HashSet<>()));
+//            userService.addRoleToUser("john", Config.ROLE.USER.getValue());
+//
+//            repo.save(new SpecialtyEntity("Cơ xương khớp","https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg","Cơ xương khớp"));
         };
     }
 }

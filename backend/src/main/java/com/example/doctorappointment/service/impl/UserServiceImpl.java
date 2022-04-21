@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserEntity getUser(String username) {
-        return userRepo.findByUsername(username);
+    public UserDTO getUser(String username) {
+        return dataMapperUtils.map(userRepo.findByUsername(username),UserDTO.class);
     }
 
     @Override
