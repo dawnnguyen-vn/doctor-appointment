@@ -2,8 +2,9 @@ package com.example.doctorappointment.utility;
 
 public class Config {
     public enum ROLE {
-        USER("USER"),
-        ADMIN("AMIN");
+        ADMIN("AMIN"),
+        DOCTOR("DOCTOR"),
+        PATIENT("PATIENT");
         private String value;
         ROLE(String s) {
             this.value = s;

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserRepo extends JpaRepository<UserEntity,Integer> {
-    UserEntity findByUsername(String username);
-    boolean existsByUsername(String username);
-    List<UserEntity> findAllByRolesIn(Set<RoleEntity> roles);
+    UserEntity findByEmail(String email);
+    boolean existsByEmail(String email);
 }
