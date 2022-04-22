@@ -28,7 +28,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorReadDTO save(DoctorWriteDTO newDoctor) {
         ClinicEntity clinic = clinicService.findById(newDoctor.getClinicId());
-        SpecialtyEntity specialty = specialtyService.findById(newDoctor.getSpecialtyId());
+        SpecialtyEntity specialty = specialtyService.getById(newDoctor.getSpecialtyId());
         DoctorEntity doctor = dataMapperUtils.map(newDoctor, DoctorEntity.class);
         doctor.setClinic(clinic);
         doctor.setSpecialty(specialty);

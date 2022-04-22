@@ -12,6 +12,7 @@ UserService {
     UserDTO saveUser(UserEntity user);
     RoleEntity saveRole(RoleEntity role);
     void addRoleToUser(String username, String roleName);
+    List<UserDTO> getUsers();
     UserEntity getUser(String email);
     String getEmail();
 }

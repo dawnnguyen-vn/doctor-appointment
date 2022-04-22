@@ -1,19 +1,18 @@
 package com.example.doctorappointment.controller.enpointAPI;
 
+import com.example.doctorappointment.DTO.Message;
 import com.example.doctorappointment.DTO.user.UserDTO;
-import com.example.doctorappointment.entity.UserEntity;
 import com.example.doctorappointment.service.UserService;
-import com.example.doctorappointment.utility.Config;
 import com.example.doctorappointment.utility.CustomException;
 import com.example.doctorappointment.utility.DataMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.util.Date;
+import java.util.List;
 
-import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,6 +55,14 @@ public class UserController {
 //        return ResponseEntity.created(uri).body(dataMapperUtils.map(userService.getUser(user.getEmail()), UserDTO.class));
 //    }
 
+    @GetMapping("/userLogin")
+    public ResponseEntity<Message> getUserLogin(Authentication auth){
+        return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(),"ok","",userService.getUser(auth.getName())));
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
 
 }
 

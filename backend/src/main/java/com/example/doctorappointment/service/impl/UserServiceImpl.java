@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public List<UserDTO> getUsers() {
+        return dataMapperUtils.mapAll(userRepo.findAll(),UserDTO.class);
+    }
+
+    @Override
     public UserEntity getUser(String email) {
         return userRepo.findByEmail(email);
     }
