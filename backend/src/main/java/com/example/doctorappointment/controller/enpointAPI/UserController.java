@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
     private final DataMapperUtils dataMapperUtils;
 
-    @GetMapping("/exist/{username}")
+    @GetMapping("/exist/{email}")
     public ResponseEntity<Boolean> checkUserExist(@PathVariable String email) {
         return ResponseEntity.ok().body(userService.exists(email));
     }

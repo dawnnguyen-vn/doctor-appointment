@@ -2,45 +2,78 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon_Menu } from "../../constants/icons";
 import "../../styles/navbar.scss";
-
+import { LogoutAction } from "../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
 
 export const NavBarAdmin = () => {
+  const dispatch = useDispatch();
 
-    const [showMenu, setShowMenu] = useState(false);
-    useEffect(() => {
-      if(showMenu){
-        document.getElementById('menu').addEventListener('click', function(){
-          setShowMenu(false)
+  const [showMenu, setShowMenu] = useState(false);
+  useEffect(() => {
+    if (showMenu) {
+      document.getElementById("menu").addEventListener("click", function () {
+        setShowMenu(false);
+      });
+
+      document
+        .getElementById("menu-content")
+        .addEventListener("click", function (e) {
+          e.stopPropagation();
         });
-        
-        document.getElementById('menu-content').addEventListener('click', function(e){
-          e.stopPropagation()
-        });
-      }
-      return () => {
-      };
-    });
+    }
+    return () => {};
+  });
+  const logout = () => {
+    dispatch(LogoutAction());
+  };
   return (
     <div className="navbar">
-      <div style={showMenu?{display:"block"}:{display:"none"}} id="menu" className="menu">
+      <div
+        style={showMenu ? { display: "block" } : { display: "none" }}
+        id="menu"
+        className="menu"
+      >
         <div id="menu-content" className="menu-content">
           <ul>
-            <li><Link to={"/#"}>Trang chủ </Link></li>
-            <li><Link to={"/#"}>Cẩm nang</Link></li>
-            <li><Link to={"/#"}>Liên hệ hợp tác</Link></li>
-            <li><Link to={"/#"}>Quy chế hoạt động</Link></li>
-            <li><Link to={"/#"}>Câu hỏi thường gặp</Link></li>
-            <li><Link to={"/#"}>Trang chủ </Link></li>
-            <li><Link to={"/#"}>Cẩm nang</Link></li>
-            <li><Link to={"/#"}>Liên hệ hợp tác</Link></li>
-            <li><Link to={"/#"}>Quy chế hoạt động</Link></li>
-            <li><Link to={"/#"}>Câu hỏi thường gặp</Link></li>
+            <li>
+              <Link to={"/#"}>Trang chủ </Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Cẩm nang</Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Liên hệ hợp tác</Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Quy chế hoạt động</Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Câu hỏi thường gặp</Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Trang chủ </Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Cẩm nang</Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Liên hệ hợp tác</Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Quy chế hoạt động</Link>
+            </li>
+            <li>
+              <Link to={"/#"}>Câu hỏi thường gặp</Link>
+            </li>
           </ul>
         </div>
       </div>
       <div className="navbar-content">
         <div className="navbar-logo">
-          <button onClick={()=>setShowMenu(!showMenu)} className="btn btn-menu">
+          <button
+            onClick={() => setShowMenu(!showMenu)}
+            className="btn btn-menu"
+          >
             <Icon_Menu />
           </button>
           <a href="">
@@ -80,9 +113,11 @@ export const NavBarAdmin = () => {
           </ul>
         </div>
         <div className="navbar-sub">
-          <Link to={"#"}>Hỗ trợ</Link>
+          <button onClick={logout} className="btn-logout">
+            Đăng xuất
+          </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

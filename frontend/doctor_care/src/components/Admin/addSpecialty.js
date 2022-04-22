@@ -7,6 +7,7 @@ import swal from "sweetalert";
 export default function AddSpecialty() {
   let [state, setState] = useState({
     values: {
+      id:0,
       name: "",
       image: "",
       description: "",

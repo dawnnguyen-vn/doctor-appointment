@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import swal from "sweetalert";
 import { LoginAction } from "../redux/actions/userActions";
-import {userService} from "../services/UserService"
+import { userService } from "../services/UserService";
 import "../styles/login.scss";
 
 export const LoginPage = () => {
@@ -12,28 +12,18 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
   let [state, setState] = useState({
     values: {
-      username: "",
+      email: "",
       password: "",
     },
     errors: {
-      username: "",
-      username: "",
+      email: "",
+      password: "",
     },
   });
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("userLogin")) {
-  //     navigate("/admin/specialties");
-  //     console.log(localStorage.getItem("userLogin"));
-  //   }
-  //   return () => {
-  //   };
-  // }, []);
-
   const [errors, setErrors] = useState("");
 
-  const isInvalid =
-    state.values.password === "" || state.values.username === "";
+  const isInvalid = state.values.password === "" || state.values.email === "";
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -41,23 +31,22 @@ export const LoginPage = () => {
       .login(state.values)
       .then((res) => {
         localStorage.setItem("token", res.data.access_token);
-        userService.getUserLogin().then((res)=>{
+        userService.getUserLogin().then((res) => {
           localStorage.setItem("userLogin", JSON.stringify(res.data.data));
           dispatch(LoginAction(res.data.data));
-        })
-        navigate("/admin/specialties");
+        });
+        navigate("/");
       })
       .catch((err) => {
-        userService.existsUser(state.values.username)
-        .then((res)=>{
-          console.log(res);
-          res.data?
-          setErrors("Sai mật khẩu !")
-          :
-          setErrors("Tài khoản không tồn tại !")
-        })
-        .catch((err)=>{
-        })
+        userService
+          .existsUser(state.values.email)
+          .then((res) => {
+            console.log(res);
+            res.data
+              ? setErrors("Sai mật khẩu !")
+              : setErrors("Tài khoản không tồn tại !");
+          })
+          .catch((err) => {});
       });
   };
   const handleChangeInput = (event) => {
@@ -70,8 +59,6 @@ export const LoginPage = () => {
     setState({ values: newValues, errors: newErrors });
   };
 
-
- 
   return (
     <div className="login">
       <div className="container">
@@ -96,7 +83,7 @@ export const LoginPage = () => {
                   <label className="input">
                     <span
                       className={`lable-text ${
-                        state.values.username !== "" && "focus"
+                        state.values.email !== "" && "focus"
                       }`}
                     >
                       Số điện thoại, tên người dùng hoặc email
@@ -108,9 +95,9 @@ export const LoginPage = () => {
                       autoCorrect="off"
                       className="form-input"
                       onChange={(e) => handleChangeInput(e)}
-                      value={state.values.username}
+                      value={state.values.email}
                       maxLength="75"
-                      name="username"
+                      name="email"
                       type="text"
                     />
                   </label>
