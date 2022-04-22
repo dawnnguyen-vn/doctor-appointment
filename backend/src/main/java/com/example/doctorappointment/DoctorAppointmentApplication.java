@@ -1,7 +1,6 @@
 package com.example.doctorappointment;
 
 import com.example.doctorappointment.entity.RoleEntity;
-import com.example.doctorappointment.entity.SpecialtyEntity;
 import com.example.doctorappointment.entity.UserEntity;
 import com.example.doctorappointment.repository.SpecialtyRepo;
 import com.example.doctorappointment.service.UserService;
@@ -13,12 +12,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.CacheControl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.util.HashSet;
-import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 public class DoctorAppointmentApplication {
@@ -57,6 +53,12 @@ public class DoctorAppointmentApplication {
 //            userService.addRoleToUser("john", Config.ROLE.USER.getValue());
 //
 //            repo.save(new SpecialtyEntity("Cơ xương khớp","https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg","Cơ xương khớp"));
+            userService.saveRole(new RoleEntity(0, Config.ROLE.DOCTOR.getValue()));
+            userService.saveRole(new RoleEntity(0, Config.ROLE.ADMIN.getValue()));
+            userService.saveRole(new RoleEntity(0, Config.ROLE.PATIENT.getValue()));
+
+            userService.saveUser(new UserEntity(0, "danh@gmail.com", "1234",  true, null));
+            userService.addRoleToUser("danh@gmail.com", Config.ROLE.DOCTOR.getValue());
         };
     }
 }

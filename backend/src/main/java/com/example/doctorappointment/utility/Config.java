@@ -2,9 +2,10 @@ package com.example.doctorappointment.utility;
 
 public class Config {
     public enum ROLE {
-        USER("USER"),
-        ADMIN("ADMIN");
-        private String value;
+        ADMIN("ADMIN"),
+        DOCTOR("DOCTOR"),
+        PATIENT("PATIENT");
+        private final String value;
         ROLE(String s) {
             this.value = s;
         }
@@ -15,7 +16,7 @@ public class Config {
     public enum CONFIG {
         //SECRET((Math.random()*9999)+" This is secret key");
         SECRET(" This is secret key");
-        private String value;
+        private final String value;
         CONFIG(String s) {
             this.value = s;
         }

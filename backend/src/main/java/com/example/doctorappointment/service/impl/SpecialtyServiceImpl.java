@@ -21,32 +21,32 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     @Override
     public List<SpecialtyDTO> getAll() {
         List<SpecialtyEntity> data = repo.findAll();
-        if(data.size()!=0)
-        return dataMapperUtils.mapAll(repo.findAll(),SpecialtyDTO.class);
+        if (data.size() != 0)
+            return dataMapperUtils.mapAll(repo.findAll(), SpecialtyDTO.class);
         return null;
     }
 
     @Override
-    public SpecialtyDTO getById(int id) {
+    public SpecialtyEntity getById(int id) {
         SpecialtyEntity data = repo.findById(id);
-        if(data!=null)
-        return dataMapperUtils.map(repo.findById(id),SpecialtyDTO.class);
+        if (data != null)
+           return data;
         return null;
     }
 
     @Override
     public SpecialtyDTO createSpecialty(SpecialtyEntity specialty) {
-        return dataMapperUtils.map(repo.save(specialty),SpecialtyDTO.class);
+        return dataMapperUtils.map(repo.save(specialty), SpecialtyDTO.class);
     }
 
     @Override
     public SpecialtyDTO updateSpecialty(int id, SpecialtyEntity specialty) {
         SpecialtyEntity specialtyUpdate = repo.findById(id);
-        if(specialtyUpdate!=null){
+        if (specialtyUpdate != null) {
             specialtyUpdate.setName(specialty.getName());
             specialtyUpdate.setDescription(specialty.getDescription());
             specialtyUpdate.setImage(specialty.getImage());
-            return dataMapperUtils.map(repo.save(specialtyUpdate),SpecialtyDTO.class);
+            return dataMapperUtils.map(repo.save(specialtyUpdate), SpecialtyDTO.class);
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     @Override
     public boolean deleteSpecialty(int id) {
         SpecialtyEntity specialty = repo.findById(id);
-        if(specialty!=null){
+        if (specialty != null) {
             repo.delete(specialty);
             return true;
         }
@@ -66,5 +66,4 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     public boolean existsByName(String name) {
         return repo.existsByName(name);
     }
-
 }

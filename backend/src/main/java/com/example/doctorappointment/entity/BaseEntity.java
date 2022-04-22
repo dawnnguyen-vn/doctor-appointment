@@ -20,5 +20,4 @@ public abstract class BaseEntity {
     @CreatedBy
     @Column(name="_createdBy")
     private String createdBy;
-
 }

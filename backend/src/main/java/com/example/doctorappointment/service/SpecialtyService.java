@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface SpecialtyService {
     List<SpecialtyDTO> getAll();
-    SpecialtyDTO getById(int Id);
+    SpecialtyEntity getById(int Id);
     SpecialtyDTO createSpecialty(SpecialtyEntity specialty);
     SpecialtyDTO updateSpecialty(int id, SpecialtyEntity specialty);
     boolean deleteSpecialty(int id);
     boolean existsByName(String name);
+
 }

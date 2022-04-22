@@ -44,7 +44,7 @@ public class SpecialtyController {
     // build get employee by id REST API
     @GetMapping("/{id}")
     public ResponseEntity<Message> getEmployeeById(@PathVariable int id) {
-        SpecialtyDTO data = service.getById(id);
+        SpecialtyEntity data = service.getById(id);
         return data != null ?
                 ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "create specialty successfull", data))
                 :

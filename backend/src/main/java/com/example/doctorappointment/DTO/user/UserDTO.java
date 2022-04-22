@@ -1,18 +1,16 @@
 package com.example.doctorappointment.DTO.user;
-import com.example.doctorappointment.DTO.RoleDTO;
+
+import com.example.doctorappointment.entity.RoleEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
-
-@Data @NoArgsConstructor
+@Data
 public class UserDTO {
     private int id;
     private String name;
-    private String username;
     private int createdAt;
     private boolean isActive ;
+    private String email;
     private String phone;
-    private Set<RoleDTO> roles = new HashSet<RoleDTO>();
+    private RoleEntity role;
 }
