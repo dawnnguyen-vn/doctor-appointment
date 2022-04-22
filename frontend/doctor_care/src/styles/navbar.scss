@@ -43,6 +43,9 @@
     }
     .navbar-sub{
         margin-left: auto;
+        button:focus{
+            border:none;
+        }
     }
     
     .menu{

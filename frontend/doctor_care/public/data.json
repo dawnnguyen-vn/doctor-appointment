@@ -61,5 +61,27 @@
             "description":"chuyen-khoa-mat",
             "imageURL":"https://cdn.bookingcare.vn/fr/w300/2019/12/16/190150-chuyen-khoa-mat.jpg"
         }
+    ],
+    "doctors":[
+        {
+            "id": 1,
+            "firstName": "danh",
+            "lastName": "Nguyen cong",
+            "phone": "0376263052",
+            "gender": true,
+            "clinicId": 0,
+            "specialtyId": 0,
+            "image":"https://cdn.bookingcare.vn/fr/w200/2021/01/21/142313-bs-tran-huu-binh.jpg",
+            "user": {
+                "email": "danh35@gmail.com",
+                "role": {
+                    "id": 1,
+                    "name": "DOCTOR"
+                },
+                "active": true
+            }
+        }
     ]
 }
+
+
