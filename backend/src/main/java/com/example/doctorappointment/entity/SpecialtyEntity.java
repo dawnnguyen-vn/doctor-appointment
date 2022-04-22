@@ -51,6 +51,7 @@ public class SpecialtyEntity {
     @Column(nullable = false)
     @NotBlank(message = "image không được bỏ trống")
     private String image;
+
     @OneToMany(
             mappedBy = "specialty",
             cascade = CascadeType.ALL,

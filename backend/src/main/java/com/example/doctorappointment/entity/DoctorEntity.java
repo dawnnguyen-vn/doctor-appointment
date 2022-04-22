@@ -23,6 +23,10 @@ public class DoctorEntity {
     private int id;
 
     @Column(nullable = false)
+    @NotBlank(message = "image không được bỏ trống")
+    private String image;
+
+    @Column(nullable = false)
     @NotBlank(message = "Họ tên không được bỏ trống")
     private String firstName;
 

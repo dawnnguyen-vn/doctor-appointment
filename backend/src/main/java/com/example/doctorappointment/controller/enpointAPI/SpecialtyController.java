@@ -26,9 +26,9 @@ public class SpecialtyController {
 
 
     @GetMapping("/all")
-     ResponseEntity<Message> getSpecialties() {
+    ResponseEntity<Message> getSpecialties() {
         List<SpecialtyDTO> data = service.getAll();
-        if(data.size()>0)
+        if (data.size() > 0)
             return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "get data successfull", data));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message(new Date(), "failed", "data is not created !!", ""));
     }
@@ -55,7 +55,7 @@ public class SpecialtyController {
     @PutMapping("/{id}")
     public ResponseEntity<Message> updateEmployee(@PathVariable int id, @RequestBody SpecialtyEntity specialty) {
         return
-                ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "update specialty successfull", service.updateSpecialty(id,specialty)));
+                ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "update specialty successfull", service.updateSpecialty(id, specialty)));
     }
 
 

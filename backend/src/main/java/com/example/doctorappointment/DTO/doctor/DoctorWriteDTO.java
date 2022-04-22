@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DoctorWriteDTO {
     private int id;
+    private String image;
     private String firstName;
     private String lastName;
     private String phone;
