@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
     private String email;
     private boolean isActive;
-    private String phone;
     private RoleEntity role;
 }

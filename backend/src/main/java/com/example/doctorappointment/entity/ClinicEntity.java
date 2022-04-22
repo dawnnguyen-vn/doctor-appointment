@@ -36,7 +36,7 @@ public class ClinicEntity {
     @OneToMany(
             mappedBy = "clinic",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JsonManagedReference
     private List<ClinicImageEntity> images = new ArrayList<>();
