@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +41,10 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<DoctorReadDTO> findAll() {
-        List<DoctorReadDTO> doctorReadDTOS = dataMapperUtils.mapAll(doctorRepo.findAll(), DoctorReadDTO.class);
+        List<DoctorEntity> doctorEntity = doctorRepo.findAll();
+        List<DoctorReadDTO> doctorReadDTOS = doctorEntity.stream()
+                .map(doctor -> convertEntityToDTO(doctor))
+                .collect(Collectors.toList());
         return doctorReadDTOS;
     }
 
