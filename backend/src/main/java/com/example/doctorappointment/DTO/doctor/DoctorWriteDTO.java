@@ -15,5 +15,6 @@ public class DoctorWriteDTO {
     private boolean gender;
     private int clinicId;
     private int specialtyId;
+    private int positionId;
     private UserEntity user;
 }

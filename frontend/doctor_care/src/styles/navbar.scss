@@ -43,7 +43,7 @@
     }
     .navbar-sub{
         margin-left: auto;
-        button:focus{
+        .btn-logout:focus{
             border:none;
         }
     }

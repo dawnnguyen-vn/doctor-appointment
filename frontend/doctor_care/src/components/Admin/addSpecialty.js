@@ -36,7 +36,9 @@ export default function AddSpecialty() {
     event.preventDefault();
     let valid = true;
     let { values, errors } = state;
-
+    
+    console.log(values)
+    
     for (let key in values) {
       if (values[key] === "") {
         // kiểm tra lỗi

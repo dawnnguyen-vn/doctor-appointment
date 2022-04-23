@@ -1,25 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../styles/admin/add_specialty.scss";
 import { useState } from "react";
-import { manageAdminService } from "../../services/ManageAdminService";
+import { manageService } from "../../services/ManageService";
 import swal from "sweetalert";
 import { Select } from "@material-ui/core";
+import { userService } from "../../services/UserService";
 
-// "id": 0,
-//     "firstName": "danh",
-//     "lastName": "Nguyen cong",
-//     "phone": "0376263052",
-//     "gender":"true",
-//     "clinicId": 1,
-//     "specialtyId":1,
-//     "user": {
-//         "id": 0,
-//         "email": "danh35@gmail.com",
-//         "password": "1234",
-
-//         "role": null
-//}
 export default function AddDoctor() {
+
   let [state, setState] = useState({
     values: {
       id: 0,
@@ -27,23 +15,53 @@ export default function AddDoctor() {
       lastName: "",
       phone: "",
       gender: "true",
-      clinicId: 1,
-      specialtyId: 1,
-      user: {
+      image:"",
+      clinicId: '1',
+      specialtyId: '1',
+      positionId:'1',
+      user:  {
         id: 0,
-        email: "danh35@gmail.com",
-        password: "1234",
+        email: "",
+        password: "",
         role: null,
       },
     },
     errors: {},
   });
+
+  const [positions, setPositions] = useState([]);
+  const [specialties, setSpecialties] = useState([]);
+
+  useEffect(() => {
+    manageService.getListOfSpecialty()
+    .then((result)=>setSpecialties(result.data.data))
+    .catch((err)=>{
+      alert(err);
+    });
+    userService.getAllPosition()
+    .then((result)=>setPositions(result.data))
+    .catch((err)=>{
+      alert(err);
+    })
+  }, []);
+
+
+  const handleChangeUserInput = (event)=>{
+    event.preventDefault();
+    let { value, name } = event.target;
+    
+    let newValue = {
+      ...state.values,
+        ['user']:{...state.values.user,[name]:value},
+    }
+    setState({...state,['values']:newValue})
+  }
   const handleChangeInput = (event) => {
     event.preventDefault();
     let { value, name } = event.target;
     let newValues = {
       ...state.values,
-      [name]: value,
+      [name]:value,
     };
     let newErrors = {
       ...state.errors,
@@ -56,23 +74,10 @@ export default function AddDoctor() {
     let valid = true;
     let { values, errors } = state;
 
-    for (let key in values) {
-      if (values[key] === "") {
-        // kiểm tra lỗi
-        valid = false;
-      }
-    }
-    for (let key in errors) {
-      if (errors[key] !== "") {
-        valid = false;
-      }
-    }
-    if (!valid) {
-      alert("thông tin không hợp lệ");
-      return;
-    } else {
-      manageAdminService
-        .addSpecialty(values)
+    console.log(">>>doctor",state);
+ 
+    userService
+        .createNewDoctor(values)
         .then((res) => {
           swal({
             title: "Thêm tin thành công",
@@ -92,7 +97,6 @@ export default function AddDoctor() {
             button: "OK",
           });
         });
-    }
   };
   return (
     <div
@@ -128,11 +132,11 @@ export default function AddDoctor() {
                   <div className="textb">
                     <input
                       type="text"
-                      name="name"
+                      name="firstName"
                       onChange={handleChangeInput}
                       required
                     />
-                    <div className="placeholder">Tên chuyên khoa</div>
+                    <div className="placeholder">Tên</div>
                     <span className="text-danger">
                       {/* {this.state.errors.hinhAnh} */}
                     </span>
@@ -142,11 +146,11 @@ export default function AddDoctor() {
                   <div className="textb">
                     <input
                       type="text"
-                      name="name"
+                      name="lastName"
                       onChange={handleChangeInput}
                       required
                     />
-                    <div className="placeholder">Tên chuyên khoa</div>
+                    <div className="placeholder">Họ</div>
                     <span className="text-danger">
                       {/* {this.state.errors.hinhAnh} */}
                     </span>
@@ -158,7 +162,7 @@ export default function AddDoctor() {
                   <div className="textb">
                     <input
                       type="text"
-                      name="name"
+                      name="phone"
                       onChange={handleChangeInput}
                       required
                     />
@@ -168,12 +172,13 @@ export default function AddDoctor() {
                     </span>
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                   <div className="textb">
                     <input
                       type="text"
-                      name="name"
-                      onChange={handleChangeInput}
+                      name="email"
+                      // value={state.values.user.email}
+                      onChange={handleChangeUserInput}
                       required
                     />
                     <div className="placeholder">Email</div>
@@ -182,34 +187,16 @@ export default function AddDoctor() {
                     </span>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-6">
+                <div className="col-3">
                   <div className="textb">
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                    >
-                      <option value={true}>Nam</option>
-                      <option value={false}>Nữ</option>
-                      <option value={true}>Khác</option>
-                    </select>
-                  </div>
-                  <div className="placeholder">Giới tính</div>
-                  <span className="text-danger">
-                    {/* {this.state.errors.hinhAnh} */}
-                  </span>
-                </div>
-                <div className="col-6">
-                  <div className="textb">
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                    >
-                      <option value={1}>Phòng khám đa khoa Thủ Đức</option>
-                      <option value={2}>Phòng khám Medic Bình Dương</option>
-                    </select>
-                    <div className="placeholder">clinicId</div>
+                    <input
+                      type="text"
+                      // value={state.values.user.password}
+                      name="password"
+                      onChange={handleChangeUserInput}
+                      required
+                    />
+                    <div className="placeholder">Mật khẩu</div>
                     <span className="text-danger">
                       {/* {this.state.errors.hinhAnh} */}
                     </span>
@@ -220,28 +207,65 @@ export default function AddDoctor() {
                 <div className="col-6">
                   <div className="textb">
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
+                      onChange={handleChangeInput}
+                      name="gender"
                     >
-                      <option value={true}>Cơ xương khớp</option>
-                      <option value={false}>Tim mạch</option>
-                      <option value={true}>Nam khoa</option>
+                      <option value={"true"}>Nam</option>
+                      <option value={"false"}>Nữ</option>
                     </select>
+                  <div className="placeholder">Giới tính</div>
+                  <span className="text-danger">
+                    {/* {this.state.errors.hinhAnh} */}
+                  </span>
                   </div>
+                </div>
+                <div className="col-6">
+                  <div className="textb">
+                    <select
+                      name="positionId"
+                      className="form-select"
+                      aria-label="Default select example"
+                      onChange={handleChangeInput}
+                    >
+                      {positions.map((item,index)=>(
+                        <option key={index} value={item.id}>{item.name}</option>
+                      ))}
+                    </select>
+                    <div className="placeholder">Chức danh</div>
+                    <span className="text-danger">
+                      {/* {this.state.errors.hinhAnh} */}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  <div className="textb">
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      onChange={handleChangeInput}
+                      name="specialtyId"
+                    >
+                      {specialties.map((item)=>(<option value={item.id}>{item.name}</option>))}
+                    </select>
                   <div className="placeholder">Chuyên khoa</div>
                   <span className="text-danger">
                     {/* {this.state.errors.hinhAnh} */}
                   </span>
+                  </div>
                 </div>
                 <div className="col-6">
                   <div className="textb">
                     <input
                       type="text"
-                      name="name"
+                      name="image"
                       onChange={handleChangeInput}
                       required
                     />
-                    <div className="placeholder">Image</div>
+                    <div className="placeholder">Ảnh đại diện</div>
                     <span className="text-danger">
                       {/* {this.state.errors.hinhAnh} */}
                     </span>

@@ -63,15 +63,15 @@ export const NavBarAdmin = () => {
         <div className="navbar-menu">
           <ul className="">
             <li className="menu-item">
-              <Link to={"/#"}>
-                <span>Chuyên khoa</span>
-                <p>tìm bác sĩ theo chuyên khoa</p>
+              <Link to={"/admin/users"}>
+                <span>Bác sĩ</span>
+                <p>Quản lý danh sách bác sĩ</p>
               </Link>
             </li>
             <li className="menu-item">
-              <Link to={"/#"}>
-                <span>Cơ sở y tế</span>
-                <p>Chọn bệnh viện phòng khám</p>
+              <Link to={"/admin/specialties"}>
+                <span>Chuyên khoa</span>
+                <p>Quản lý danh sách chuyên khoa</p>
               </Link>
             </li>
             <li className="menu-item">

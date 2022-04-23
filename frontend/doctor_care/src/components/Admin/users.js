@@ -59,17 +59,17 @@ export const Users = () => {
             <div className="news__description">{doctor.user.email}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{doctor.gender?"man":"woman"}</div>
+            <div className="news__description">{doctor.gender?"Nam":"Nữ"}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{doctor.clinicId}</div>
+            <div className="news__description">{doctor.clinic.name}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{doctor.specialtyId	}</div>
+            <div className="news__description">{doctor.specialty.name	}</div>
           </TableCell>
           <TableCell>
             <img
-              src={"https://cdn.bookingcare.vn/fr/w200/2021/01/21/142313-bs-tran-huu-binh.jpg"}
+              src={doctor.image}
               style={{ width: "70px", height: "50px" }}
               alt={doctor.image}
             />
@@ -146,14 +146,14 @@ export const Users = () => {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Frist Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Phone</TableCell>
+              <TableCell>Tên</TableCell>
+              <TableCell>Họ</TableCell>
+              <TableCell>Số điện thoại</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Gender</TableCell>
-              <TableCell>clinicId</TableCell>
-              <TableCell>specialtyId</TableCell>
-              <TableCell>Image</TableCell>
+              <TableCell>Giới tính</TableCell>
+              <TableCell>Phòng khám</TableCell>
+              <TableCell>Chuyên khoa</TableCell>
+              <TableCell>Ảnh đại diện</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>

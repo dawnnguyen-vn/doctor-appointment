@@ -23,13 +23,7 @@ export class ManageAdminService{
         });
       };
 
-      getDoctors = ()=>{
-        return axios({
-          url:`${domain}/doctor/get`,
-          method:"GET"
-        })
-      }
-
+      
 }
 
 export const manageAdminService = new ManageAdminService();

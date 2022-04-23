@@ -2,7 +2,9 @@ package com.example.doctorappointment.controller.enpointAPI;
 
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
+import com.example.doctorappointment.entity.PositionEntity;
 import com.example.doctorappointment.entity.UserEntity;
+import com.example.doctorappointment.repository.PositionRepo;
 import com.example.doctorappointment.service.DoctorService;
 import com.example.doctorappointment.service.UserService;
 import com.example.doctorappointment.utility.Config;
@@ -23,7 +25,7 @@ public class DoctorController {
 
     private final UserService userService;
     private final DoctorService doctorService;
-
+    private final PositionRepo positionRepo;
     @GetMapping("/get")
     public ResponseEntity<List<DoctorReadDTO>> checkUserExist() {
         return ResponseEntity.ok().body(doctorService.findAll());
@@ -44,7 +46,10 @@ public class DoctorController {
         return ResponseEntity.created(uri).body(doctorService.save(doctor));
     }
 
-
+    @GetMapping("/positon")
+    public ResponseEntity<List<PositionEntity>> getPosition(){
+        return ResponseEntity.ok().body(positionRepo.findAll());
+    }
 }
 
 

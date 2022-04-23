@@ -10,9 +10,9 @@ import TableRow from "@material-ui/core/TableRow";
 import swal from "sweetalert";
 import { Paper } from "@material-ui/core";
 import "../../styles/admin/specialty.scss"
+import { manageAdminService } from "../../services/ManageAdminService";
 import AddSpecialty from "./addSpecialty";
 import EditSpecialty from "./editSpecialty"
-import { manageAdminService } from "../../services/ManageAdminService";
 
 export const Specialty = () => {
   const [specialty, setSpecialty] = useState([]);
@@ -54,13 +54,13 @@ export const Specialty = () => {
             <div className="news__description">{specialty.name}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{specialty.description}</div>
+            <div className="news__description">{specialty.image}</div>
           </TableCell>
           <TableCell>
             <img
-              src={specialty.image}
+              src={specialty.description}
               style={{ width: "70px", height: "50px" }}
-              alt={specialty.image}
+              alt={specialty.description}
             />
           </TableCell>
           <TableCell>
