@@ -60,6 +60,7 @@ public class SpecialtyEntity {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
+
     @JsonManagedReference
     private List<DoctorEntity> doctors = new ArrayList<>();
 

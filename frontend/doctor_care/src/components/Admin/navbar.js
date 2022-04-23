@@ -36,34 +36,10 @@ export const NavBarAdmin = () => {
         <div id="menu-content" className="menu-content">
           <ul>
             <li>
-              <Link to={"/#"}>Trang chủ </Link>
+              <Link to={"/admin/specilaties"}>Chuyên khoa </Link>
             </li>
             <li>
-              <Link to={"/#"}>Cẩm nang</Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Liên hệ hợp tác</Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Quy chế hoạt động</Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Câu hỏi thường gặp</Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Trang chủ </Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Cẩm nang</Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Liên hệ hợp tác</Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Quy chế hoạt động</Link>
-            </li>
-            <li>
-              <Link to={"/#"}>Câu hỏi thường gặp</Link>
+              <Link to={"/admin/users"}>Bác sĩ</Link>
             </li>
           </ul>
         </div>

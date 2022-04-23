@@ -11,6 +11,7 @@ import swal from "sweetalert";
 import { Paper } from "@material-ui/core";
 import { manageAdminService } from "../../services/ManageAdminService";
 import "../../styles/admin/specialty.scss"
+import AddDoctor from "./addDoctors";
 
 export const Users = () => {
   const [doctors, setDoctors] = useState([]);
@@ -18,11 +19,18 @@ export const Users = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(4);
 
   useEffect(() => {
-    getContentFromURL(
-      "/data.json"
-    );
-    return () => {};
-  },[]);
+    manageService
+        .getDoctors()
+        .then((result) =>{
+          console.log(result);
+          setDoctors(result.data)
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    return () => {
+    };
+  }, []);
 
   const getContentFromURL = (url) => {
     fetch(url)
@@ -36,7 +44,7 @@ export const Users = () => {
     return doctors && doctors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .map((doctor) => {
       return (
-        <TableRow hover role="checkbox" tabIndex={-1} key={doctors.id}>
+        <TableRow hover role="checkbox" tabIndex={-1} key={doctor.id}>
           <TableCell>{doctor.id}</TableCell>
           <TableCell>
             <div className="news__description">{doctor.firstName}</div>
@@ -61,7 +69,7 @@ export const Users = () => {
           </TableCell>
           <TableCell>
             <img
-              src={doctor.image}
+              src={"https://cdn.bookingcare.vn/fr/w200/2021/01/21/142313-bs-tran-huu-binh.jpg"}
               style={{ width: "70px", height: "50px" }}
               alt={doctor.image}
             />
@@ -127,12 +135,12 @@ export const Users = () => {
       <button
         className="btnAdd mb-3"
         data-toggle="modal"
-        data-target="#addSpecialModal"
+        data-target="#addDoctorModal"
       >
         <i className="fa fa-plus"></i>
         <h2>Add new</h2>
       </button>
-      {/* <Adddoctors /> */}
+      <AddDoctor/>
       <TableContainer style={{ maxHeight: "100%" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -155,7 +163,7 @@ export const Users = () => {
       <TablePagination
         rowsPerPageOptions={[4, 10, 25]}
         component="div"
-        count={doctors.length}
+        count={doctors&&doctors.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

@@ -21,6 +21,12 @@ export class UserService{
           }
         )
       }
+      getDoctors = ()=>{
+        return axios({
+          url:`${domain}/doctor/get`,
+          method:"GET"
+        })
+      }
       existsUser = (username) =>{
         return axios({
           url: `${domain}/user/exist/${username}`,

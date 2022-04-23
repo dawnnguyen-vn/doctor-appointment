@@ -25,7 +25,7 @@ export const Navbar = () => {
         <div id="menu-content" className="menu-content">
           <ul>
             <li><Link to={"/#"}>Trang chủ </Link></li>
-            <li><Link to={"/#"}>Cẩm nang</Link></li>
+            <li><Link to={"/admin/users"}>Danh sách bác sĩ</Link></li>
             <li><Link to={"/#"}>Liên hệ hợp tác</Link></li>
             <li><Link to={"/#"}>Quy chế hoạt động</Link></li>
             <li><Link to={"/#"}>Câu hỏi thường gặp</Link></li>

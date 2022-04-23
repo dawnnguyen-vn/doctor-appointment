@@ -15,5 +15,12 @@ export class ManageService{
             method:"GET"
         })
     }
+
+    getDoctors = ()=>{
+        return axios({
+          url:`${domain}/doctor/get`,
+          method:"GET"
+        })
+      }
 }
 export const manageService = new ManageService();

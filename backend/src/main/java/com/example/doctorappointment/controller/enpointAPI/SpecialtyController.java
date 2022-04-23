@@ -34,7 +34,7 @@ public class SpecialtyController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Message> createEmployee(@RequestBody SpecialtyEntity specialty) {
+    public ResponseEntity<Message> createSpecialty(@RequestBody SpecialtyEntity specialty) {
         return service.existsByName(specialty.getName()) == false ?
                 ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "create specialty successfull", service.createSpecialty(specialty)))
                 :
