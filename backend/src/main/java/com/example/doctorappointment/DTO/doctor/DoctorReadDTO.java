@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DoctorReadDTO {
     private int id;
+    private String image;
     private String firstName;
     private String lastName;
     private String phone;

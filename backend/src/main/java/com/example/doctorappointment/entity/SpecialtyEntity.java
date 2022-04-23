@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,7 +29,6 @@ import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 //
 @Entity
 @Data
@@ -47,13 +45,12 @@ public class SpecialtyEntity {
     @NotBlank(message = "Tên không được bỏ trống")
     private String name;
 
+    @Column
+    private String description;
 
     @Column(nullable = false)
     @NotBlank(message = "image không được bỏ trống")
     private String image;
-
-    @Column
-    private String description;
 
     @OneToMany(
             mappedBy = "specialty",
@@ -64,13 +61,11 @@ public class SpecialtyEntity {
     @JsonManagedReference
     private List<DoctorEntity> doctors = new ArrayList<>();
 
-    public SpecialtyEntity(SpecialtyEntity specialty) {
-    }
-
     public void addDoctor(DoctorEntity doctor) {
         doctors.add(doctor);
         doctor.setSpecialty(this);
     }
+
     public void removeDoctor(DoctorEntity doctor) {
         doctors.remove(doctor);
         doctor.setSpecialty(null);

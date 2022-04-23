@@ -33,13 +33,9 @@ public class ClinicEntity {
     @Column
     private String description;
 
-    @OneToMany(
-            mappedBy = "clinic",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    @JsonManagedReference
-    private List<ClinicImageEntity> images = new ArrayList<>();
+    @Column(nullable = false)
+    @NotBlank(message = "image không được bỏ trống")
+    private String image;
 
     @OneToMany(
             mappedBy = "clinic",
@@ -49,15 +45,6 @@ public class ClinicEntity {
     @JsonManagedReference
     private List<DoctorEntity> doctors = new ArrayList<>();
 
-    public void addImage(ClinicImageEntity image) {
-        images.add(image);
-        image.setClinic(this);
-    }
-
-    public void removeImage(ClinicImageEntity image) {
-        images.remove(image);
-        image.setClinic(null);
-    }
 
     public void addDoctor(DoctorEntity doctor) {
         doctors.add(doctor);
