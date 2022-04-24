@@ -12,10 +12,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN: {
       state.user = action.user;
+      window.location.reload();
       return { ...state };
     }
     case LOGOUT: {
       localStorage.removeItem("userLogin");
+      localStorage.removeItem("token");
       state.user = "";
       window.location.reload();
       return { ...state };

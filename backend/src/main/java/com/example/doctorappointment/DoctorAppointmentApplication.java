@@ -2,6 +2,7 @@ package com.example.doctorappointment;
 
 import com.example.doctorappointment.entity.*;
 import com.example.doctorappointment.repository.ClinicRepo;
+import com.example.doctorappointment.repository.MarkdownRepo;
 import com.example.doctorappointment.repository.PositionRepo;
 import com.example.doctorappointment.repository.SpecialtyRepo;
 import com.example.doctorappointment.service.UserService;
@@ -38,7 +39,7 @@ public class DoctorAppointmentApplication {
     public ObjectMapper objectMapper() {return  new ObjectMapper();}
 
     @Bean
-    CommandLineRunner run(UserService userService, SpecialtyRepo repo , ClinicRepo clinicRepo, PositionRepo positionRepo){
+    CommandLineRunner run(UserService userService, SpecialtyRepo repo , ClinicRepo clinicRepo, PositionRepo positionRepo, MarkdownRepo markdownRepo){
         return args -> {
             userService.saveRole(new RoleEntity(0, Config.ROLE.DOCTOR.getValue()));
             userService.saveRole(new RoleEntity(0, Config.ROLE.ADMIN.getValue()));
@@ -56,6 +57,7 @@ public class DoctorAppointmentApplication {
             positionRepo.save(new PositionEntity(0,"Tiến sĩ"));
             positionRepo.save(new PositionEntity(0,"Giáo sư"));
             positionRepo.save(new PositionEntity(0,"Phó giáo sư"));
+            markdownRepo.save(new MarkdownEntity(0,"asd","asd","asdasdas",1,0,0));
         };
     }
 }

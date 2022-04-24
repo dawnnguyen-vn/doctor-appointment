@@ -9,11 +9,11 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import swal from "sweetalert";
 import { Paper } from "@material-ui/core";
-import { manageAdminService } from "../../services/ManageAdminService";
 import "../../styles/admin/specialty.scss"
 import AddDoctor from "./addDoctors";
 
-export const Users = () => {
+
+export const UsersTable = () => {
   const [doctors, setDoctors] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(4);
@@ -32,14 +32,7 @@ export const Users = () => {
     };
   }, []);
 
-  const getContentFromURL = (url) => {
-    fetch(url)
-      .then((res) =>res.json())
-      .then(data =>setDoctors(data.doctors))
-      .catch(
-        err => alert(err)
-      );
-  };
+
   const renderTable = () => {
     return doctors && doctors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .map((doctor) => {

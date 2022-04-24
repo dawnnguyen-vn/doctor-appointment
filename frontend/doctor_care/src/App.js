@@ -7,8 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BlogsPage } from "./pages/blogs";
 import { Admin } from "./pages/admin/admin";
-import { Specialty } from "./components/Admin/specialty";
-import { Users } from "./components/Admin/users";
+import { SpecialtyTable } from "./components/Admin/specialty";
+import { UsersTable } from "./components/Admin/users";
+import { AddInformation } from "./components/Admin/addInformation";
 
 function App() {
   const LoginPage = lazy(() =>
@@ -21,7 +22,7 @@ function App() {
       default: module.HomePage,
     }))
   );
-  const auth = localStorage.getItem("userLogin");
+  const auth = localStorage.getItem("token");
   return (
       <BrowserRouter>
       <Suspense fallback={<LoadingPage />}>
@@ -30,8 +31,9 @@ function App() {
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.BLOG} element={<BlogsPage />} />
           <Route path="/admin" element={auth?<Admin/>:<Navigate to={ROUTES.LOGIN} replace />} >
-            <Route path="users" element={<Users />} />
-            <Route path="specialties" element={<Specialty />} />
+            <Route path="users" element={<UsersTable />} />
+            <Route path="specialties" element={<SpecialtyTable />} />
+            <Route path="info" element={<AddInformation />} />
           </Route>
         </Routes>
       </Suspense>

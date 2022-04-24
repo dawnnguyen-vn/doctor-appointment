@@ -5,11 +5,9 @@ import com.example.doctorappointment.DTO.SpecialtyDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
 import com.example.doctorappointment.DTO.user.UserDTO;
-import com.example.doctorappointment.entity.ClinicEntity;
-import com.example.doctorappointment.entity.DoctorEntity;
-import com.example.doctorappointment.entity.PositionEntity;
-import com.example.doctorappointment.entity.SpecialtyEntity;
+import com.example.doctorappointment.entity.*;
 import com.example.doctorappointment.repository.DoctorRepo;
+import com.example.doctorappointment.repository.MarkdownRepo;
 import com.example.doctorappointment.repository.PositionRepo;
 import com.example.doctorappointment.service.ClinicService;
 import com.example.doctorappointment.service.DoctorService;
@@ -31,13 +29,14 @@ public class DoctorServiceImpl implements DoctorService {
     private final ClinicService clinicService;
     private final SpecialtyService specialtyService;
     private final PositionRepo positionRepo;
+
+
     @Override
     public DoctorReadDTO save(DoctorWriteDTO newDoctor) {
         ClinicEntity clinic = clinicService.findById(newDoctor.getClinicId());
         SpecialtyEntity specialty = specialtyService.getById(newDoctor.getSpecialtyId());
         DoctorEntity doctor = dataMapperUtils.map(newDoctor, DoctorEntity.class);
         PositionEntity position = positionRepo.findById(newDoctor.getPositionId());
-
         doctor.setPosition(position);
         doctor.setClinic(clinic);
         doctor.setSpecialty(specialty);

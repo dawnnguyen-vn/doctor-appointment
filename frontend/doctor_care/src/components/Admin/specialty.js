@@ -14,7 +14,7 @@ import { manageAdminService } from "../../services/ManageAdminService";
 import AddSpecialty from "./addSpecialty";
 import EditSpecialty from "./editSpecialty"
 
-export const Specialty = () => {
+export const SpecialtyTable = () => {
   const [specialty, setSpecialty] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(4);

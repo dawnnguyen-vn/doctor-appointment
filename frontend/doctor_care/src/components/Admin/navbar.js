@@ -41,6 +41,9 @@ export const NavBarAdmin = () => {
             <li>
               <Link to={"/admin/users"}>Bác sĩ</Link>
             </li>
+            <li>
+              <Link to={"/admin/info"}>Thông tin chi tiết</Link>
+            </li>
           </ul>
         </div>
       </div>

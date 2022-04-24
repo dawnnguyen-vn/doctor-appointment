@@ -24,7 +24,7 @@ export default function AddDoctor() {
         email: "",
         password: "",
         role: null,
-      },
+      }
     },
     errors: {},
   });
