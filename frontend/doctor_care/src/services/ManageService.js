@@ -22,5 +22,25 @@ export class ManageService{
           method:"GET"
         })
       }
+    updateDoctorMarkdown = (doctorId,markdown) =>{
+        return axios({
+            url:`${domain}/doctor/markdown/${doctorId}`,
+            method:"PUT",
+            data:markdown
+        })
+    }
+    addDoctorMarkdown = (markdown) =>{
+        return axios({
+            url:`${domain}/doctor/markdown`,
+            method:"POST",
+            data:markdown
+        })
+    }
+    getDoctorMarkdown = (doctorId)=>{
+        return axios({
+            url:`${domain}/doctor/markdown/${doctorId}`,
+            method:"GET"
+        })
+    }
 }
 export const manageService = new ManageService();
