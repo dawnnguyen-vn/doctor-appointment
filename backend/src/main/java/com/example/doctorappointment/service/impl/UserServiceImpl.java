@@ -79,6 +79,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepo.findByEmail(email);
     }
 
+    @Override
+    public boolean delete(int userId) {
+        if(userRepo.findById(userId)!=null){
+            userRepo.deleteById(userId);
+            return true;
+        }
+        return false;
+    }
+
 //    @Override
 //    public List<UserDTO> getUsers() {
 //        Set<RoleEntity> roles = new HashSet();

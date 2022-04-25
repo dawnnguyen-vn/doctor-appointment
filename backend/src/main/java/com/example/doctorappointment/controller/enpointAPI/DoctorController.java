@@ -3,6 +3,8 @@ package com.example.doctorappointment.controller.enpointAPI;
 import com.example.doctorappointment.DTO.Message;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
+import com.example.doctorappointment.DTO.user.UserDTO;
+import com.example.doctorappointment.entity.DoctorEntity;
 import com.example.doctorappointment.entity.MarkdownEntity;
 import com.example.doctorappointment.entity.PositionEntity;
 import com.example.doctorappointment.entity.UserEntity;
@@ -30,13 +32,34 @@ public class DoctorController {
     private final UserService userService;
     private final DoctorService doctorService;
     private final PositionRepo positionRepo;
-
     private final MarkdownRepo markdownRepo;
 
 
     @GetMapping("/get")
     public ResponseEntity<List<DoctorReadDTO>> checkUserExist() {
         return ResponseEntity.ok().body(doctorService.findAll());
+    }
+    @GetMapping("/{doctorId}")
+    public ResponseEntity<DoctorReadDTO> getBYId(@PathVariable int doctorId){
+        return ResponseEntity.ok().body(doctorService.getDoctorById(doctorId));
+    }
+    
+    @DeleteMapping("/{doctorId}")
+    public ResponseEntity<Boolean> deleteDoctor(@PathVariable int doctorId){
+        return ResponseEntity.ok().body(doctorService.delete(doctorId));
+    }
+
+    @PutMapping("/{doctorId}")
+    public ResponseEntity<DoctorReadDTO> update(@PathVariable int doctorId,@RequestBody DoctorWriteDTO doctor) throws CustomException {
+        UserEntity newUser = doctor.getUser();
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path(null).toUriString());
+        if (!userService.exists(newUser.getEmail())) {
+            userService.saveUser(newUser);
+            userService.addRoleToUser(newUser.getEmail(), Config.ROLE.DOCTOR.getValue());
+            UserEntity user = userService.getUser(newUser.getEmail());
+            doctor.setUser(user);
+        }
+        return ResponseEntity.created(uri).body(doctorService.update(doctorId,doctor));
     }
 
     @PostMapping("/register")
@@ -84,8 +107,6 @@ public class DoctorController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message(new Date(),"not found","can not find markdown with doctorId "+doctorId,""));
     }
-
-
 }
 
 

@@ -28,6 +28,10 @@
         margin-left: 4em;
         ul{
             gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
             li{
                 font-size: 0.9em;
                 span{
@@ -64,6 +68,8 @@
         }
         ul{
             flex-direction: column;
+            list-style: none;
+            padding: 0;
             li{
                 border-top: 1px solid rgba(128, 128, 128, 0.215) ;
                 font-size: 1em;

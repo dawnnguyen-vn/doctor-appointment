@@ -22,6 +22,9 @@ export class ManageService{
           method:"GET"
         })
       }
+    getDoctor = (doctorId) =>{
+        return axios.get(`${domain}/doctor/${doctorId}`);
+    }
     updateDoctorMarkdown = (doctorId,markdown) =>{
         return axios({
             url:`${domain}/doctor/markdown/${doctorId}`,

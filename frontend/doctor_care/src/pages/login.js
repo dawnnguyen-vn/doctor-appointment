@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import swal from "sweetalert";
 import { LoginAction } from "../redux/actions/userActions";
 import { userService } from "../services/UserService";
 import "../styles/login.scss";

@@ -14,5 +14,6 @@ UserService {
     void addRoleToUser(String username, String roleName);
     List<UserDTO> getUsers();
     UserEntity getUser(String email);
+    boolean delete(int userId);
     String getEmail();
 }

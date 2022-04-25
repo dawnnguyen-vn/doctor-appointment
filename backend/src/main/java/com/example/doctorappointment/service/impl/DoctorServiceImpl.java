@@ -9,6 +9,7 @@ import com.example.doctorappointment.entity.*;
 import com.example.doctorappointment.repository.DoctorRepo;
 import com.example.doctorappointment.repository.MarkdownRepo;
 import com.example.doctorappointment.repository.PositionRepo;
+import com.example.doctorappointment.repository.UserRepo;
 import com.example.doctorappointment.service.ClinicService;
 import com.example.doctorappointment.service.DoctorService;
 import com.example.doctorappointment.service.SpecialtyService;
@@ -29,6 +30,8 @@ public class DoctorServiceImpl implements DoctorService {
     private final ClinicService clinicService;
     private final SpecialtyService specialtyService;
     private final PositionRepo positionRepo;
+
+    private final UserRepo userRepo;
 
 
     @Override
@@ -54,6 +57,40 @@ public class DoctorServiceImpl implements DoctorService {
                 .collect(Collectors.toList());
         return doctorReadDTOS;
     }
+
+    @Override
+    public DoctorReadDTO getDoctorById(int doctorId) {
+        DoctorEntity doctorEntity = doctorRepo.findById(doctorId);
+        DoctorReadDTO doctorReadDTO = convertEntityToDTO(doctorEntity);
+        return doctorReadDTO;
+    }
+
+    @Override
+    public DoctorReadDTO update(int doctorId, DoctorWriteDTO newDoctor) {
+        DoctorEntity updateDoctor = doctorRepo.findById(doctorId);
+        ClinicEntity clinic = clinicService.findById(newDoctor.getClinicId());
+        SpecialtyEntity specialty = specialtyService.getById(newDoctor.getSpecialtyId());
+        PositionEntity position = positionRepo.findById(newDoctor.getPositionId());
+        updateDoctor.setPosition(position);
+        updateDoctor.setClinic(clinic);
+        updateDoctor.setSpecialty(specialty);
+        DoctorEntity doctorResult = doctorRepo.save(updateDoctor);
+        clinic.addDoctor(doctorResult);
+        specialty.addDoctor(doctorResult);
+        return convertEntityToDTO(doctorResult);
+    }
+
+    @Override
+    public boolean delete(int doctorId) {
+        DoctorEntity doctor = doctorRepo.findById(doctorId);
+        if(doctor!=null){
+            doctorRepo.deleteById(doctorId);
+            userRepo.delete(doctor.getUser());
+            return true;
+        }
+        return false;
+    }
+
 
     private DoctorReadDTO convertEntityToDTO(DoctorEntity doctorResult) {
         DoctorReadDTO doctorReadDTO = dataMapperUtils.map(doctorResult, DoctorReadDTO.class);
