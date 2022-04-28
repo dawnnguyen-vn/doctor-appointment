@@ -42,17 +42,15 @@ public class DoctorEntity {
     private boolean gender;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "clinic_id", nullable = false)
-    @JsonBackReference
     private ClinicEntity clinic;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "specialty_id", nullable = false)
-    @JsonBackReference
     private SpecialtyEntity specialty;
 
     @OneToOne(fetch = LAZY)
