@@ -9,34 +9,35 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import swal from "sweetalert";
 import { Paper } from "@material-ui/core";
-import { manageAdminService } from "../../services/ManageAdminService";
 import "../../styles/admin/specialty.scss"
+import AddDoctor from "./addDoctors";
 
-export const Users = () => {
+
+export const UsersTable = () => {
   const [doctors, setDoctors] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(4);
 
   useEffect(() => {
-    getContentFromURL(
-      "/data.json"
-    );
-    return () => {};
-  },[]);
+    manageService
+        .getDoctors()
+        .then((result) =>{
+          console.log(result);
+          setDoctors(result.data)
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    return () => {
+    };
+  }, []);
 
-  const getContentFromURL = (url) => {
-    fetch(url)
-      .then((res) =>res.json())
-      .then(data =>setDoctors(data.doctors))
-      .catch(
-        err => alert(err)
-      );
-  };
+
   const renderTable = () => {
     return doctors && doctors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .map((doctor) => {
       return (
-        <TableRow hover role="checkbox" tabIndex={-1} key={doctors.id}>
+        <TableRow hover role="checkbox" tabIndex={-1} key={doctor.id}>
           <TableCell>{doctor.id}</TableCell>
           <TableCell>
             <div className="news__description">{doctor.firstName}</div>
@@ -51,13 +52,13 @@ export const Users = () => {
             <div className="news__description">{doctor.user.email}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{doctor.gender?"man":"woman"}</div>
+            <div className="news__description">{doctor.gender?"Nam":"Nữ"}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{doctor.clinicId}</div>
+            <div className="news__description">{doctor.clinic.name}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{doctor.specialtyId	}</div>
+            <div className="news__description">{doctor.specialty.name	}</div>
           </TableCell>
           <TableCell>
             <img
@@ -127,25 +128,25 @@ export const Users = () => {
       <button
         className="btnAdd mb-3"
         data-toggle="modal"
-        data-target="#addSpecialModal"
+        data-target="#addDoctorModal"
       >
         <i className="fa fa-plus"></i>
         <h2>Add new</h2>
       </button>
-      {/* <Adddoctors /> */}
+      <AddDoctor/>
       <TableContainer style={{ maxHeight: "100%" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Frist Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Phone</TableCell>
+              <TableCell>Tên</TableCell>
+              <TableCell>Họ</TableCell>
+              <TableCell>Số điện thoại</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Gender</TableCell>
-              <TableCell>clinicId</TableCell>
-              <TableCell>specialtyId</TableCell>
-              <TableCell>Image</TableCell>
+              <TableCell>Giới tính</TableCell>
+              <TableCell>Phòng khám</TableCell>
+              <TableCell>Chuyên khoa</TableCell>
+              <TableCell>Ảnh đại diện</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -155,7 +156,7 @@ export const Users = () => {
       <TablePagination
         rowsPerPageOptions={[4, 10, 25]}
         component="div"
-        count={doctors.length}
+        count={doctors&&doctors.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

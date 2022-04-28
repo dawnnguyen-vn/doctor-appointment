@@ -1,5 +1,5 @@
 
-#addSpecialModal , .editSpecialModal {
+#addDoctorModal , #addSpecialModal , .editSpecialModal {
     .modal-dialog {
       z-index: 9999;
       max-width: 400px;
@@ -18,20 +18,21 @@
         .modal-body {
           .user-form {
             width: calc(100% - 20px);
-            max-width: 400px;
             background-color: #fff;
             //   padding: 45px 40px;
             z-index: 300;
           }
           .row {
               margin: 0;
-            .col-12 {
+            .col-6 , .col-3{
                 padding: 0;
+                // margin: 0 20px;
               .textb {
                 margin-bottom: 12px;
                 padding: 0;
+                margin: 10px 20px;
                 position: relative;
-                input {
+                select, input {
                   width: 100%;
                   height: 50px;
                   border: none;
@@ -55,13 +56,18 @@
                   font-weight: 500;
                   padding: 14px 60px 0 10px;
                 }
-                & input:focus ~ .placeholder,
-                & input:valid ~ .placeholder {
+                &  input:focus ~ .placeholder,
+                &  input:valid ~ .placeholder {
                   left: 10px;
                   top: -16px;
                 }
                 & textarea:focus ~ .placeholder,
                 & textarea:valid ~ .placeholder {
+                  left: 10px;
+                  top: -16px;
+                }
+                & select:focus ~ .placeholder,
+                & select:valid ~ .placeholder {
                   left: 10px;
                   top: -16px;
                 }
@@ -122,3 +128,4 @@
       }
     }
   }
+

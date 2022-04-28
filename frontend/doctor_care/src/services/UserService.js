@@ -21,11 +21,28 @@ export class UserService{
           }
         )
       }
+      
       existsUser = (username) =>{
         return axios({
           url: `${domain}/user/exist/${username}`,
           method: "GET",
         })
+      }
+
+      createNewDoctor= (doctor) =>{
+        return axios({
+          url:`${domain}/doctor/register`,
+          method:"POST",
+          data:doctor
+        })
+      }
+
+      getAllDoctor = () =>{
+        return axios.get(`${domain}/doctor/get`)
+      }
+
+      getAllPosition=()=>{
+        return axios.get(`${domain}/doctor/positon`)
       }
 }
 

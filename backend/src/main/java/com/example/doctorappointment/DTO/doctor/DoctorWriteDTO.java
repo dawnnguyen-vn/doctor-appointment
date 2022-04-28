@@ -1,5 +1,6 @@
 package com.example.doctorappointment.DTO.doctor;
 
+import com.example.doctorappointment.entity.MarkdownEntity;
 import com.example.doctorappointment.entity.UserEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,7 @@ public class DoctorWriteDTO {
     private boolean gender;
     private int clinicId;
     private int specialtyId;
+    private int positionId;
     private UserEntity user;
+
 }

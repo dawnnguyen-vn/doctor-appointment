@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "roles")
-public class RoleEntity {
+@Table(name = "position")
+public class PositionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

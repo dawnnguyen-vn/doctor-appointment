@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import swal from "sweetalert";
 import { LoginAction } from "../redux/actions/userActions";
 import { userService } from "../services/UserService";
 import "../styles/login.scss";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  
 
   const dispatch = useDispatch();
   let [state, setState] = useState({
@@ -21,21 +21,22 @@ export const LoginPage = () => {
     },
   });
 
+  const [isLogin,setIsLogin] =  useState(false);
+
   const [errors, setErrors] = useState("");
 
   const isInvalid = state.values.password === "" || state.values.email === "";
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    userService
+     userService
       .login(state.values)
       .then((res) => {
-        localStorage.setItem("token", res.data.access_token);
-        userService.getUserLogin().then((res) => {
+          localStorage.setItem("token", res.data.access_token);
+          userService.getUserLogin().then((res) => {
           localStorage.setItem("userLogin", JSON.stringify(res.data.data));
           dispatch(LoginAction(res.data.data));
         });
-        navigate("/");
       })
       .catch((err) => {
         userService
@@ -58,6 +59,7 @@ export const LoginPage = () => {
     };
     setState({ values: newValues, errors: newErrors });
   };
+
 
   return (
     <div className="login">
