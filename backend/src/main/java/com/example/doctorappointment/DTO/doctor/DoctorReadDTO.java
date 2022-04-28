@@ -21,6 +21,6 @@ public class DoctorReadDTO {
     private boolean gender;
     private ClinicDTO clinic;
     private SpecialtyDTO specialty;
-    private String positon;
+    private String position;
     private UserDTO user;
 }

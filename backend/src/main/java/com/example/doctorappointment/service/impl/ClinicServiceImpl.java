@@ -28,7 +28,6 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public List<ClinicEntity> findAll() {
         List<ClinicEntity> clinicEntities =  clinicRepo.findAll();
-        System.out.println("hmm");
         return clinicRepo.findAll();
     }
 }

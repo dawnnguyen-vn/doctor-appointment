@@ -97,7 +97,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctorReadDTO.setClinic(dataMapperUtils.map(doctorResult.getClinic(), ClinicDTO.class));
         doctorReadDTO.setSpecialty(dataMapperUtils.map(doctorResult.getSpecialty(), SpecialtyDTO.class));
         doctorReadDTO.setUser(dataMapperUtils.map(doctorResult.getUser(), UserDTO.class));
-        doctorReadDTO.setPositon(doctorResult.getPosition().getName());
+        doctorReadDTO.setPosition(doctorResult.getPosition().getName());
         return doctorReadDTO;
     }
 }

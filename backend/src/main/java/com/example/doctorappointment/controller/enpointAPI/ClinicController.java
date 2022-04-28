@@ -18,7 +18,7 @@ public class ClinicController {
 
     private final ClinicService clinicService;
 
-    @GetMapping("/get")
+    @GetMapping("/all")
     public ResponseEntity<List<ClinicEntity>> checkUserExist() {
         return ResponseEntity.ok().body(clinicService.findAll());
     }

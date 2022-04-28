@@ -35,7 +35,7 @@ public class DoctorController {
     private final MarkdownRepo markdownRepo;
 
 
-    @GetMapping("/get")
+    @GetMapping("/all")
     public ResponseEntity<List<DoctorReadDTO>> checkUserExist() {
         return ResponseEntity.ok().body(doctorService.findAll());
     }
