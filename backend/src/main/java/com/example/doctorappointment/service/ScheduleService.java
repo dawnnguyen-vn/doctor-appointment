@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ScheduleService {
     ScheduleReadDTO save(ScheduleWriteDTO newSchedule);
-
-    List<ScheduleReadDTO> findByDoctorAndDate(int doctorId, int date);
+    boolean updateScheduleDoctor(int timeId, int doctorId, int date);
+    ScheduleReadDTO findByDoctorAndDate(int doctorId, int date);
 
     List<ScheduleReadDTO> findByDoctor(int doctorId);
 }

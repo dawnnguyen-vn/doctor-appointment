@@ -28,6 +28,9 @@ public class BookingEntity {
     private int date;
 
     @Column(nullable = false)
-    private String time;
+    private int timeId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
+    private PatientEntity patient;
 }

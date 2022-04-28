@@ -22,8 +22,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<ScheduleReadDTO>> findByDoctorAndDate(@RequestParam int doctorId,
-                                                                         @RequestParam int date) {
+    public ResponseEntity<ScheduleReadDTO> findByDoctorAndDate(@RequestParam int doctorId,
+                                                               @RequestParam int date) {
         return ResponseEntity.ok().body(scheduleService.findByDoctorAndDate(doctorId, date));
     }
 

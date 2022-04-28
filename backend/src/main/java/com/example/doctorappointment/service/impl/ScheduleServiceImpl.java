@@ -34,15 +34,22 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleReadDTO> findByDoctorAndDate(int doctorId, int date) {
+    public boolean updateScheduleDoctor(int timeId, int doctorId, int date) {
+        DoctorTimeEntity doctorTime = doctorTimeService.findById(timeId);
         DoctorEntity doctor = doctorService.findById(doctorId);
-        List<ScheduleEntity> scheduleEntities = scheduleRepo.findAllByDateAndDoctor(date, doctor);
-        List<ScheduleReadDTO> scheduleReadDTOS = new ArrayList<>();
-        scheduleEntities.forEach(scheduleEntity -> {
-            ScheduleReadDTO scheduleReadDTO = convertEntityToDTO(scheduleEntity);
-            scheduleReadDTOS.add(scheduleReadDTO);
-        });
-        return scheduleReadDTOS;
+        ScheduleEntity scheduleEntity = scheduleRepo.findAllByDateAndDoctor(date, doctor);
+        if(scheduleEntity.getDoctorTimes().contains(doctorTime)){
+            scheduleEntity.getDoctorTimes().remove(doctorTime);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public ScheduleReadDTO findByDoctorAndDate(int doctorId, int date) {
+        DoctorEntity doctor = doctorService.findById(doctorId);
+        ScheduleEntity scheduleEntities = scheduleRepo.findAllByDateAndDoctor(date, doctor);
+        return convertEntityToDTO(scheduleEntities);
     }
 
     @Override

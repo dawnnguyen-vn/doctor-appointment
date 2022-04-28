@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ScheduleRepo extends JpaRepository<ScheduleEntity, Integer> {
 
-    List<ScheduleEntity> findAllByDateAndDoctor(int date, DoctorEntity doctor);
+    ScheduleEntity findAllByDateAndDoctor(int date, DoctorEntity doctor);
     List<ScheduleEntity> findAllByDoctor(DoctorEntity doctor);
 
 }
