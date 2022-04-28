@@ -1,10 +1,7 @@
 package com.example.doctorappointment;
 
 import com.example.doctorappointment.entity.*;
-import com.example.doctorappointment.repository.ClinicRepo;
-import com.example.doctorappointment.repository.MarkdownRepo;
-import com.example.doctorappointment.repository.PositionRepo;
-import com.example.doctorappointment.repository.SpecialtyRepo;
+import com.example.doctorappointment.repository.*;
 import com.example.doctorappointment.service.UserService;
 import com.example.doctorappointment.utility.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,7 +36,10 @@ public class DoctorAppointmentApplication {
     public ObjectMapper objectMapper() {return  new ObjectMapper();}
 
     @Bean
-    CommandLineRunner run(UserService userService, SpecialtyRepo repo , ClinicRepo clinicRepo, PositionRepo positionRepo, MarkdownRepo markdownRepo){
+    CommandLineRunner run(UserService userService, SpecialtyRepo repo ,
+                          ClinicRepo clinicRepo, PositionRepo positionRepo,
+                          MarkdownRepo markdownRepo, DoctorTimeRepo doctorTimeRepo,
+                          ScheduleRepo scheduleRepo){
         return args -> {
             userService.saveRole(new RoleEntity(0, Config.ROLE.DOCTOR.getValue()));
             userService.saveRole(new RoleEntity(0, Config.ROLE.ADMIN.getValue()));
@@ -58,6 +58,9 @@ public class DoctorAppointmentApplication {
             positionRepo.save(new PositionEntity(0,"Giáo sư"));
             positionRepo.save(new PositionEntity(0,"Phó giáo sư"));
             markdownRepo.save(new MarkdownEntity(0,"asd","asd","asdasdas",1,0,0));
+
+            doctorTimeRepo.save(new DoctorTimeEntity(0, "8h-9h", null));
+            doctorTimeRepo.save(new DoctorTimeEntity(0, "9-10h", null));
         };
     }
 }

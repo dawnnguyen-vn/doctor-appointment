@@ -1,6 +1,7 @@
 package com.example.doctorappointment.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
@@ -61,4 +65,10 @@ public class DoctorEntity {
     @ManyToOne(fetch = EAGER)
     private PositionEntity position;
 
+    @OneToMany(
+            mappedBy = "doctor",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private List<ScheduleEntity> schedules = new ArrayList<>();
 }
