@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/static/**",
                         "/api/v1/user/**",
                         "/api/v1/specialty/**",
+                        "/api/v1/schedule/**",
                         "/api/v1/clinic/**",
                         "/images/**",
                         "/template/**",

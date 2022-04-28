@@ -30,11 +30,8 @@ public class ScheduleEntity {
             inverseJoinColumns = @JoinColumn(name = "doctor_time_id"))
     private List<DoctorTimeEntity> doctorTimes = new ArrayList<>();
 
-    @JsonIgnore
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
     private DoctorEntity doctor;
 
 

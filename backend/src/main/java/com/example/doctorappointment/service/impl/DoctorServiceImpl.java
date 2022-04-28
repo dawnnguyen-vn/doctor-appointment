@@ -5,9 +5,11 @@ import com.example.doctorappointment.DTO.SpecialtyDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
 import com.example.doctorappointment.DTO.user.UserDTO;
-import com.example.doctorappointment.entity.*;
+import com.example.doctorappointment.entity.ClinicEntity;
+import com.example.doctorappointment.entity.DoctorEntity;
+import com.example.doctorappointment.entity.PositionEntity;
+import com.example.doctorappointment.entity.SpecialtyEntity;
 import com.example.doctorappointment.repository.DoctorRepo;
-import com.example.doctorappointment.repository.MarkdownRepo;
 import com.example.doctorappointment.repository.PositionRepo;
 import com.example.doctorappointment.repository.UserRepo;
 import com.example.doctorappointment.service.ClinicService;
@@ -18,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,6 +79,11 @@ public class DoctorServiceImpl implements DoctorService {
         clinic.addDoctor(doctorResult);
         specialty.addDoctor(doctorResult);
         return convertEntityToDTO(doctorResult);
+    }
+
+    @Override
+    public DoctorEntity findById(int id) {
+        return doctorRepo.findById(id);
     }
 
     @Override

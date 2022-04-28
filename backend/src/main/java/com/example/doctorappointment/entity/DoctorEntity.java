@@ -46,12 +46,14 @@ public class DoctorEntity {
     @Column(nullable = false)
     private boolean gender;
 
+    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "clinic_id", nullable = false)
     private ClinicEntity clinic;
 
+    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
@@ -65,10 +67,4 @@ public class DoctorEntity {
     @ManyToOne(fetch = EAGER)
     private PositionEntity position;
 
-    @OneToMany(
-            mappedBy = "doctor",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    private List<ScheduleEntity> schedules = new ArrayList<>();
 }
