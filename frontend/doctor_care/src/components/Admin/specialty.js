@@ -54,11 +54,11 @@ export const SpecialtyTable = () => {
             <div className="news__description">{specialty.name}</div>
           </TableCell>
           <TableCell>
-            <div className="news__description">{specialty.image}</div>
+            <div className="news__description">{specialty.description}</div>
           </TableCell>
           <TableCell>
             <img
-              src={specialty.description}
+              src={specialty.image}
               style={{ width: "70px", height: "50px" }}
               alt={specialty.description}
             />

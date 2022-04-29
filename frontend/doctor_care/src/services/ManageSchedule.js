@@ -18,16 +18,16 @@ export class ManageSchedule{
       }
     saveAllScheduel = (scheduels) =>{
         return axios(
-          {
+           {
             url: `${domain}/schedule/`,
             method:"POST",
             headers:{
               Authorization: "Bearer " + localStorage.getItem("token"),
             },
             data:scheduels
-          }
+           }
         )
-      }
+    }
       
 }
 

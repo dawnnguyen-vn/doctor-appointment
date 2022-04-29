@@ -36,5 +36,76 @@
             }
         }
     }
+    .booking-form{
+        .container{
+            max-width: 680px;
+            margin: 0 auto;
+            .input-name-title{
+                padding: 10px 0;
+                font-size: 14px;
+                color: gray;
+            }
+            .price{
+                border: 1px solid rgba(242, 119, 18, 0.8);
+                padding: 10px 40px;
+                cursor: pointer;
+            }
+            label{
+                margin-right: 10px;
+                input{
+                    margin-right: 5px;
+                }
+            }
+            .input{
+                margin: 10px 0;
+                width: 100%;
+                input{
+                    padding: 5px 10px;
+                    width: 100%;
+                    border: 1px solid rgba(128, 128, 128, 0.259);
+                    border-radius: 5px;
+                    outline: none;
+                }
+                input:focus{
+                    border: 1px solid #45c3d2;
+                }
+                
+                textarea{
+                    padding: 5px 10px;
+                    width: 100%;
+                    border: 1px solid rgba(128, 128, 128, 0.259);
+                    border-radius: 5px;
+                }
+            }
+        }
+    }
+    .payment{
+        width: 100%;
+        background-color: rgba(128, 128, 128, 0.09);
+        padding: 10px;
+        .container{
+            padding: 10px 0;
+            
+            .gia-kham{
+                display: flex;
+                h3{
+                    flex: 1;
+                }
+            }
+            .phi-dat-lich{
+                display: flex;
+                h3{
+                    flex: 1;
+                }
+            }
+            .total{
+                display: flex;
+                h3{
+                    flex: 1;
+                    margin-left: auto;
+                }
+            }
+        }
+    }
 
 }

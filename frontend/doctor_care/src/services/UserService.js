@@ -38,7 +38,7 @@ export class UserService{
       }
 
       getAllDoctor = () =>{
-        return axios.get(`${domain}/doctor/get`)
+        return axios.get(`${domain}/doctor/all`)
       }
 
       getAllPosition=()=>{

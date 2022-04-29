@@ -41,7 +41,7 @@ function App() {
               !auth ? (
                 <LoginPage />
               ) : (
-                <Navigate to={"/admin/specialties"} replace />
+                <Navigate to={"/admin/specilaties"} replace />
               )
             }
           />

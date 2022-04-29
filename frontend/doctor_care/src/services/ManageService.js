@@ -17,7 +17,7 @@ export class ManageService {
 
   getDoctors = () => {
     return axios({
-      url: `${domain}/doctor/get`,
+      url: `${domain}/doctor/all`,
       method: "GET",
     });
   };

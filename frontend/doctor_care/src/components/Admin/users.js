@@ -32,6 +32,8 @@ export const UsersTable = () => {
     };
   }, []);
 
+  
+
 
   const renderTable = () => {
     return doctors && doctors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
