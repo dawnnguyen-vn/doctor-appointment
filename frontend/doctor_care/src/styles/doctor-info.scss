@@ -1,15 +1,136 @@
-.doctor{
+.doctor {
     margin-top: 4.6em;
 
-    .descripton-info{
-        ul{
-            display: block;
-            list-style: circle;
+    .doctor-info-header {
+        color: #45c3d2 !important;
+        margin-bottom: 1em;
+
+        .container {
+            padding: 10px 10px;
+
+            a {
+                color: #45c3d2 !important;
+                font-size: 14px;
+            }
         }
     }
-}
 
-.custom-html-style ol, .custom-html-style ul {
-    display: block;
-    list-style: armenian;
+    .doctor-info {
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 10px 10px;
+
+            img {
+                width: 130px;
+                height: 130px;
+                object-fit: cover;
+                border-radius: 100px;
+            }
+
+            .content {
+                max-width: 540px;
+                margin-bottom: 1em;
+                width: 100%;
+                h2 {
+                    font-size: 25px;
+                }
+
+                p {
+                    font-size: 13px;
+                }
+            }
+        }
+
+    }
+
+    .container {
+        padding: 10px 10px;
+
+        select {
+            background: transparent;
+            border: none;
+            color: #337ab7;
+            border-bottom: 1px solid #999;
+            border-radius: 0;
+            font-weight: bold;
+            padding: 3px;
+            width: 150px;
+            outline: 0;
+        }
+    }
+
+    .schedule {
+        padding-bottom: 1em;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.227);
+
+        .container {
+            padding: 10px 10px;
+
+            .row {
+                .col-6 {
+                    display: flex;
+                    flex-direction: column;
+
+                    .time-options {
+                        display: grid;
+                        grid-template-columns: auto auto auto auto;
+                        grid-template-rows: auto auto auto;
+                        column-gap: 10px;
+                        row-gap: 15px;
+                        padding-right: 20px;
+                        border-right: 1px solid rgba(128, 128, 128, 0.15);
+                        overflow-x: scroll;
+                        white-space: nowrap;
+
+                        button {
+                            background-color: #fff8ae;
+                            padding: 10px;
+                            font-weight: 500;
+                        }
+
+                        button:hover {
+                            background-color: #33b798;
+                        }
+                    }
+
+                    h4 {
+                        font-size: 14px;
+                        color: #666;
+                        text-transform: uppercase;
+                    }
+
+                    .address {
+                        padding: 10px 0;
+                    }
+
+                    .price {
+                        padding: 10px 0;
+                        border-top: 1px solid rgba(128, 128, 128, 0.15);
+
+                        span {
+                            font-size: 13px;
+                        }
+
+                        a {
+                            font-size: 13px;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    .desctiption-info {
+        .container {
+            padding: 20px 10px;
+
+            ul {
+                li {
+                    font-size: 15px;
+                }
+            }
+        }
+    }
 }

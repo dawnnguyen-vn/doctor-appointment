@@ -1,7 +1,8 @@
 package com.example.doctorappointment.service.impl;
 
 import com.example.doctorappointment.DTO.ClinicDTO;
-import com.example.doctorappointment.DTO.SpecialtyDTO;
+import com.example.doctorappointment.DTO.MarkdownDTO;
+import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
 import com.example.doctorappointment.DTO.user.UserDTO;
@@ -18,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +30,7 @@ public class DoctorServiceImpl implements DoctorService {
     private final ClinicService clinicService;
     private final SpecialtyService specialtyService;
     private final PositionRepo positionRepo;
-
+    private final MarkdownRepo markdownRepo;
     private final UserRepo userRepo;
 
 
@@ -40,12 +40,17 @@ public class DoctorServiceImpl implements DoctorService {
         SpecialtyEntity specialty = specialtyService.getById(newDoctor.getSpecialtyId());
         DoctorEntity doctor = dataMapperUtils.map(newDoctor, DoctorEntity.class);
         PositionEntity position = positionRepo.findById(newDoctor.getPositionId());
+        MarkdownEntity markdown =markdownRepo.save( new MarkdownEntity(0,"","","",newDoctor.getId(),0,0));
+        doctor.setMarkdown(markdown);
         doctor.setPosition(position);
         doctor.setClinic(clinic);
         doctor.setSpecialty(specialty);
         DoctorEntity doctorResult = doctorRepo.save(doctor);
+        markdown.setDoctorId(doctorResult.getId());
+        markdownRepo.save(markdown);
         clinic.addDoctor(doctorResult);
         specialty.addDoctor(doctorResult);
+        specialtyService.updateSpecialty(newDoctor.getSpecialtyId(),specialty);
         return convertEntityToDTO(doctorResult);
     }
 
@@ -98,6 +103,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctorReadDTO.setSpecialty(dataMapperUtils.map(doctorResult.getSpecialty(), SpecialtyDTO.class));
         doctorReadDTO.setUser(dataMapperUtils.map(doctorResult.getUser(), UserDTO.class));
         doctorReadDTO.setPositon(doctorResult.getPosition().getName());
+        doctorReadDTO.setMarkdown(dataMapperUtils.map(doctorResult.getMarkdown(), MarkdownDTO.class));
         return doctorReadDTO;
     }
 }

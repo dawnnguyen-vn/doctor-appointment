@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import java.util.List;
+
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
@@ -46,14 +48,12 @@ public class DoctorEntity {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "clinic_id", nullable = false)
-    @JsonBackReference
     private ClinicEntity clinic;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "specialty_id", nullable = false)
-    @JsonBackReference
     private SpecialtyEntity specialty;
 
     @OneToOne(fetch = LAZY)
@@ -62,5 +62,8 @@ public class DoctorEntity {
 
     @ManyToOne(fetch = EAGER)
     private PositionEntity position;
+
+    @OneToOne(fetch = LAZY)
+    private MarkdownEntity markdown;
 
 }

@@ -1,6 +1,8 @@
 package com.example.doctorappointment.service.impl;
 
-import com.example.doctorappointment.DTO.SpecialtyDTO;
+import com.example.doctorappointment.DTO.doctor.DoctorDTO;
+import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
+import com.example.doctorappointment.DTO.specialty.SpecialtyReadDTO;
 import com.example.doctorappointment.entity.SpecialtyEntity;
 import com.example.doctorappointment.repository.SpecialtyRepo;
 import com.example.doctorappointment.service.SpecialtyService;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,23 +22,25 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     private final DataMapperUtils dataMapperUtils;
 
     @Override
-    public List<SpecialtyDTO> getAll() {
+    public List<SpecialtyReadDTO> getAll() {
         List<SpecialtyEntity> data = repo.findAll();
-        if (data.size() != 0)
-            return dataMapperUtils.mapAll(repo.findAll(), SpecialtyDTO.class);
-        return null;
+        List<SpecialtyReadDTO> dataResult = data.stream()
+                .map(specialty -> convertEntityToDTO(specialty))
+                .collect(Collectors.toList());
+        return dataResult;
     }
 
     @Override
     public SpecialtyEntity getById(int id) {
         SpecialtyEntity data = repo.findById(id);
         if (data != null)
-           return data;
+            return data;
         return null;
     }
 
     @Override
     public SpecialtyDTO createSpecialty(SpecialtyEntity specialty) {
+
         return dataMapperUtils.map(repo.save(specialty), SpecialtyDTO.class);
     }
 
@@ -66,4 +71,15 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     public boolean existsByName(String name) {
         return repo.existsByName(name);
     }
+
+    private SpecialtyReadDTO convertEntityToDTO(SpecialtyEntity specialty) {
+        SpecialtyReadDTO specialtyReadDTO = dataMapperUtils.map(specialty, SpecialtyReadDTO.class);
+        List<DoctorDTO> listDoctor = specialty.getDoctors().stream()
+                .map(doctorEntity -> dataMapperUtils.map(doctorEntity, DoctorDTO.class))
+                .collect(Collectors.toList());
+        specialtyReadDTO.setDoctors(listDoctor);
+        return specialtyReadDTO;
+    }
+
 }
+

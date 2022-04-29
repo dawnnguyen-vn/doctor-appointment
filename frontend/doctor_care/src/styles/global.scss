@@ -3,14 +3,29 @@ button {
     background-color: rgba(0, 0, 0, 0);
     border: none;
     cursor: pointer;
+    outline: none !important;
 }
 
-// ul {
-//     list-style: none;
-//     margin: 0;
-//     padding: 0;
-//     display: flex;
-// }
+.error{
+    width:100%;
+    height:500px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    .title{
+        margin: 0 auto;
+        margin-bottom: 100px;
+        position: relative;
+        h2{
+            color: rgba(128, 128, 128, 0.389);
+            font-size: 1.8em;
+        }
+    }
+}
+
+.btn-active{
+    background-color: #fff8ae !important;
+}
 
 a {
     text-decoration: none !important;
@@ -63,3 +78,15 @@ h3 {
     }
 }
 
+.react-datepicker__day--selected {
+    border-radius: 1.3rem !important;
+    background-color: #ff8307 !important;
+    color: #fff;
+}
+
+.react-datepicker__day--today {
+    color: #ff8307 !important;
+    border-radius: 1.3rem !important;
+    border: 1px solid #ff8307 !important ;
+
+}

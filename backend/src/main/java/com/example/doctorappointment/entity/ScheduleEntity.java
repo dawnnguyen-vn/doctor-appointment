@@ -1,40 +1,42 @@
 package com.example.doctorappointment.entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "markdown")
-public class MarkdownEntity {
+@Table(name = "schedule")
+public class ScheduleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Lob
     @Column
-    private String contentHTML;
-
-    @Lob
+    private Date date;
     @Column
-    private String contentMarkdown;
+    private String name;
 
-    @Lob
     @Column
-    private String description;
+    private int maxNumber = 10;
+
+    @Column
+    private int currentNumber = 0;
 
     @Column
     private int doctorId;
 
     @Column
-    private int specialtyId;
+    private int timeId;
 
-    @Column
-    private int clinicId;
+
+
 
 }

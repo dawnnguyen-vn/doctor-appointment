@@ -11,6 +11,8 @@ import { SpecialtyTable } from "./components/Admin/specialty";
 import { UsersTable } from "./components/Admin/users";
 import { PatientTemplate } from "./pages/patientTemplate";
 import { AddInformation } from "./components/Admin/addInformation";
+import { ManageSchedule } from "./components/Admin/manageSchedule";
+import { BookingPage } from "./pages/doctor_booking";
 
 function App() {
   const LoginPage = lazy(() =>
@@ -43,8 +45,9 @@ function App() {
               )
             }
           />
-          <Route path="" element={<PatientTemplate/>}>
+          <Route path="" element={<PatientTemplate />}>
             <Route path={ROUTES.HOME} element={<HomePage />} />
+            <Route path={ROUTES.BOOKING} element={<BookingPage />} />
             <Route path={ROUTES.BLOG} element={<BlogsPage />} />
             <Route path={ROUTES.DOCTOR_INFO} element={<DoctorPage />} />
           </Route>
@@ -55,6 +58,7 @@ function App() {
             <Route path="users" element={<UsersTable />} />
             <Route path="specialties" element={<SpecialtyTable />} />
             <Route path="info" element={<AddInformation />} />
+            <Route path="schedule" element={<ManageSchedule />} />
           </Route>
         </Routes>
       </Suspense>

@@ -1,5 +1,6 @@
 package com.example.doctorappointment.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,10 @@ import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
+
 //
 @Entity
 @Data
@@ -57,9 +62,7 @@ public class SpecialtyEntity {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-
-    @JsonManagedReference
-    private List<DoctorEntity> doctors = new ArrayList<>();
+    private List<DoctorEntity> doctors ;
 
     public void addDoctor(DoctorEntity doctor) {
         doctors.add(doctor);

@@ -14,10 +14,10 @@ import AddDoctor from "./addDoctors";
 
 
 export const UsersTable = () => {
-  const [doctors, setDoctors] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(4);
-
+  
+  const [doctors, setDoctors] = useState([]);
   useEffect(() => {
     manageService
         .getDoctors()

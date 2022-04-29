@@ -1,0 +1,92 @@
+.schedule-manage {
+    margin-top: 4.6em;
+    padding: 10px;
+
+    .select-form {
+        padding-bottom: 1em;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.259);
+    }
+
+    .row {
+        max-width: 100%;
+        margin: 0;
+
+        .col-6 {
+            input {
+                width: 30%;
+                border: none;
+                background-color: #ededed;
+                border-radius: 4px;
+                color: #333;
+                font-size: 13px;
+                font-weight: 500;
+                padding: 14px 60px 0 10px;
+                outline: none;
+            }
+
+            .placeholder {
+                text-transform: uppercase;
+                font-size: 12px;
+                font-weight: 500;
+                position: absolute;
+                line-height: 50px;
+                top: -30px;
+                left: 20px;
+                color: #9d9d9d;
+                user-select: none;
+                pointer-events: none;
+                transition: all 0.2s;
+            }
+
+        }
+    }
+
+    .content {
+        max-height: 60%;
+        height: 400px;
+        .time-box {
+            padding: 20px 15px;
+            display: grid;
+            grid-template-columns: repeat(8, auto);
+            grid-template-rows: auto auto;
+            column-gap: 10px;
+            row-gap: 15px;
+            padding-right: 20px;
+            border-right: 1px solid rgba(128, 128, 128, 0.15);
+            overflow-x: scroll;
+            white-space: nowrap;
+
+            button {
+                padding: 10px;
+                background-color: rgba(128, 128, 128, 0.419);
+                font-weight: 500;
+            }
+            
+
+            button:hover {
+                background-color: #33b798;
+            }
+        }
+
+    }
+    
+    .schedule-btn-save {
+        margin: 20px 0;
+        padding: 10px 20px;
+        background-color: rgb(0, 255, 174);
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+    }
+
+    .schedule-btn-save:hover {
+        border: 1px solid rgb(0, 255, 174);
+        color: rgb(0, 255, 174);
+        background-color: white;
+    }
+
+    .schedule-btn-save:target {
+        border: none;
+    }
+}

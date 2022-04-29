@@ -1,7 +1,9 @@
 package com.example.doctorappointment.controller.enpointAPI;
 
 import com.example.doctorappointment.DTO.Message;
+import com.example.doctorappointment.DTO.ScheduleDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
+import com.example.doctorappointment.DTO.doctor.DoctorScheduleDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
 import com.example.doctorappointment.DTO.user.UserDTO;
 import com.example.doctorappointment.entity.DoctorEntity;
@@ -11,10 +13,12 @@ import com.example.doctorappointment.entity.UserEntity;
 import com.example.doctorappointment.repository.MarkdownRepo;
 import com.example.doctorappointment.repository.PositionRepo;
 import com.example.doctorappointment.service.DoctorService;
+import com.example.doctorappointment.service.ScheduelService;
 import com.example.doctorappointment.service.UserService;
 import com.example.doctorappointment.utility.Config;
 import com.example.doctorappointment.utility.CustomException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +37,7 @@ public class DoctorController {
     private final DoctorService doctorService;
     private final PositionRepo positionRepo;
     private final MarkdownRepo markdownRepo;
+    private final ScheduelService scheduelService;
 
 
     @GetMapping("/get")
@@ -106,6 +111,12 @@ public class DoctorController {
             return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(),"ok","update successful",markdownRepo.save(updateMarkdown)));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message(new Date(),"not found","can not find markdown with doctorId "+doctorId,""));
+    }
+
+    @PostMapping("/schedule")
+    public ResponseEntity<List<ScheduleDTO>> getScheduleByDate(@RequestBody DoctorScheduleDTO doctorScheduleDTO){
+        System.out.println(doctorScheduleDTO.getDoctorId()+" "+doctorScheduleDTO.getDate());
+        return ResponseEntity.ok().body(scheduelService.getScheduleByDate(doctorScheduleDTO.getDoctorId(),doctorScheduleDTO.getDate()));
     }
 }
 

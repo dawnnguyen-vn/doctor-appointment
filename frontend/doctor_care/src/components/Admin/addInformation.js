@@ -8,6 +8,7 @@ import "../../styles/admin/markdown.scss";
 import swal from "sweetalert";
 import Select from "react-select";
 import { manageService } from "../../services/ManageService";
+import { ErrorNoData } from "../no_data";
 
 export const AddInformation = () => {
   const [exist, setExist] = useState(false);
@@ -127,7 +128,7 @@ export const AddInformation = () => {
 
   return (
     <Paper className="markdown" style={{}}>
-      <h2 className="text-center ">Add information</h2>
+      <h2 className="text-center ">Thêm thông tin chi tiết</h2>
       {options && options.length > 0 ? (
         <>
           <div className="row">
@@ -175,11 +176,7 @@ export const AddInformation = () => {
           </button>
         </>
       ) : (
-        <div className="error">
-          <div className="title">
-            <h2>Don't have data !!!</h2>
-          </div>
-        </div>
+        <ErrorNoData/>
       )}
     </Paper>
   );

@@ -44,6 +44,9 @@ export const NavBarAdmin = () => {
             <li>
               <Link to={"/admin/info"}>Thông tin chi tiết</Link>
             </li>
+            <li>
+              <Link to={"/admin/schedule"}>Quản lý lịch hẹn</Link>
+            </li>
           </ul>
         </div>
       </div>
@@ -55,13 +58,13 @@ export const NavBarAdmin = () => {
           >
             <Icon_Menu />
           </button>
-          <a href="">
+          <Link to={"/"}>
             <img
               className="logo"
               srcSet="https://theme.hstatic.net/1000115149/1000551146/14/logo.png?v=293 5x"
               alt=""
             />
-          </a>
+          </Link>
         </div>
         <div className="navbar-menu">
           <ul className="">

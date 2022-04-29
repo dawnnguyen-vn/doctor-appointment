@@ -10,6 +10,5 @@ public interface DoctorService {
     List<DoctorReadDTO> findAll();
     DoctorReadDTO getDoctorById(int doctorId);
     DoctorReadDTO update(int doctorId, DoctorWriteDTO newDoctor);
-
     boolean delete(int doctorId);
 }
