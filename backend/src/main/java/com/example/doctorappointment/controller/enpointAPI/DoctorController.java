@@ -40,7 +40,7 @@ public class DoctorController {
     private final ScheduelService scheduelService;
 
 
-    @GetMapping("/get")
+    @GetMapping("/all")
     public ResponseEntity<List<DoctorReadDTO>> checkUserExist() {
         return ResponseEntity.ok().body(doctorService.findAll());
     }

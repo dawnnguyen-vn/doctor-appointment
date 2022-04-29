@@ -1,6 +1,7 @@
 package com.example.doctorappointment.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
@@ -44,14 +44,16 @@ public class DoctorEntity {
     @Column(nullable = false)
     private boolean gender;
 
+    @JsonIgnore
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "clinic_id", nullable = false)
     private ClinicEntity clinic;
 
+    @JsonIgnore
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "specialty_id", nullable = false)
     private SpecialtyEntity specialty;

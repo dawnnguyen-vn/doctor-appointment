@@ -86,6 +86,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public DoctorEntity findById(int id) {
+        return doctorRepo.findById(id);
+    }
+
+    @Override
     public boolean delete(int doctorId) {
         DoctorEntity doctor = doctorRepo.findById(doctorId);
         if(doctor!=null){
@@ -102,8 +107,8 @@ public class DoctorServiceImpl implements DoctorService {
         doctorReadDTO.setClinic(dataMapperUtils.map(doctorResult.getClinic(), ClinicDTO.class));
         doctorReadDTO.setSpecialty(dataMapperUtils.map(doctorResult.getSpecialty(), SpecialtyDTO.class));
         doctorReadDTO.setUser(dataMapperUtils.map(doctorResult.getUser(), UserDTO.class));
-        doctorReadDTO.setPositon(doctorResult.getPosition().getName());
         doctorReadDTO.setMarkdown(dataMapperUtils.map(doctorResult.getMarkdown(), MarkdownDTO.class));
+        doctorReadDTO.setPosition(doctorResult.getPosition().getName());
         return doctorReadDTO;
     }
 }

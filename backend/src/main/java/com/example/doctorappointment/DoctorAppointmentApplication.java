@@ -1,9 +1,8 @@
 package com.example.doctorappointment;
 
-import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
 import com.example.doctorappointment.entity.*;
 import com.example.doctorappointment.repository.*;
-import com.example.doctorappointment.service.DoctorService;
+
 import com.example.doctorappointment.service.UserService;
 import com.example.doctorappointment.utility.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +40,7 @@ public class DoctorAppointmentApplication {
 
     @Bean
     CommandLineRunner run(UserService userService, SpecialtyRepo repo, ClinicRepo clinicRepo, PositionRepo positionRepo,TimeRepo timeRepo) {
+
         return args -> {
             userService.saveRole(new RoleEntity(0, Config.ROLE.DOCTOR.getValue()));
             userService.saveRole(new RoleEntity(0, Config.ROLE.ADMIN.getValue()));
@@ -68,6 +68,7 @@ public class DoctorAppointmentApplication {
             timeRepo.save(new TimeEntity(0,"14:30 - 15:00"));
             timeRepo.save(new TimeEntity(0,"15:00 - 15:30"));
             timeRepo.save(new TimeEntity(0,"15:30 - 16:00"));
+
         };
     }
 }

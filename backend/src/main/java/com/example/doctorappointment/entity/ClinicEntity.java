@@ -1,5 +1,6 @@
 package com.example.doctorappointment.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -37,13 +38,13 @@ public class ClinicEntity {
     @NotBlank(message = "image không được bỏ trống")
     private String image;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "clinic",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private List<DoctorEntity> doctors = new ArrayList<>();
-
 
     public void addDoctor(DoctorEntity doctor) {
         doctors.add(doctor);
