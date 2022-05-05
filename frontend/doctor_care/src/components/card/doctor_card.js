@@ -9,7 +9,7 @@ export const DoctorCard = ({doctor}) => {
     <Link to={`/doctor/${doctor.id}`}>
         <div className="doctor-card" >
         <img srcSet={`${doctor.image} 5x`} alt="" />
-        <h3 className="mt-3 ml-3 mr-3 mb-2">{doctor.positon} , {doctor.lastName} {doctor.firstName}</h3>
+        <h3 className="mt-3 ml-3 mr-3 mb-2">{doctor.position} , Bác sĩ , {doctor.lastName} {doctor.firstName}</h3>
         <p>{doctor.clinic.name}</p>
         <p>{doctor.specialty.name}</p>
         </div>

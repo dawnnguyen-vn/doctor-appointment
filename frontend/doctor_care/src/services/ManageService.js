@@ -51,5 +51,32 @@ export class ManageService {
         data: doctorAndDate,
       });
   }
+  getDoctorByEmail(email){
+    return axios({
+      url: `${domain}/doctor/email/${email}`,
+      method: "GET",
+    });
+  }
+  updateSpecialtyMarkdown = (specialtyId, markdown) => {
+    return axios({
+      url: `${domain}/specialty/markdown/${specialtyId}`,
+      method: "PUT",
+      data: markdown,
+    });
+  };
+  addSpecialtyMarkdown = (markdown) => {
+    return axios({
+      url: `${domain}/specialty/markdown`,
+      method: "POST",
+      data: markdown,
+    });
+  };
+  getSpecialtyMarkdown = (specialtyId) => {
+    return axios({
+      url: `${domain}/specialty/markdown/${specialtyId}`,
+      method: "GET",
+    });
+  }
+ 
 }
 export const manageService = new ManageService();

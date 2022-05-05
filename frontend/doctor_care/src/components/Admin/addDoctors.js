@@ -45,6 +45,7 @@ export default function AddDoctor() {
     })
   }, []);
 
+  console.log(specialties)
 
   const handleChangeUserInput = (event)=>{
     event.preventDefault();
@@ -89,9 +90,8 @@ export default function AddDoctor() {
           }, 2000);
         })
         .catch((err) => {
-          console.log(err.response);
           swal({
-            title: err.response.data,
+            title: "",
             text: "Điền lại thông tin!",
             icon: "warning",
             button: "OK",

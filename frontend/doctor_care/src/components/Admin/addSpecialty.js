@@ -79,7 +79,7 @@ export default function AddSpecialty() {
   };
   return (
     <div
-      className="modal fade"
+      className="modal fade addSpecialModal"
       id="addSpecialModal"
       tabIndex={-1}
       aria-labelledby="addNewsModal"

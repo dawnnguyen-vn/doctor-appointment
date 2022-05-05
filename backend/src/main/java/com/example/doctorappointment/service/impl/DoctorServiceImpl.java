@@ -37,7 +37,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorReadDTO save(DoctorWriteDTO newDoctor) {
         ClinicEntity clinic = clinicService.findById(newDoctor.getClinicId());
-        SpecialtyEntity specialty = specialtyService.getById(newDoctor.getSpecialtyId());
+        SpecialtyEntity specialty = specialtyService.geEntitytById(newDoctor.getSpecialtyId());
         DoctorEntity doctor = dataMapperUtils.map(newDoctor, DoctorEntity.class);
         PositionEntity position = positionRepo.findById(newDoctor.getPositionId());
         MarkdownEntity markdown =markdownRepo.save( new MarkdownEntity(0,"","","",newDoctor.getId(),0,0));
@@ -74,7 +74,7 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorReadDTO update(int doctorId, DoctorWriteDTO newDoctor) {
         DoctorEntity updateDoctor = doctorRepo.findById(doctorId);
         ClinicEntity clinic = clinicService.findById(newDoctor.getClinicId());
-        SpecialtyEntity specialty = specialtyService.getById(newDoctor.getSpecialtyId());
+        SpecialtyEntity specialty = specialtyService.geEntitytById(newDoctor.getSpecialtyId());
         PositionEntity position = positionRepo.findById(newDoctor.getPositionId());
         updateDoctor.setPosition(position);
         updateDoctor.setClinic(clinic);
@@ -83,6 +83,11 @@ public class DoctorServiceImpl implements DoctorService {
         clinic.addDoctor(doctorResult);
         specialty.addDoctor(doctorResult);
         return convertEntityToDTO(doctorResult);
+    }
+
+    @Override
+    public DoctorReadDTO getDoctorByEmail(String email) {
+        return  convertEntityToDTO(doctorRepo.findByUser_Email(email));
     }
 
     @Override

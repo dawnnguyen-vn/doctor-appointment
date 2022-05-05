@@ -11,7 +11,7 @@ public interface DoctorService {
     List<DoctorReadDTO> findAll();
     DoctorReadDTO getDoctorById(int doctorId);
     DoctorReadDTO update(int doctorId, DoctorWriteDTO newDoctor);
-
+    DoctorReadDTO getDoctorByEmail(String email);
     DoctorEntity findById(int id);
     boolean delete(int doctorId);
 }

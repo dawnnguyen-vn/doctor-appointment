@@ -13,6 +13,7 @@ export const ManageSchedule = () => {
   const [doctorOptions, setDoctorOptions] = useState([]);
   const [timeList, setTimeList] = useState([]);
   const [doctorSelected, setDoctorSelected] = useState();
+  const currentUser = JSON.parse(localStorage.getItem("userLogin"));
   const [dateSelected, setDateSelected] = useState(new Date());
   const [schedule , setSchedule] = useState({
       doctorId: "",
@@ -21,26 +22,38 @@ export const ManageSchedule = () => {
       name:""
   })
   useEffect(() => {
-    manageService
-      .getDoctors()
+    if(currentUser&&currentUser.role.id==2){
+      manageService
+        .getDoctors()
+        .then((result) => {
+          let data = result.data.map((e) => {
+            return {
+              value: e,
+              label: `Bác sĩ   ${e.lastName}  ${e.firstName}`,
+            };
+          });
+          setDoctorOptions(data);
+          setDoctorSelected(result.data[0]);
+        })
+        .catch((err) => {});
+    }
+    else{
+      manageService
+      .getDoctorByEmail(currentUser.email)
       .then((result) => {
-        let data = result.data.map((e) => {
-          return {
-            value: e,
-            label: `Bác sĩ   ${e.lastName}  ${e.firstName}`,
-          };
-        });
-        setDoctorOptions(data);
-        setDoctorSelected(result.data[0]);
+        setDoctorSelected(result.data);
       })
       .catch((err) => {});
-    manageSchedule
+    }
+      manageSchedule
       .getAllTimes()
       .then((result) => {
         let data = result.data.map((e) => ({ ...e, ["isSelected"]: false }));
         setTimeList(data);
       })
       .catch((err) => alert(err));
+
+      
   }, []);
 
   const handleSelectChange = (selectedOption) => {
@@ -69,11 +82,18 @@ export const ManageSchedule = () => {
         
         if(selectTimes&&selectTimes.length>0){  
             selectTimes.map((e)=>{
+              if(currentUser.role.id==2)
                 result.push({...schedule,["id"]:0,["name"]:e.name,["timeId"]:e.id})
+              else
+                result.push({...schedule,["doctorId"]:doctorSelected.id,["id"]:0,["name"]:e.name,["timeId"]:e.id})
             })
             manageSchedule.saveAllScheduel(result)
             .then((result)=>{
-                console.log("api result : " , result);
+              swal({
+                title: "Thêm tin thành công",
+                icon: "success",
+                button: "OK",
+              });
             })
             .catch((err)=>console.log(err))
         }else{
@@ -81,14 +101,14 @@ export const ManageSchedule = () => {
         }
 
   }
-
+  console.log("doctor select",doctorSelected)
   return (
     <Paper className="schedule-manage">
-      <h2 className="text-center mb-5 ">Quản lý lịch khám bệnh</h2>
-      {doctorOptions && doctorOptions.length > 0 ? (
+      <h2 className="text-center mb-5 ">Quản lý lịch hẹn khám bệnh</h2>
+      {doctorSelected ? (
         <>
           <div className="row select-form">
-            <div className="col-6">
+            <div className="col-6" style={currentUser.role.id==1?{display:"none"}:{display:"block"}}>
               <Select
                 className="select"
                 name=""

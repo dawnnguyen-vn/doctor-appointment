@@ -52,7 +52,7 @@
         }
     }
     
-    .menu{
+    .menu ,.menu2{ 
         position: fixed;
         top: 0;
         left: 0;
@@ -61,7 +61,7 @@
         background-color: rgba(0, 0, 0, 0.401);
         z-index: 999;
         transition: all 0.2s ease-in-out;
-        .menu-content{
+        .menu-content , .menu-content2{
             background-color: white;
             width:16%;
             height: 100vh;

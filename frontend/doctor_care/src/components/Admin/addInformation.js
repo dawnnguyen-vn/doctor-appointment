@@ -21,13 +21,17 @@ export const AddInformation = () => {
     specialtyId: 0,
     clinicId: 0,
   });
+  const currentUser = JSON.parse(localStorage.getItem("userLogin"));
   const [options, setOptions] = useState([]);
   const [doctorSelected, setDoctorSelected] = useState();
   // Initialize a markdown parser
   const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-  console.log(exist);
+  // console.log(exist);
+  console.log(currentUser)
+
   useEffect(() => {
+    if(currentUser&&currentUser.role.id==2){
     manageService
       .getDoctors()
       .then((result) => {
@@ -47,12 +51,34 @@ export const AddInformation = () => {
           .catch((err) =>
             setMarkdown({ ...markdown, ["doctorId"]: result.data[0].id })
           );
+        
         setDoctorSelected(result.data[0]);
         setOptions(data);
       })
       .catch((err) => {
         console.log(err.response);
       });
+    }else{
+      manageService
+      .getDoctorByEmail(currentUser.email)
+      .then((result) => {
+        console.log(result);
+        
+        manageService
+          .getDoctorMarkdown(result.data.id)
+          .then((result) => {
+            setExist(true);
+            setMarkdown(result.data);
+          })
+          .catch((err) =>
+            setMarkdown({ ...markdown, ["doctorId"]: result.data.id })
+          );
+        setDoctorSelected(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    }
     return () => {};
   }, []);
 
@@ -129,17 +155,20 @@ export const AddInformation = () => {
   return (
     <Paper className="markdown" style={{}}>
       <h2 className="text-center ">Thêm thông tin chi tiết</h2>
-      {options && options.length > 0 ? (
+      {doctorSelected ? (
         <>
           <div className="row">
             <div className="more-info col-6">
+              <div style={currentUser.role.id==1?{display:"none"}:{display:"block"}} className="">
               <Select
                 className="doctor-select"
+                defaultValue={{ label: `${doctorSelected.lastName} ${doctorSelected.firstName} ` , value: doctorSelected }}
                 name=""
                 id=""
                 options={options}
                 onChange={handleSelectChange}
               />
+              </div>
               {doctorSelected && (
                 <div className="doctor-info">
                   <img
@@ -148,7 +177,7 @@ export const AddInformation = () => {
                     alt=""
                   />
                   <div className="doctor-title">
-                    <h4>{doctorSelected.positon}</h4>
+                    <h4>{doctorSelected.position}</h4>
                     <h4>
                       Bác sĩ {doctorSelected.lastName}{" "}
                       {doctorSelected.firstName}{" "}

@@ -1,40 +1,115 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/booking.scss";
+import { useLocation,useNavigate } from "react-router-dom";
+import moment from "moment";
+import "moment/locale/vi";
+import { bookingService } from "../services/BookingService";
+import swal from "sweetalert";
 
 export const BookingPage = () => {
+  const { state } = useLocation();
+  const { doctor, schedule } = state;
+  const navigate = useNavigate();
+
+  console.log(doctor);
+
+  const [patient, setPatient] = useState({
+    email: "",
+    phone: "",
+    name: "",
+    reason: "",
+    yearOfBirth: 0,
+    address: "",
+    gender: true,
+  });
+
+  const formatDate = (scheduleDate) => {
+    let date = moment(scheduleDate).locale("vi").format("dddd - DD/MM");
+    date = date.charAt(0).toUpperCase() + date.slice(1);
+    return date;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let dataSubmit = {
+      bookingStatus: "NEW",
+      doctorId: doctor.id,
+      date: schedule.date,
+      timeId: schedule.timeId,
+      patient: patient,
+    };
+    console.log(dataSubmit);
+
+    await bookingService
+      .createBooking(dataSubmit)
+      .then((result) => {
+        console.log(result);
+        swal({
+          title: "Đặt lịch thành công !! Vui lòng kiểm tra email để xác nhận lịch hẹn !!",
+          content:"Vui lòng kiểm tra email để xác nhận lịch hẹn !!",  
+          icon: "success",
+          button: "OK",
+        }).then((result)=>{
+          navigate("/");
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleChangeInput = (event) => {
+    event.preventDefault();
+    let { value, name } = event.target;
+    let newValues = {
+      ...patient,
+      [name]: value,
+    };
+
+    setPatient(newValues);
+  };
+
   return (
     <div className="booking">
       <div className="booking-header">
         <div className="container">
-          <img
-            src="	https://cdn.bookingcare.vn/fr/w100/2020/03/17/114430-bshung.jpg"
-            alt=""
-          />
+          <img src={doctor.image} alt="" />
           <div className="header-title">
             <h3>Đặt lịch khám</h3>
-            <h2>Phó giáo sư , tiến sĩ , bác sĩ Nguyễn Hữu Cảnh</h2>
-            <p>15:30 - 15:45 - Thứ 6 - 29/4/2022</p>{" "}
+            <h2>
+              {doctor.position} , Bác sĩ chuyên khoa{" "}
+              {doctor.specialty.name.toLowerCase()} {doctor.lastName}{" "}
+              {doctor.firstName}
+            </h2>
+            <p>
+              {schedule.name} - {formatDate(schedule.date)}
+            </p>
           </div>
         </div>
       </div>
       <div className="booking-form">
         <div className="container">
-          <form action="">
+          <form onSubmit={(e) => handleSubmit(e)} action="">
             <div>
-              <label class="price" data-price="300000">
-                <input type="radio" checked="checked" name="price" value="54" />
+              <label className="price" data-price="300000">
+                <input
+                  type="radio"
+                  onChange={() => {}}
+                  checked="checked"
+                  name="price"
+                  value="54"
+                />
                 <span>Giá khám</span>
                 <div>300.000đ</div>
               </label>
             </div>
-            <div class="input">
-              <span class="dauvao-bt bt-g bt-g-nguoi"></span>
+            <div className="input">
+              <span className="dauvao-bt bt-g bt-g-nguoi"></span>
               <input
-                class="input-name"
+                className="input-name"
                 name="name"
+                onChange={(e) => handleChangeInput(e)}
                 type="text"
                 placeholder="Họ tên bệnh nhân (bắt buộc)"
-                autocomplete="name"
+                autoComplete="name"
                 required
               />
             </div>
@@ -42,84 +117,99 @@ export const BookingPage = () => {
               Hãy ghi rõ Họ Và Tên, viết hoa những chữ cái đầu tiên, ví dụ: Trần
               Văn Phú
             </div>
-            <div class="">
+            <div className="">
               <label>
                 <input
-                  class="dauv"
+                  className="dauv"
                   type="radio"
                   name="gender"
-                  value="0"
+                  onClick={(e) =>
+                    setPatient({ ...patient, ["gender"]: e.target.value })
+                  }
+                  value={true}
                   dl-luu="gender"
                 />{" "}
                 Nam
               </label>
               <label>
                 <input
-                  class="dauv"
+                  className="dauv"
                   type="radio"
                   name="gender"
-                  value="1"
+                  onClick={(e) =>
+                    setPatient({ ...patient, ["gender"]: e.target.value })
+                  }
+                  value={false}
                   dl-luu="gender"
                 />{" "}
                 Nữ
               </label>
-              <div class="dauvao-thongbao"></div>
-              <div class="input">
-                <span class="dauvao-bt bt-g bt-g-nguoi"></span>
+              <div className="dauvao-thongbao"></div>
+              <div className="input">
+                <span className="dauvao-bt bt-g bt-g-nguoi"></span>
                 <input
-                  class="input-name"
+                  className="input-name"
                   name="phone"
+                  onChange={(e) => handleChangeInput(e)}
                   type="text"
                   placeholder="Số điện thoại liên hệ (bắt buộc)"
-                  autocomplete="phone"
+                  autoComplete="phone"
                   required
                 />
               </div>
-              <div class="input">
-                <span class="dauvao-bt bt-g bt-g-nguoi"></span>
+              <div className="input">
+                <span className="dauvao-bt bt-g bt-g-nguoi"></span>
                 <input
-                  class="input-name"
-                  name="year"
+                  className="input-name"
+                  onChange={(e) => handleChangeInput(e)}
+                  name="yearOfBirth"
                   type="number"
                   placeholder="Năm sinh"
-                  autocomplete="year"
+                  autoComplete="yearOfBirth"
+                  required
                 />
               </div>
-              <div class="input">
-                <span class="dauvao-bt bt-g bt-g-nguoi"></span>
+              <div className="input">
+                <span className="dauvao-bt bt-g bt-g-nguoi"></span>
                 <input
-                  class="input-name"
-                  name="address"
-                  type="text"
-                  placeholder="Địa chỉ liên hệ"
-                  autocomplete="address"
+                  className="input-name"
+                  onChange={(e) => handleChangeInput(e)}
+                  name="email"
+                  type="email"
+                  placeholder="Địa chỉ email"
+                  autoComplete="email"
+                  required
                 />
               </div>
 
-              <div class="input">
-                <span class="dauvao-bt bt-g bt-g-nguoi"></span>
+              <div className="input">
+                <span className="dauvao-bt bt-g bt-g-nguoi"></span>
                 <input
-                  class="input-name"
+                  className="input-name"
                   name="address"
+                  onChange={(e) => handleChangeInput(e)}
                   type="text"
                   placeholder="Địa chỉ liên hệ"
-                  autocomplete="address"
+                  autoComplete="address"
                 />
               </div>
-              <div class="input">
-                <span class="dauvao-bt bt-g bt-g-nguoi"></span>
+              <div className="input">
+                <span className="dauvao-bt bt-g bt-g-nguoi"></span>
                 <textarea
-                  name="reason_other"
-                  class=""
+                  name="reason"
+                  onChange={(e) => handleChangeInput(e)}
+                  className=""
                   placeholder="Lý do khám"
+                  required
                 ></textarea>
               </div>
             </div>
             <div className="input">
               <label>
                 <input
-                  class=""
+                  className=""
                   style={{ display: "inline", width: "10px" }}
+                  onChange={(e) => handleChangeInput(e)}
                   type="radio"
                   name="pay_type"
                   value="1"
@@ -128,24 +218,27 @@ export const BookingPage = () => {
                 Thanh toán sau tại cơ sở y tế
               </label>
             </div>
-          </form>
-          <div className="payment">
-            <div className="container">
-              <div className="gia-kham">
-                <h3>Giá khám </h3>
-                <h3>300.000đ</h3>
-              </div>
-              <div className="phi-dat-lich">
-                <h3>Phí đặt lịch </h3>
-                <h3>Miễn phí</h3>
-              </div>
-              <hr />
-              <div className="total">
-                <h3>Tổng cộng</h3>
-                <h3 style={{ color: "red" }}>300.000đ</h3>
+            <div className="payment">
+              <div className="container">
+                <div className="gia-kham">
+                  <h3>Giá khám </h3>
+                  <h3>300.000đ</h3>
+                </div>
+                <div className="phi-dat-lich">
+                  <h3>Phí đặt lịch </h3>
+                  <h3>Miễn phí</h3>
+                </div>
+                <hr />
+                <div className="total">
+                  <h3>Tổng cộng</h3>
+                  <h3 style={{ color: "red" }}>300.000đ</h3>
+                </div>
               </div>
             </div>
-          </div>
+            <div className="button-submit">
+              <button className="btn">Đặt lịch</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

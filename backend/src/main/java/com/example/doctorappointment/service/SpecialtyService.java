@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface SpecialtyService {
     List<SpecialtyReadDTO> getAll();
-    SpecialtyEntity getById(int Id);
+    SpecialtyReadDTO getById(int Id);
+    SpecialtyEntity geEntitytById(int id);
     SpecialtyDTO createSpecialty(SpecialtyEntity specialty);
     SpecialtyDTO updateSpecialty(int id, SpecialtyEntity specialty);
     boolean deleteSpecialty(int id);

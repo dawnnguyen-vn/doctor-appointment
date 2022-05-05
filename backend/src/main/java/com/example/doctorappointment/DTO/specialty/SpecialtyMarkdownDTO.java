@@ -11,10 +11,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpecialtyReadDTO {
+public class SpecialtyMarkdownDTO {
     private int id;
     private String description;
     private String image;
     private String name;
+    private MarkdownDTO markdown;
     private List<DoctorDTO> doctors;
 }

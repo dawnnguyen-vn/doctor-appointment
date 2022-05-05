@@ -37,7 +37,7 @@ public class PatientEntity {
     private String reason;
 
     @Column(nullable = false)
-    private Date dateOfBirth;
+    private int yearOfBirth;
 
     @Column(nullable = false)
     private String address;

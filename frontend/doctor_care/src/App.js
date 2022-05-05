@@ -13,6 +13,10 @@ import { PatientTemplate } from "./pages/patientTemplate";
 import { AddInformation } from "./components/Admin/addInformation";
 import { ManageSchedule } from "./components/Admin/manageSchedule";
 import { BookingPage } from "./pages/doctor_booking";
+import { VerifyBooking } from "./pages/verifyBooking";
+import { ManageBooking } from "./components/Admin/booking";
+import { MarkdownSpecialty } from "./components/Admin/addInfomationSpecialty";
+import { DetailSpecialTy } from "./pages/specialtyInfo";
 
 function App() {
   const LoginPage = lazy(() =>
@@ -31,6 +35,8 @@ function App() {
     }))
   );
   const auth = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("userLogin"));
+  console.log(user);
   return (
     <BrowserRouter>
       <Suspense fallback={<LoadingPage />}>
@@ -38,10 +44,12 @@ function App() {
           <Route
             path={ROUTES.LOGIN}
             element={
-              !auth ? (
+              !auth &&!user ? (
                 <LoginPage />
-              ) : (
-                <Navigate to={"/admin/specilaties"} replace />
+              ) : user.role.id == 2 ?(
+                <Navigate to={"/admin/specialties"} replace />
+              ):(
+                <Navigate to={"/admin/booking"} replace />
               )
             }
           />
@@ -49,15 +57,19 @@ function App() {
             <Route path={ROUTES.HOME} element={<HomePage />} />
             <Route path={ROUTES.BOOKING} element={<BookingPage />} />
             <Route path={ROUTES.BLOG} element={<BlogsPage />} />
+            <Route path={"/verify-booking/:token"} element={<VerifyBooking />} />
             <Route path={ROUTES.DOCTOR_INFO} element={<DoctorPage />} />
+            <Route path={ROUTES.SPECIALTY_INFO} element={<DetailSpecialTy />} />
           </Route>
           <Route
             path="/admin"
-            element={auth ? <Admin /> : <Navigate to={ROUTES.LOGIN} replace />}
+            element={auth && user ? <Admin /> : <Navigate to={ROUTES.LOGIN} replace />}
           >
-            <Route path="users" element={<UsersTable />} />
-            <Route path="specialties" element={<SpecialtyTable />} />
+            <Route path="users" element={<UsersTable />} />\
+            {user && (<Route path="specialties" element={ user.role.id==2?<SpecialtyTable />:<Navigate  to={ROUTES.LOGIN} replace/>} />) }
             <Route path="info" element={<AddInformation />} />
+            <Route path="specialty-info" element={<MarkdownSpecialty />} />
+            <Route path="booking" element={<ManageBooking />} />
             <Route path="schedule" element={<ManageSchedule />} />
           </Route>
         </Routes>

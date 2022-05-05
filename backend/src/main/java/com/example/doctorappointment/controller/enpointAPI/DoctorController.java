@@ -67,6 +67,11 @@ public class DoctorController {
         return ResponseEntity.created(uri).body(doctorService.update(doctorId,doctor));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<DoctorReadDTO> getByEmail(@PathVariable String email){
+        return ResponseEntity.ok().body(doctorService.getDoctorByEmail(email));
+    }
+
     @PostMapping("/register")
     public ResponseEntity<DoctorReadDTO> saveDoctor(@RequestBody DoctorWriteDTO doctor) throws CustomException {
         UserEntity newUser = doctor.getUser();

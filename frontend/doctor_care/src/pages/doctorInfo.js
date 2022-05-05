@@ -4,11 +4,13 @@ import { manageService } from "../services/ManageService";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/vi";
+import * as ROUTES from "../constants/routes";
 
 export const DoctorPage = () => {
   const [doctor, setDoctor] = useState({});
   const [allDays, setAllDays] = useState([]);
   const [arrTime, setArrTime] = useState([]);
+  const navigate = useNavigate(); 
 
   let { id } = useParams();
 
@@ -56,6 +58,7 @@ export const DoctorPage = () => {
 
   const handleSubmit = (schedule) =>{
     console.log(schedule);
+    navigate(ROUTES.BOOKING, { state: {schedule:schedule,doctor:doctor} });
   }
 
   return (
@@ -83,7 +86,7 @@ export const DoctorPage = () => {
                 />
                 <div className="content">
                   <h2>
-                    {doctor.positon} , Bác sĩ chuyên khoa{" "}
+                    {doctor.position} , Bác sĩ chuyên khoa{" "}
                     {doctor.specialty.name.toLowerCase()} {doctor.lastName}{" "}
                     {doctor.firstName}
                   </h2>

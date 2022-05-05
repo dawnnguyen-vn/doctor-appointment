@@ -16,6 +16,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 
 @Entity
 @Data
@@ -48,7 +50,8 @@ public class SpecialtyEntity {
 
     private List<DoctorEntity> doctors ;
 
-
+    @OneToOne(fetch = LAZY)
+    private MarkdownEntity markdown;
     public void addDoctor(DoctorEntity doctor) {
         doctors.add(doctor);
         doctor.setSpecialty(this);
@@ -58,5 +61,7 @@ public class SpecialtyEntity {
         doctors.remove(doctor);
         doctor.setSpecialty(null);
     }
+
+
 
 }

@@ -1,9 +1,12 @@
 package com.example.doctorappointment.service.impl;
 
+import com.example.doctorappointment.DTO.MarkdownDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyReadDTO;
+import com.example.doctorappointment.entity.MarkdownEntity;
 import com.example.doctorappointment.entity.SpecialtyEntity;
+import com.example.doctorappointment.repository.MarkdownRepo;
 import com.example.doctorappointment.repository.SpecialtyRepo;
 import com.example.doctorappointment.service.SpecialtyService;
 import com.example.doctorappointment.utility.DataMapperUtils;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class SpecialtyServiceImpl implements SpecialtyService {
     private final SpecialtyRepo repo;
     private final DataMapperUtils dataMapperUtils;
+    private final MarkdownRepo markdownRepo;
 
     @Override
     public List<SpecialtyReadDTO> getAll() {
@@ -31,16 +35,25 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     }
 
     @Override
-    public SpecialtyEntity getById(int id) {
+    public SpecialtyReadDTO getById(int id) {
         SpecialtyEntity data = repo.findById(id);
         if (data != null)
-            return data;
+            return convertEntityToDTO(data);
+        return null;
+    }
+
+    @Override
+    public SpecialtyEntity geEntitytById(int id) {
+        SpecialtyEntity data = repo.findById(id);
+        if (data != null)
+            return (data);
         return null;
     }
 
     @Override
     public SpecialtyDTO createSpecialty(SpecialtyEntity specialty) {
-
+        MarkdownEntity markdown =markdownRepo.save( new MarkdownEntity(0,"","","",0,specialty.getId(),0));
+        specialty.setMarkdown(markdown);
         return dataMapperUtils.map(repo.save(specialty), SpecialtyDTO.class);
     }
 

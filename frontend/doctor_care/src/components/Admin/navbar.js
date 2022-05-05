@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 export const NavBarAdmin = () => {
   const dispatch = useDispatch();
 
+  const user = JSON.parse(localStorage.getItem("userLogin"));
+
   const [showMenu, setShowMenu] = useState(false);
   useEffect(() => {
     if (showMenu) {
@@ -34,12 +36,28 @@ export const NavBarAdmin = () => {
         className="menu"
       >
         <div id="menu-content" className="menu-content">
-          <ul>
+          {user.role.id==2?(
+            <ul>
             <li>
-              <Link to={"/admin/specilaties"}>Chuyên khoa </Link>
+              <Link to={"/admin/specialties"}>Chuyên khoa </Link>
             </li>
             <li>
               <Link to={"/admin/users"}>Bác sĩ</Link>
+            </li>
+            <li>
+              <Link to={"/admin/specialty-info"}>Thông tin chi tiết chuyên khoa</Link>
+            </li>
+            <li>
+              <Link to={"/admin/info"}>Thông tin chi tiết bác sĩ</Link>
+            </li>
+            <li>
+              <Link to={"/admin/schedule"}>Quản lý lịch hẹn</Link>
+            </li>
+          </ul>
+          ):(
+            <ul>
+            <li>
+              <Link to={"/admin/booking"}>Quản lý lịch khám </Link>
             </li>
             <li>
               <Link to={"/admin/info"}>Thông tin chi tiết</Link>
@@ -48,6 +66,7 @@ export const NavBarAdmin = () => {
               <Link to={"/admin/schedule"}>Quản lý lịch hẹn</Link>
             </li>
           </ul>
+          )}
         </div>
       </div>
       <div className="navbar-content">

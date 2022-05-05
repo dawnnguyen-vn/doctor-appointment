@@ -31,6 +31,9 @@ public class BookingEntity {
     @Column(nullable = false)
     private int timeId;
 
+    @Column(nullable = false)
+    private String token;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
     private PatientEntity patient;

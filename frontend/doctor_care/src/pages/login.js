@@ -92,15 +92,14 @@ export const LoginPage = () => {
                     </span>
                     <input
                       aria-label="Số điện thoại, tên người dùng hoặc email"
-                      aria-required="true"
-                      autoCapitalize="off"
-                      autoCorrect="off"
+                      autoComplete="off"
                       className="form-input"
                       onChange={(e) => handleChangeInput(e)}
                       value={state.values.email}
                       maxLength="75"
                       name="email"
                       type="text"
+                      required
                     />
                   </label>
                 </div>
@@ -116,14 +115,13 @@ export const LoginPage = () => {
                     <input
                       className="form-input"
                       aria-label="Mật khẩu"
-                      aria-required="true"
-                      autoCapitalize="off"
+                      autoComplete="off"
                       onChange={(e) => handleChangeInput(e)}
-                      autoCorrect="off"
                       maxLength="75"
                       value={state.values.password}
                       name="password"
                       type="password"
+                      required
                     />
                     <a
                       className="btn-show-pw"
