@@ -8,18 +8,20 @@ import "slick-carousel/slick/slick-theme.css";
 import { SliderDoctor } from "../components/slider/slider_doctor";
 import { HomeBanner } from "../components/home_banner";
 import { SliderBlog } from "../components/slider/slider_blog";
+import { SliderClinic } from "../components/slider/slider_clinic";
 
 export const HomePage = () => {
 
 
   return (
     <div className="home">
-      <Navbar />
+      {/* <Navbar /> */}
       <HomeBanner/>
       <SliderBlog/>
       <SliderSpecialty/>
       <SliderDoctor/>
-      <div style={{height:"300px"}}></div>
+      <SliderClinic/>
+      <div style={{height:"100px"}}></div>
     </div>
   );
 };

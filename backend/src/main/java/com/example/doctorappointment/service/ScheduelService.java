@@ -13,4 +13,6 @@ public interface ScheduelService {
 
     List<ScheduleDTO> getScheduleByDate(int doctorId , Date date);
 
+    boolean isExists(int doctorId,Date date,int timeId);
+
 }

@@ -47,7 +47,7 @@ public class DoctorEntity {
     @JsonIgnore
     @ManyToOne(
             fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.MERGE)
     @JoinColumn(name = "clinic_id", nullable = false)
     private ClinicEntity clinic;
 

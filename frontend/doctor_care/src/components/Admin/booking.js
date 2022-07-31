@@ -16,38 +16,72 @@ import { VerifyBookingModal } from "./verifyBookingModal";
 
 export const ManageBooking = () => {
   const [bookings, setBookings] = useState([]);
-  const [doctorSelected, setDoctorSelected] = useState();
+  const [doctorSelected, setDoctorSelected] = useState(null);
+  const [clinicSelected, setClinicSelected] = useState(null);
+
   const [allDays, setAllDays] = useState([]);
   const currenUser = JSON.parse(localStorage.getItem("userLogin"));
+  const tabs = [
+    {
+      type: "NEW",
+      name: "Chờ duyệt",
+    },
+    {
+      type: "CONFIRM",
+      name: "Đã duyệt",
+    },
+    {
+      type: "CHECKED",
+      name: "Đã khám",
+    },
+    {
+      type: "FAILED",
+      name: "Từ chối",
+    },
+  ];
+  const [type, setType] = useState("NEW");
 
-  const [doctorDTO, setDoctorDTO] = useState({
-    date: new Date().setHours(0, 0, 0, 0),
-    doctorId: "",
-  });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(4);
 
   useEffect(() => {
     const setDoctor = async () => {
       await manageService.getDoctorByEmail(currenUser.email).then((result) => {
-        console.log(result)
+        setDoctorSelected(result.data);
         let request = {
           doctorId: result.data.id,
           date: new Date().setHours(0, 0, 0, 0),
         };
         bookingService
-          .getForDoctor(request)
+          .getForDoctor(request, type)
           .then((result) => {
             console.log(result.data);
             setBookings(result.data);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => alert("booking for doctor is null"));
       });
     };
-    setDoctor();
+    const setClinic = async () => {
+      await manageService.getClinicByAdminId(currenUser.id).then((result) => {
+        setClinicSelected(result.data);
+        let request = {
+          clinicId: result.data.id,
+          date: new Date().setHours(0, 0, 0, 0),
+        };
+        bookingService
+          .getForClinic(request, type)
+          .then((result) => {
+            console.log(result.data);
+            setBookings(result.data);
+          })
+          .catch((err) => alert("booking for clinic is null"));
+      });
+    };
+    if (currenUser.role.name == "DOCTOR") setDoctor();
+    else setClinic();
 
     createArrDate();
-  }, []);
+  }, [type]);
 
   const createArrDate = () => {
     let arrDate = [];
@@ -64,17 +98,31 @@ export const ManageBooking = () => {
   };
   const handleSelectChange = (e) => {
     const { value, lable } = e.target;
+    if (currenUser.role.name == "DOCTOR"){
     let request = {
-      doctorId: 1,
+      doctorId: doctorSelected.id,
       date: value,
     };
     bookingService
-      .getForDoctor(request)
+      .getForDoctor(request,type)
       .then((result) => {
         console.log(result.data);
         setBookings(result.data);
       })
       .catch((err) => console.log(err));
+    }else{
+      let request = {
+        clinicId: clinicSelected.id,
+        date: value,
+      };
+      bookingService
+        .getForClinic(request,type)
+        .then((result) => {
+          console.log(result.data);
+          setBookings(result.data);
+        })
+        .catch((err) => console.log(err));
+    }
   };
   const handleConfirm = () => {};
 
@@ -138,7 +186,27 @@ export const ManageBooking = () => {
       <div className="header">
         <h2>Quản lý lịch khám bệnh</h2>
       </div>
-      <select onChange={(e) => handleSelectChange(e)} name="" id="">
+
+      <ul className="nav nav-tabs" id="myTab" role="tablist">
+        {tabs.map((tab) => (
+          <li key={tab.type} className="nav-item">
+            <button
+              className={`nav-link ${tab.type == type ? "active" : ""}`}
+              onClick={() => {
+                setType(tab.type);
+              }}
+            >
+              {tab.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <select
+        style={{ marginTop: "30px" }}
+        onChange={(e) => handleSelectChange(e)}
+        name=""
+        id=""
+      >
         {allDays &&
           allDays.length > 0 &&
           allDays.map((e, index) => (

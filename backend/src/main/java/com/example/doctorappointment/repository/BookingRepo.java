@@ -11,5 +11,10 @@ public interface BookingRepo extends JpaRepository<BookingEntity, Integer> {
     BookingEntity findById(int id);
     BookingEntity findByPatientEmailAndDate(String email,Date date);
 
-    List<BookingEntity> findAllByDateAndDoctorId(Date date , int doctorId);
+    List<BookingEntity> findAllByDateAndDoctorIdAndBookingStatus(Date date , int doctorId,String status);
+    List<BookingEntity> findAllByDateAndClinicIdAndBookingStatus(Date date , int clinicId,String status);
+
+
+
+
 }

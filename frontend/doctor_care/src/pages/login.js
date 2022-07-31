@@ -6,7 +6,7 @@ import { userService } from "../services/UserService";
 import "../styles/login.scss";
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
 
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export const LoginPage = () => {
     },
   });
 
-  const [isLogin,setIsLogin] =  useState(false);
+  // const [isLogin,setIsLogin] =  useState(false);
 
   const [errors, setErrors] = useState("");
 
@@ -133,7 +133,7 @@ export const LoginPage = () => {
                       onClick={(e) => {
                         const passwordInput =
                           document.getElementsByName("password");
-                        if (passwordInput[0].type == "text") {
+                        if (passwordInput[0].type === "text") {
                           passwordInput[0].setAttribute("type", "password");
                           e.target.innerText = "Hiển thị";
                         } else {

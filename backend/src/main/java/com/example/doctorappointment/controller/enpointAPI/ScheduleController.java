@@ -22,10 +22,6 @@ public class ScheduleController {
 
     private final TimeRepo timeRepo;
     private final ScheduelService scheduelService;
-    private final DataMapperUtils dataMapperUtils;
-    private final DoctorRepo doctorRepo;
-    private final ScheduleRepo scheduleRepo;
-
     @GetMapping("/times")
     public ResponseEntity<List<TimeEntity>> getAllTime(){
         return ResponseEntity.ok().body(timeRepo.findAll());

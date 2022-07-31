@@ -89,9 +89,7 @@ export const SpecialtyTable = () => {
                       buttons: true,
                       dangerMode: true,
                     }).then((willDelete) => {
-                      if (willDelete) {
                         deleteSpecialty(specialty.id);
-                      }
                     });
                   }}
                 ></i>
@@ -115,7 +113,7 @@ export const SpecialtyTable = () => {
   return (
     <Paper className="specialty-admin" style={{width:"100%",marginTop:"4.5em"}}>
     <div className="header">
-      <h2>Specialty Manage</h2>
+      <h2>Quản lý chuyên khoa</h2>
     </div>
     <button
       className="btnAdd mb-3"
@@ -123,7 +121,7 @@ export const SpecialtyTable = () => {
       data-target="#addSpecialModal"
     >
       <i className="fa fa-plus"></i>
-      <h2>Add new</h2>
+      <h2>Thêm mới</h2>
     </button>
       <AddSpecialty />
     <TableContainer style={{maxHeight:"100%"}}>

@@ -6,11 +6,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
@@ -31,29 +34,27 @@ public class ClinicEntity {
     @NotBlank(message = "Địa chỉ không được bỏ trống")
     private String address;
 
-    @Column
-    private String description;
+    @OneToOne(fetch = LAZY)
+    private ClinicMarkdownEntity markdown;
 
     @Column(nullable = false)
     @NotBlank(message = "image không được bỏ trống")
     private String image;
 
+    @Column()
+    private int adminId;
+
     @JsonIgnore
     @OneToMany(
             mappedBy = "clinic",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.MERGE,
             fetch = FetchType.EAGER
     )
-    private List<DoctorEntity> doctors = new ArrayList<>();
+    private List<SpecialtyEntity> specialties = new ArrayList<>();
 
-    public void addDoctor(DoctorEntity doctor) {
-        doctors.add(doctor);
-        doctor.setClinic(this);
-    }
-
-    public void removeDoctor(DoctorEntity doctor) {
-        doctors.remove(doctor);
-        doctor.setClinic(null);
+    public void addSpecialty(SpecialtyEntity specialty){
+        specialties.add(specialty);
+        specialty.setClinic(this);
     }
 
 }

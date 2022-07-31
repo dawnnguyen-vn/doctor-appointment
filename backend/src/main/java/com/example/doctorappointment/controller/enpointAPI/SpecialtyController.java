@@ -1,10 +1,13 @@
 package com.example.doctorappointment.controller.enpointAPI;
 
 import com.example.doctorappointment.DTO.Message;
+import com.example.doctorappointment.DTO.search.SearchInputDTO;
+import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyReadDTO;
 import com.example.doctorappointment.entity.MarkdownEntity;
 import com.example.doctorappointment.entity.SpecialtyEntity;
 import com.example.doctorappointment.repository.MarkdownRepo;
+import com.example.doctorappointment.repository.SpecialtyRepo;
 import com.example.doctorappointment.service.SpecialtyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -14,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +28,7 @@ import java.util.List;
 public class SpecialtyController {
     private final SpecialtyService service;
     private final MarkdownRepo markdownRepo;
-
+    private final SpecialtyRepo specialtyRepo;
     @GetMapping("/all")
     ResponseEntity<Message> getSpecialties() {
         List<SpecialtyReadDTO> data = service.getAll();
@@ -34,7 +38,7 @@ public class SpecialtyController {
     }
     @Procedure(MediaType.APPLICATION_JSON_VALUE)
     @PostMapping(value="/create", consumes={"application/json"})
-    public ResponseEntity<Message> createSpecialty(@RequestBody SpecialtyEntity specialty) {
+    public ResponseEntity<Message> createSpecialty(@RequestBody SpecialtyDTO specialty) {
         return service.existsByName(specialty.getName()) == false ?
                 ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "create specialty successfull", service.createSpecialty(specialty)))
                 :
@@ -61,7 +65,11 @@ public class SpecialtyController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Message> deleteEmployee(@PathVariable int id) {
-        return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "update specialty successfull", service.deleteSpecialty(id)));
+        if(specialtyRepo.findById(id)!=null){
+            specialtyRepo.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(), "OK", "delete specialty successfull", id ));
+        }
+        return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(new Message(new Date(), "failed", "not fond specialty with id "+id, id ));
     }
 
 
@@ -90,5 +98,14 @@ public class SpecialtyController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message(new Date(),"not found","can not find markdown with doctorId "+specialtyId,""));
     }
-
+    @PostMapping("/search")
+    public ResponseEntity<Message> search(@RequestBody SearchInputDTO systom){
+        systom.removeNonKeywords();
+        System.out.println(systom.getInput());
+        List<SpecialtyReadDTO> result = service.search("%"+systom.getInput()+"%");
+        if(result!=null)
+         return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(),"ok","update successful",result));
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(),"ok","empty",null));
+    }
 }

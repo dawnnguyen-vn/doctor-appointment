@@ -9,9 +9,9 @@ import * as ROUTES from "../../constants/routes";
 
 export const DoctorCardAppointment = (props) => {
   const { doctor } = props;
-  console.log(doctor);
   const [allDays, setAllDays] = useState([]);
   const [arrTime, setArrTime] = useState([]);
+  const [selectDay,setSelectDay] = useState({})
   const navigate = useNavigate();
   const [doctorInfo, setDoctorInfo] = useState({});
 
@@ -34,16 +34,18 @@ export const DoctorCardAppointment = (props) => {
     moment.locale("vi");
     for (let i = 0; i < 7; i++) {
       let object = {};
-      let lable = moment(new Date()).add(i, "days").format("dddd - DD/MM");
-      object.lable = lable.charAt(0).toUpperCase() + lable.slice(1);
+      let label = moment(new Date()).add(i, "days").format("dddd - DD/MM");
+      object.label = label.charAt(0).toUpperCase() + label.slice(1);
       object.value = moment(new Date()).add(i, "days").startOf("day").valueOf();
-
+      if(i===0){
+        setSelectDay(object);
+      }
       arrDate.push(object);
     }
     setAllDays(arrDate);
   };
   const handleSelectChange = (e) => {
-    const { value, lable } = e.target;
+    const { value } = e.target;
     let request = {
       doctorId: doctorInfo.id,
       date: value,
@@ -52,11 +54,14 @@ export const DoctorCardAppointment = (props) => {
       .getDoctorScheduleByDate(request)
       .then((result) => setArrTime(result.data))
       .catch((err) => console.log(err));
+      setSelectDay(
+        {
+          "value":value,
+          "label":e.target.options[e.target.selectedIndex].text
+        });
   };
 
   const handleSubmit = (schedule) => {
-    console.log(schedule);
-    console.log(doctor);
     navigate(ROUTES.BOOKING, { state: { schedule: schedule, doctor: doctorInfo } });
   };
 
@@ -78,14 +83,15 @@ export const DoctorCardAppointment = (props) => {
           </div>
         </div>
         <div className="right_content col-6">
-          <select onChange={(e) => handleSelectChange(e)} name="" id="">
+          <select onChange={(e) => handleSelectChange(e)}>
             {allDays &&
               allDays.length > 0 &&
               allDays.map((e, index) => (
                 <option key={index} value={e.value}>
-                  {e.lable}
+                  {e.label}
                 </option>
-              ))}
+              ))
+              }
           </select>
           <div
             style={{ paddingBottom: "15px", borderBottom: "1px solid #999" }}
@@ -95,12 +101,18 @@ export const DoctorCardAppointment = (props) => {
             </h4>
             <div className="time-options">
               {arrTime &&
-                arrTime.length > 0 &&
-                arrTime.map((e, index) => (
-                  <button onClick={() => handleSubmit(e)} key={e.id}>
-                    {e.name}
-                  </button>
-                ))}
+                arrTime.length > 0 ?
+                  arrTime.map((e, index) => (
+                    <button onClick={() => handleSubmit(e)} key={e.id}>
+                      {e.name}
+                    </button>
+                  ))
+                  :
+                <div style={{whiteSpace:"normal"}} >
+                    Bác sĩ "{doctorInfo.position}, {doctor.lastName} {doctor.firstName}" không có lịch hẹn tại ngày <span style={{fontWeight:"bold"}}>{selectDay.label}</span>.
+                    Xin chọn những lịch khám tiếp theo.
+                </div>
+                }
             </div>
           </div>
           <div className="info_doctor">

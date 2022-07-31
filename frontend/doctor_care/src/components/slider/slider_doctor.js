@@ -24,7 +24,6 @@ export const SliderDoctor = () => {
     };
   }, []);
   let arr = doctors.concat(doctors).concat(doctors);
-  console.log(arr);
   return (
     <div style={{backgroundColor:"white"}} className="slider-doctor">
 

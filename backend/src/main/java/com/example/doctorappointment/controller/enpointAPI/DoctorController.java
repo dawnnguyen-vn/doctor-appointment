@@ -123,6 +123,8 @@ public class DoctorController {
         System.out.println(doctorScheduleDTO.getDoctorId()+" "+doctorScheduleDTO.getDate());
         return ResponseEntity.ok().body(scheduelService.getScheduleByDate(doctorScheduleDTO.getDoctorId(),doctorScheduleDTO.getDate()));
     }
+
+ 
 }
 
 

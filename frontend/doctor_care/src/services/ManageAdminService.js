@@ -7,6 +7,9 @@ export class ManageAdminService{
           url: `${domain}/specialty/create`,
           method: "POST",
           data: specialty,
+          headers:{
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          }
         });
       };
       updateSpecialty = (id, specialty) => {
@@ -14,12 +17,18 @@ export class ManageAdminService{
           url: `${domain}/specialty/${id}`,
           method: "PUT",
           data: specialty,
+          headers:{
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          }
         });
       };
       deleteSpecialty = (id) => {
         return axios({
           url: `${domain}/specialty/${id}`,
           method: "DELETE",
+          headers:{
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          }
         });
       };
 

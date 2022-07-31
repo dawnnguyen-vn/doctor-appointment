@@ -3,6 +3,7 @@ package com.example.doctorappointment.controller.enpointAPI;
 import com.example.doctorappointment.DTO.Booking.BookingDTO;
 import com.example.doctorappointment.DTO.Booking.BookingReadDTO;
 import com.example.doctorappointment.DTO.Booking.VerifyBookingDTO;
+import com.example.doctorappointment.DTO.clinic.ClinicScheduleDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorScheduleDTO;
 import com.example.doctorappointment.repository.TimeRepo;
 import com.example.doctorappointment.service.BookingService;
@@ -34,8 +35,6 @@ public class BookingController {
     private final TimeRepo timeRepo;
     @PostMapping("/create")
     public ResponseEntity<BookingDTO> saveAllSchedule(@RequestBody BookingDTO bookingDTO) throws UnsupportedEncodingException, MessagingException {
-
-
         return  ResponseEntity.ok().body(bookingService.save(bookingDTO));
     }
 
@@ -53,10 +52,13 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not fond with token "+token);
         }
     }
-
-    @PostMapping("/doctor")
-    public ResponseEntity<List<BookingReadDTO>> getAllByDoctorIdAndDate(@RequestBody DoctorScheduleDTO doctorScheduleDTO){
-        return ResponseEntity.ok().body(bookingService.findAllByDoctorIdAndDate(doctorScheduleDTO.getDate(),doctorScheduleDTO.getDoctorId()));
+    @PostMapping("/clinic/{status}")
+    public ResponseEntity<List<BookingReadDTO>> getAllByClinicIdAndDate(@RequestBody ClinicScheduleDTO clinicScheduleDTO,@PathVariable String status){
+        return ResponseEntity.ok().body(bookingService.findAllByClinicIdAndDate(clinicScheduleDTO.getDate(),clinicScheduleDTO.getClinicId(),status));
+    }
+    @PostMapping("/doctor/{status}")
+    public ResponseEntity<List<BookingReadDTO>> getAllByDoctorIdAndDate(@RequestBody DoctorScheduleDTO doctorScheduleDTO,@PathVariable String status ){
+        return ResponseEntity.ok().body(bookingService.findAllByDoctorIdAndDate(doctorScheduleDTO.getDate(),doctorScheduleDTO.getDoctorId(),status));
     }
 
     @PostMapping("/doctor/verify")

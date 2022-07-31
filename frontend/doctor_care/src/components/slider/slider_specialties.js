@@ -30,5 +30,5 @@ export const SliderSpecialty = () => {
           </Slider>
         </div>
       </div>
-    ):(<>nodata</>)
+    ):(<></>)
 }

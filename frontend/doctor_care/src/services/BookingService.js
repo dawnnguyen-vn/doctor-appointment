@@ -15,14 +15,24 @@ export class BookingService {
       method: "PUT",
     });
   };
-  getForDoctor(doctorDTO) {
+  getForDoctor(doctorDTO,status) {
     return axios({
-      url: `${domain}/booking/doctor`,
+      url: `${domain}/booking/doctor/${status}`,
       method: "POST",
       headers:{
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
       data: doctorDTO,
+    });
+  }
+  getForClinic(clinicDTO,status) {
+    return axios({
+      url: `${domain}/booking/clinic/${status}`,
+      method: "POST",
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      data: clinicDTO,
     });
   }
   doctorVerifyBooking(data) {

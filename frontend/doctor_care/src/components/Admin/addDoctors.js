@@ -3,11 +3,12 @@ import "../../styles/admin/add_specialty.scss";
 import { useState } from "react";
 import { manageService } from "../../services/ManageService";
 import swal from "sweetalert";
-import { Select } from "@material-ui/core";
 import { userService } from "../../services/UserService";
+import { domain, domainImage } from "../../constants/setting_api";
+import axios from "axios";
+
 
 export default function AddDoctor() {
-
   let [state, setState] = useState({
     values: {
       id: 0,
@@ -15,54 +16,58 @@ export default function AddDoctor() {
       lastName: "",
       phone: "",
       gender: "true",
-      image:"",
-      clinicId: '1',
-      specialtyId: '1',
-      positionId:'1',
-      user:  {
+      image: "",
+      clinicId: "1",
+      specialtyId: "1",
+      positionId: "1",
+      user: {
         id: 0,
         email: "",
         password: "",
         role: null,
-      }
+      },
     },
     errors: {},
   });
-
+  const [fileupload,setFileupload] = useState(null);
+  const [imageReview,setImageReview] = useState(null)
   const [positions, setPositions] = useState([]);
+  const [imageUploaded,setImageUploaded] = useState(null);
   const [specialties, setSpecialties] = useState([]);
 
   useEffect(() => {
-    manageService.getListOfSpecialty()
-    .then((result)=>setSpecialties(result.data.data))
-    .catch((err)=>{
-      alert(err);
-    });
-    userService.getAllPosition()
-    .then((result)=>setPositions(result.data))
-    .catch((err)=>{
-      alert(err);
-    })
+    manageService
+      .getListOfSpecialty()
+      .then((result) => setSpecialties(result.data.data))
+      .catch((err) => {
+        alert(err);
+      });
+    userService
+      .getAllPosition()
+      .then((result) => setPositions(result.data))
+      .catch((err) => {
+        alert(err);
+      });
   }, []);
 
-  console.log(specialties)
+  // console.log(specialties);
 
-  const handleChangeUserInput = (event)=>{
+  const handleChangeUserInput = (event) => {
     event.preventDefault();
     let { value, name } = event.target;
-    
+
     let newValue = {
       ...state.values,
-        ['user']:{...state.values.user,[name]:value},
-    }
-    setState({...state,['values']:newValue})
-  }
+      ["user"]: { ...state.values.user, [name]: value },
+    };
+    setState({ ...state, ["values"]: newValue });
+  };
   const handleChangeInput = (event) => {
     event.preventDefault();
     let { value, name } = event.target;
     let newValues = {
       ...state.values,
-      [name]:value,
+      [name]: value,
     };
     let newErrors = {
       ...state.errors,
@@ -70,34 +75,58 @@ export default function AddDoctor() {
     };
     setState({ values: newValues, errors: newErrors });
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let valid = true;
     let { values, errors } = state;
 
-    console.log(">>>doctor",state);
- 
+    setImageUploaded(false);
+    await uploadFile();
+    setImageUploaded(true);
     userService
-        .createNewDoctor(values)
-        .then((res) => {
-          swal({
-            title: "Thêm tin thành công",
-            icon: "success",
-            button: "OK",
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        })
-        .catch((err) => {
-          swal({
-            title: "",
-            text: "Điền lại thông tin!",
-            icon: "warning",
-            button: "OK",
-          });
+      .createNewDoctor(values)
+      .then((res) => {
+        swal({
+          title: "Thêm tin thành công",
+          icon: "success",
+          button: "OK",
         });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      })
+      .catch((err) => {
+        swal({
+          title: "",
+          text: "Điền lại thông tin!",
+          icon: "warning",
+          button: "OK",
+        });
+      });
   };
+
+  const uploadFile = async () => {
+    let formData = new FormData();
+    formData.append("file", fileupload.files[0]);
+
+    let response = await axios.request( {
+      url:`${domain}/image/upload`,
+        method: "POST",
+        data: formData,
+        onUploadProgress: (progressEvent)=>{
+          const {loaded,total} = progressEvent;
+          let percent = Math.floor((loaded*100)/total);
+          console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+        }
+      });
+
+      if (response.status === 200) {
+      alert("File successfully uploaded.");
+    }
+  };
+
+  console.log(state);
+
   return (
     <div
       className="modal fade"
@@ -215,10 +244,10 @@ export default function AddDoctor() {
                       <option value={"true"}>Nam</option>
                       <option value={"false"}>Nữ</option>
                     </select>
-                  <div className="placeholder">Giới tính</div>
-                  <span className="text-danger">
-                    {/* {this.state.errors.hinhAnh} */}
-                  </span>
+                    <div className="placeholder">Giới tính</div>
+                    <span className="text-danger">
+                      {/* {this.state.errors.hinhAnh} */}
+                    </span>
                   </div>
                 </div>
                 <div className="col-6">
@@ -229,8 +258,10 @@ export default function AddDoctor() {
                       aria-label="Default select example"
                       onChange={handleChangeInput}
                     >
-                      {positions.map((item,index)=>(
-                        <option key={index} value={item.id}>{item.name}</option>
+                      {positions.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
                       ))}
                     </select>
                     <div className="placeholder">Chức danh</div>
@@ -249,23 +280,33 @@ export default function AddDoctor() {
                       onChange={handleChangeInput}
                       name="specialtyId"
                     >
-                      {specialties.map((item)=>(<option value={item.id}>{item.name}</option>))}
+                      {specialties.map((item) => (
+                        <option value={item.id}>{item.name}</option>
+                      ))}
                     </select>
-                  <div className="placeholder">Chuyên khoa</div>
-                  <span className="text-danger">
-                    {/* {this.state.errors.hinhAnh} */}
-                  </span>
+                    <div className="placeholder">Chuyên khoa</div>
+                    <span className="text-danger">
+                      {/* {this.state.errors.hinhAnh} */}
+                    </span>
                   </div>
                 </div>
                 <div className="col-6">
                   <div className="textb">
-                    <input
-                      type="text"
-                      name="image"
-                      onChange={handleChangeInput}
-                      required
-                    />
+                  <input accept="image/*" id="fileupload" onChange={ async (e)=>{
+                                      setFileupload(e.target);
+                                      // await uploadFile();
+                                      setImageReview(URL.createObjectURL(e.target.files[0]));
+                                      let newValue = {
+                                        ...state.values,["image"]:`${domainImage}/${e.target.files[0].name}`
+                                      };
+                                      setState({...state,["values"]: newValue });
+                                    }
+                                  }
+                          type="file"
+                          name="fileupload" />
+                    <button type="button" onClick={uploadFile} >upload</button>
                     <div className="placeholder">Ảnh đại diện</div>
+                    {imageReview && <img style={{maxWidth:"200px"}} srcSet={`${imageReview} 10x`} alt="image" />}
                     <span className="text-danger">
                       {/* {this.state.errors.hinhAnh} */}
                     </span>

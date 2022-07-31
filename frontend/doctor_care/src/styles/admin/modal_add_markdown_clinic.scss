@@ -1,0 +1,24 @@
+.add_markdown_modal{
+    .modal-dialog {
+        z-index: 9999;
+        max-width: 50vh;
+
+        .modal-content {
+            .modal-header {
+                .close {
+                    background-color: transparent;
+
+                    span {
+                        color: black;
+                    }
+                }
+
+                .close:hover {
+                    border: none;
+                }
+            }
+
+            .modal-body {}
+        }
+    }
+}

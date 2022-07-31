@@ -14,11 +14,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingDTO {
-
     private int id;
     private String bookingStatus;
     private int doctorId;
+    private int clinicId;
     private Date date;
+    private int scheduleId;
     private int timeId;
     private PatientEntity patient;
 

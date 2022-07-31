@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,21 +51,28 @@ public class SpecialtyEntity {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-
     private List<DoctorEntity> doctors ;
 
     @OneToOne(fetch = LAZY)
     private MarkdownEntity markdown;
+
+    @ElementCollection(targetClass = String.class)
+    @Column(name="symptoms")
+    private List<String> symptoms;
     public void addDoctor(DoctorEntity doctor) {
         doctors.add(doctor);
         doctor.setSpecialty(this);
     }
+    @JsonIgnore
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE)
+    @JoinColumn(name = "clinic_id", nullable = false)
+    private ClinicEntity clinic;
 
     public void removeDoctor(DoctorEntity doctor) {
         doctors.remove(doctor);
         doctor.setSpecialty(null);
     }
-
-
 
 }

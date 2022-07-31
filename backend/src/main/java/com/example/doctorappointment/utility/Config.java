@@ -4,7 +4,8 @@ public class Config {
     public enum ROLE {
         ADMIN("ADMIN"),
         DOCTOR("DOCTOR"),
-        PATIENT("PATIENT");
+        PATIENT("PATIENT"),
+        CLINIC("CLINIC");
         private final String value;
         ROLE(String s) {
             this.value = s;
@@ -12,6 +13,11 @@ public class Config {
         public String getValue(){
             return  this.value;
         }
+    }
+    public enum STATUS{
+        JOIN,
+        MESSAGE,
+        LEAVE
     }
     public enum CONFIG {
         //SECRET((Math.random()*9999)+" This is secret key");

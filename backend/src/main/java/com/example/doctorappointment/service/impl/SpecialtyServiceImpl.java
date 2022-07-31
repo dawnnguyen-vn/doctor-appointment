@@ -4,13 +4,17 @@ import com.example.doctorappointment.DTO.MarkdownDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyReadDTO;
+import com.example.doctorappointment.entity.ClinicEntity;
 import com.example.doctorappointment.entity.MarkdownEntity;
 import com.example.doctorappointment.entity.SpecialtyEntity;
+import com.example.doctorappointment.repository.ClinicRepo;
 import com.example.doctorappointment.repository.MarkdownRepo;
 import com.example.doctorappointment.repository.SpecialtyRepo;
+import com.example.doctorappointment.service.ClinicService;
 import com.example.doctorappointment.service.SpecialtyService;
 import com.example.doctorappointment.utility.DataMapperUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +28,8 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     private final SpecialtyRepo repo;
     private final DataMapperUtils dataMapperUtils;
     private final MarkdownRepo markdownRepo;
+    private final ClinicService clinicService;
+    private final ClinicRepo clinicRepo;
 
     @Override
     public List<SpecialtyReadDTO> getAll() {
@@ -34,6 +40,14 @@ public class SpecialtyServiceImpl implements SpecialtyService {
         return dataResult;
     }
 
+    @Override
+    public List<SpecialtyReadDTO> getAllByClinicId(int id) {
+        List<SpecialtyEntity> data = repo.findAllByClinicId(id);
+        List<SpecialtyReadDTO> dataResult = data.stream()
+                .map(specialty -> convertEntityToDTO(specialty))
+                .collect(Collectors.toList());
+        return dataResult;
+    }
     @Override
     public SpecialtyReadDTO getById(int id) {
         SpecialtyEntity data = repo.findById(id);
@@ -51,10 +65,16 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     }
 
     @Override
-    public SpecialtyDTO createSpecialty(SpecialtyEntity specialty) {
-        MarkdownEntity markdown =markdownRepo.save( new MarkdownEntity(0,"","","",0,specialty.getId(),0));
+    public SpecialtyDTO createSpecialty(SpecialtyDTO specialtyDTO) {
+        MarkdownEntity markdown = markdownRepo.save(new MarkdownEntity(0, "", "", "", 0, specialtyDTO.getId(), 0));
+        ClinicEntity clinic = clinicRepo.findDistinctById(specialtyDTO.getClinicId());
+        SpecialtyEntity specialty = dataMapperUtils.map(specialtyDTO,SpecialtyEntity.class);
         specialty.setMarkdown(markdown);
-        return dataMapperUtils.map(repo.save(specialty), SpecialtyDTO.class);
+        specialty.setClinic(clinic);
+        SpecialtyEntity dataResult = repo.save(specialty);
+        clinic.addSpecialty(dataResult);
+        clinicService.updateClinic(specialtyDTO.getId(), clinic);
+        return dataMapperUtils.map(dataResult, SpecialtyDTO.class);
     }
 
     @Override
@@ -74,7 +94,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     public boolean deleteSpecialty(int id) {
         SpecialtyEntity specialty = repo.findById(id);
         if (specialty != null) {
-            repo.delete(specialty);
+            repo.deleteById(id);
             return true;
         }
         return false;
@@ -85,11 +105,44 @@ public class SpecialtyServiceImpl implements SpecialtyService {
         return repo.existsByName(name);
     }
 
-    private SpecialtyReadDTO convertEntityToDTO(SpecialtyEntity specialty) {
+    @Override
+    public SpecialtyReadDTO search(List<String> systom) {
+        if (!systom.isEmpty()) {
+            return convertEntityToDTO(repo.findSpecialtyEntitiesBySymptomsIn(systom));
+        }
+        return null;
+    }
+
+    @Override
+    public List<SpecialtyReadDTO> search(String systom) {
+        if (systom!=null&&systom!="'\'") {
+            try {
+                List<SpecialtyReadDTO> result = repo.findDistinctBySymptomsLike(systom).stream()
+                        .map(specialty -> convertEntityToDTO(specialty))
+                        .collect(Collectors.toList());
+                return result;
+            }catch (Exception e){
+                System.out.println("systom : "+systom);
+                System.out.println(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<SpecialtyReadDTO> findTop5() {
+        List<SpecialtyReadDTO> result =  repo.findTop5ByOrderByIdDesc().stream()
+                .map(specialty -> convertEntityToDTO(specialty))
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    public SpecialtyReadDTO convertEntityToDTO(SpecialtyEntity specialty) {
         SpecialtyReadDTO specialtyReadDTO = dataMapperUtils.map(specialty, SpecialtyReadDTO.class);
         List<DoctorDTO> listDoctor = specialty.getDoctors().stream()
                 .map(doctorEntity -> dataMapperUtils.map(doctorEntity, DoctorDTO.class))
                 .collect(Collectors.toList());
+        specialtyReadDTO.setClinicId(specialty.getClinic().getId());
         specialtyReadDTO.setDoctors(listDoctor);
         return specialtyReadDTO;
     }

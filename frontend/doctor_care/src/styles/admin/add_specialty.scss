@@ -17,10 +17,11 @@
           }
         .modal-body {
           .user-form {
-            width: calc(100% - 20px);
+            // width: calc(100% - 20px);
             background-color: #fff;
             //   padding: 45px 40px;
             z-index: 300;
+            margin: 0;
           }
           .row {
               margin: 0;

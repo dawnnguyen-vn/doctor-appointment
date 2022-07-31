@@ -53,3 +53,12 @@
         color: rgb(0, 162, 255);
     }
 }
+.card-container{
+    .title{
+        transition: all 0.15s ease-in;
+    }
+}
+
+.card-container:hover > .title{
+    color: rgb(0, 162, 255);
+}

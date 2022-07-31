@@ -4,12 +4,13 @@ import { Icon_Menu } from "../../constants/icons";
 import "../../styles/navbar.scss";
 import { LogoutAction } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
+import { manageService } from "../../services/ManageService";
 
 export const NavBarAdmin = () => {
   const dispatch = useDispatch();
 
   const user = JSON.parse(localStorage.getItem("userLogin"));
-
+  const [doctorInfo,setDoctorInfo] = useState({});
   const [showMenu, setShowMenu] = useState(false);
   useEffect(() => {
     if (showMenu) {
@@ -25,6 +26,11 @@ export const NavBarAdmin = () => {
     }
     return () => {};
   });
+  useEffect(() => {
+    user.role.id === 1 && manageService.getDoctorByEmail(user.email).then((result)=>{
+      setDoctorInfo(result.data);
+    })
+  }, []);
   const logout = () => {
     dispatch(LogoutAction());
   };
@@ -36,7 +42,7 @@ export const NavBarAdmin = () => {
         className="menu"
       >
         <div id="menu-content" className="menu-content">
-          {user.role.id==2?(
+          {user.role.id===2?(
             <ul>
             <li>
               <Link to={"/admin/specialties"}>Chuyên khoa </Link>
@@ -100,20 +106,20 @@ export const NavBarAdmin = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to={"/#"}>
-                <span>Bác sĩ</span>
-                <p>Chọn bác sĩ giỏi</p>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to={"/#"}>
-                <span>Gói khám</span>
-                <p>Khám sức khỏe tổng quát</p>
+              <Link to={"/admin/clinic"}>
+                <span>Phòng khám</span>
+                <p>Quản lý danh sách phòng khám</p>
               </Link>
             </li>
           </ul>
         </div>
         <div className="navbar-sub">
+          {user.role.id===1&&
+            <div className="user-info">
+                <img style={{width:"50px",height:"50px", objectFit:"contain"}} className="avatar" srcSet={`${doctorInfo.image} 5x`} alt="" />
+                Dr.{doctorInfo.firstName}
+            </div>
+          }
           <button onClick={logout} className="btn-logout">
             Đăng xuất
           </button>

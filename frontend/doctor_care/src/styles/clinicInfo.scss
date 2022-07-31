@@ -1,0 +1,107 @@
+.clinic{
+    margin-top: 4.6em;
+    background-color: white;
+    padding-bottom: 10em;
+    .clinic-top-content{
+        .container{
+            padding: 0 10px;
+            .clinic-image{
+                height: 16em;
+                img{
+                    height: 16em;
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+            .clinic-header{
+                display: flex;
+                padding: 1em 0;
+                justify-content: space-between;
+                position: relative;
+                .clinic-header-main{
+                    display: flex;
+                    .clinic-avatar{
+                        width: 8em;
+                        object-fit: contain;
+                        margin-right: 1em;
+                    }
+                    .clinic-info{
+                        .clinic-name{
+                            margin: 0;
+                            font-size: 25px !important;
+                        }
+                        .clinic-address{
+                            padding: 1em 0;
+                            margin: 0;
+                            font-size: 16px;
+                        }
+                    }
+                }
+                .clinic-booking-btn{
+                    position: absolute;
+                    bottom: 2em;
+                    right: 1em;
+                }
+
+            }
+        }
+        .clinic-menu{
+            display: flex;
+            list-style: none;
+            width: 100%;
+            z-index: 999 !important;
+            justify-content: center;
+            
+            gap: 1em;
+            border-top: 1px solid rgba(187, 187, 187, 0.357);
+            box-shadow: 1px 2px 3px #bbb;
+            padding: 0.7em 0;
+            .clinic-menu-item{
+                a{
+                    font-size: 1em;
+                    color: rgba(70, 68, 68, 0.724) !important;
+                    padding: 1em 1em;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+    .clinic-main-content{
+        .container{
+            padding: 0 1em;
+            .clinic-card{
+                padding: 12px 12px 20px 56px;
+                margin: 15px 0;
+                border-radius: 4px;
+                border: 1px solid transparent;
+                font-size: 16px;
+               
+            }
+            .clinic-notify{
+                border-color: #d6e9c6;
+                color: #3c763d;
+                background-color: #dff0d8;
+            }
+            .clinic-ad{
+                padding: 15px;
+                background: #ffc;
+                margin-bottom: 20px;
+            }
+
+            .clinic-main-content-title{
+                color:#337ab7;
+                padding: 10px 0;
+                border-bottom:  1px solid rgba(187, 187, 187, 0.357);
+                h2{
+                    font-size: 18px !important;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+            }
+            .clinic-main-content-detail{
+               padding-top: 10px;
+            }
+        }
+
+    }
+}

@@ -4,7 +4,7 @@ export const BlogsPage = () => {
   let result = "";
   
   const decToBin =(n) =>{
-    if(n==0){
+    if(n===0){
       console.log(result);
       return n;
     }
@@ -13,7 +13,7 @@ export const BlogsPage = () => {
   }
 
   const reverse = (n) =>{
-    if(n==0){
+    if(n===0){
       console.log(result);
       return ;
     }

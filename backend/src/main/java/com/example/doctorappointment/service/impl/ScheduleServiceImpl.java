@@ -67,4 +67,9 @@ public class ScheduleServiceImpl implements ScheduelService {
         return dataMapperUtils.mapAll(scheduleRepo.findAllByDateAndDoctorId(date,doctorId),ScheduleDTO.class);
     }
 
+    @Override
+    public boolean isExists(int doctorId, Date date, int timeId) {
+        return false;
+    }
+
 }

@@ -8,9 +8,33 @@ export class ManageService {
       method: "GET",
     });
   }
+  getListOfClinic() {
+    return axios({
+      url: `${domain}/clinic/all`,
+      method: "GET",
+    });
+  }
+  getClinicById(id) {
+    return axios({
+      url: `${domain}/clinic/${id}`,
+      method: "GET",
+    });
+  }
+  getClinicByAdminId(id) {
+    return axios({
+      url: `${domain}/clinic/getByAdminId/${id}`,
+      method: "GET",
+    });
+  }
   getSpecialtyById(id) {
     return axios({
       url: `${domain}/specialty/${id}`,
+      method: "GET",
+    });
+  }
+  getSpecialtyByClinicId(id) {
+    return axios({
+      url: `${domain}/clinic/getSpecialties/${id}`,
       method: "GET",
     });
   }

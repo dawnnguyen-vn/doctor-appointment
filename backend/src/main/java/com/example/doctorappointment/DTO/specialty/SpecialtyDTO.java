@@ -17,4 +17,5 @@ public class SpecialtyDTO {
     private String description;
     private String image;
     private String name;
+    private int clinicId;
 }

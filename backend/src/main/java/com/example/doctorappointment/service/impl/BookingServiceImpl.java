@@ -3,16 +3,12 @@ package com.example.doctorappointment.service.impl;
 import com.example.doctorappointment.DTO.Booking.BookingDTO;
 import com.example.doctorappointment.DTO.Booking.BookingReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
-import com.example.doctorappointment.entity.BookingEntity;
-import com.example.doctorappointment.entity.DoctorEntity;
-import com.example.doctorappointment.entity.PatientEntity;
-import com.example.doctorappointment.entity.TimeEntity;
+import com.example.doctorappointment.entity.*;
 import com.example.doctorappointment.repository.BookingRepo;
+import com.example.doctorappointment.repository.ClinicRepo;
+import com.example.doctorappointment.repository.ScheduleRepo;
 import com.example.doctorappointment.repository.TimeRepo;
-import com.example.doctorappointment.service.BookingService;
-import com.example.doctorappointment.service.DoctorService;
-import com.example.doctorappointment.service.EmailSenderService;
-import com.example.doctorappointment.service.PatientService;
+import com.example.doctorappointment.service.*;
 import com.example.doctorappointment.utility.DataMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,9 +29,12 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepo bookingRepo;
     private final DataMapperUtils mapper;
+
+    private ScheduelService scheduelService;
     private final DoctorService doctorService;
     private final PatientService patientService;
     private final EmailSenderService emailSenderService;
+    private final ClinicRepo clinicRepo;
     private final TimeRepo timeRepo;
 
     @Override
@@ -47,6 +46,7 @@ public class BookingServiceImpl implements BookingService {
             TimeEntity time = timeRepo.findById(bookingDTO.getTimeId());
             String strDate = time.getName() + " " + formatter.format(bookingDTO.getDate());
             DoctorReadDTO doctor = doctorService.getDoctorById(bookingDTO.getDoctorId());
+            System.out.println("schedule id "+bookingDTO.getScheduleId());
             String doctorName = doctor.getFirstName() + " " + doctor.getLastName();
             String htmlSend = emailSenderService.getVerifyBooking(bookingDTO.getPatient().getName(), strDate, doctorName, "http://localhost:3000/verify-booking/" + bookingEntity.getToken());
             String subject = "Thông tin đặt lịch khám bệnh";
@@ -92,13 +92,26 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingReadDTO> findAllByDoctorIdAndDate(Date date, int doctorId) {
-        List<BookingEntity> bookingEntities = bookingRepo.findAllByDateAndDoctorId(date, doctorId);
+    public List<BookingReadDTO> findAllByDoctorIdAndDate(Date date, int doctorId,String status) {
+        List<BookingEntity> bookingEntities = bookingRepo.findAllByDateAndDoctorIdAndBookingStatus(date, doctorId , status);
         List<BookingReadDTO> bookingReadDTOS = new ArrayList<>();
         if (bookingEntities != null) {
             bookingEntities.forEach(bookingEntity -> {
-                if(bookingEntity.getBookingStatus().equals("CONFIRM"))
                 bookingReadDTOS.add(convertToReadDTO(bookingEntity));
+            });
+            return bookingReadDTOS;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<BookingReadDTO> findAllByClinicIdAndDate(Date date, int clinicId,String status) {
+        List<BookingEntity> bookingEntities = bookingRepo.findAllByDateAndClinicIdAndBookingStatus(date,clinicId,status);
+        List<BookingReadDTO> bookingReadDTOS = new ArrayList<>();
+        if (bookingEntities != null) {
+            bookingEntities.forEach(bookingEntity -> {
+                    bookingReadDTOS.add(convertToReadDTO(bookingEntity));
             });
             return bookingReadDTOS;
         } else {
@@ -123,7 +136,9 @@ public class BookingServiceImpl implements BookingService {
     private BookingEntity convertDTOToEntity(BookingDTO bookingDTO) throws UnsupportedEncodingException {
         BookingEntity bookingEntity = mapper.map(bookingDTO, BookingEntity.class);
         DoctorEntity doctor = doctorService.findById(bookingDTO.getDoctorId());
+        ClinicEntity clinic = clinicRepo.findDistinctById(bookingDTO.getClinicId());
         bookingEntity.setDoctor(doctor);
+        bookingEntity.setClinic(clinic);
         PatientEntity newPatient = patientService.save(bookingDTO.getPatient());
         bookingEntity.setPatient(newPatient);
         bookingEntity.setToken(createToken(bookingDTO));

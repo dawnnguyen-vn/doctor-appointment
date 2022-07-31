@@ -1,0 +1,16 @@
+.footer{
+    background-color: #45c3d2;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    .container{
+        padding: 1.5em 0;
+        display:flex;
+        justify-content: space-between;
+        .logo{
+            display: flex;
+            gap: 10px;
+        }
+    }
+}

@@ -1,8 +1,7 @@
 package com.example.doctorappointment.DTO.doctor;
 
-import com.example.doctorappointment.DTO.ClinicDTO;
+import com.example.doctorappointment.DTO.clinic.ClinicDTO;
 import com.example.doctorappointment.DTO.MarkdownDTO;
-import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

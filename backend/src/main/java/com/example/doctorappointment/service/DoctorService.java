@@ -14,4 +14,6 @@ public interface DoctorService {
     DoctorReadDTO getDoctorByEmail(String email);
     DoctorEntity findById(int id);
     boolean delete(int doctorId);
+    List<DoctorReadDTO> findTop5();
+    List<DoctorReadDTO> findByName(String name);
 }

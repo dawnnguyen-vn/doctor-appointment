@@ -63,7 +63,7 @@ export const ManageSchedule = () => {
 
   const handleSelectTime = (id) => {
     let data = timeList.map((e) => {
-      if (e.id == id) {
+      if (e.id === id) {
         return {
           ...e,
           ["isSelected"]: !e.isSelected,
@@ -82,7 +82,7 @@ export const ManageSchedule = () => {
         
         if(selectTimes&&selectTimes.length>0){  
             selectTimes.map((e)=>{
-              if(currentUser.role.id==2)
+              if(currentUser.role.id===2)
                 result.push({...schedule,["id"]:0,["name"]:e.name,["timeId"]:e.id})
               else
                 result.push({...schedule,["doctorId"]:doctorSelected.id,["id"]:0,["name"]:e.name,["timeId"]:e.id})

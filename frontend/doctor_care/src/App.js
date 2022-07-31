@@ -17,6 +17,9 @@ import { VerifyBooking } from "./pages/verifyBooking";
 import { ManageBooking } from "./components/Admin/booking";
 import { MarkdownSpecialty } from "./components/Admin/addInfomationSpecialty";
 import { DetailSpecialTy } from "./pages/specialtyInfo";
+import {Support} from "./pages/support";
+import { ManageClinic } from "./components/Admin/clinic";
+import { ClinicPage } from "./pages/clinicInfo";
 
 function App() {
   const LoginPage = lazy(() =>
@@ -46,7 +49,7 @@ function App() {
             element={
               !auth &&!user ? (
                 <LoginPage />
-              ) : user.role.id == 2 ?(
+              ) : user.role.id === 2 ?(
                 <Navigate to={"/admin/specialties"} replace />
               ):(
                 <Navigate to={"/admin/booking"} replace />
@@ -59,7 +62,10 @@ function App() {
             <Route path={ROUTES.BLOG} element={<BlogsPage />} />
             <Route path={"/verify-booking/:token"} element={<VerifyBooking />} />
             <Route path={ROUTES.DOCTOR_INFO} element={<DoctorPage />} />
+            <Route path={ROUTES.CLINIC_INFO} element={<ClinicPage />} />
             <Route path={ROUTES.SPECIALTY_INFO} element={<DetailSpecialTy />} />
+            <Route path="support" element={<Support/>} />
+
           </Route>
           <Route
             path="/admin"
@@ -70,6 +76,7 @@ function App() {
             <Route path="info" element={<AddInformation />} />
             <Route path="specialty-info" element={<MarkdownSpecialty />} />
             <Route path="booking" element={<ManageBooking />} />
+            <Route path="clinic" element={<ManageClinic />} />
             <Route path="schedule" element={<ManageSchedule />} />
           </Route>
         </Routes>

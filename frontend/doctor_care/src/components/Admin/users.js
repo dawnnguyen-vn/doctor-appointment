@@ -125,7 +125,7 @@ export const UsersTable = () => {
       style={{ width: "100%", marginTop: "4.5em" }}
     >
       <div className="header">
-        <h2>Doctors Manage</h2>
+        <h2>Quản lý bác sĩ</h2>
       </div>
       <button
         className="btnAdd mb-3"
@@ -133,7 +133,7 @@ export const UsersTable = () => {
         data-target="#addDoctorModal"
       >
         <i className="fa fa-plus"></i>
-        <h2>Add new</h2>
+        <h2>Thêm mới</h2>
       </button>
       <AddDoctor/>
       <TableContainer style={{ maxHeight: "100%" }}>

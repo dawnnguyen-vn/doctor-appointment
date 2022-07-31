@@ -3,6 +3,8 @@ import "../../styles/admin/add_specialty.scss";
 import { useState } from "react";
 import {manageAdminService} from "../../services/ManageAdminService"
 import swal from "sweetalert";
+import useUploadImage from "../../hooks/useUploadImage";
+import { domainImage } from "../../constants/setting_api";
 
 export default function AddSpecialty() {
   let [state, setState] = useState({
@@ -11,6 +13,7 @@ export default function AddSpecialty() {
       name: "",
       image: "",
       description: "",
+      clinicId:1
     },
     errors: {
         name: "",
@@ -18,6 +21,9 @@ export default function AddSpecialty() {
         description: "",
       },
   });
+  const  { stateImage, onImageSelect,onUploadImage} = useUploadImage();
+
+  const {imageReview} = stateImage;
   const handleChangeInput = (event) => {
     event.preventDefault();
     let { value, name } = event.target;
@@ -32,7 +38,7 @@ export default function AddSpecialty() {
     setState({ values: newValues, errors: newErrors });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let valid = true;
     let { values, errors } = state;
@@ -54,7 +60,9 @@ export default function AddSpecialty() {
       alert("thông tin không hợp lệ");
       return;
     } else {
-        manageAdminService
+        await onUploadImage();
+
+        await manageAdminService
         .addSpecialty(values)
         .then((res) => {
           swal({
@@ -117,13 +125,18 @@ export default function AddSpecialty() {
                     </span>
                   </div>
                   <div className="textb">
-                    <input
-                      type="text"
-                      name="image"
-                      onChange={handleChangeInput}
-                      required
-                    />
+                  <input accept="image/*" id="fileupload" onChange={ async (e)=>{
+                                      onImageSelect(e);
+                                      let newValue = {
+                                        ...state.values,["image"]:`${domainImage}/${e.target.files[0].name}`
+                                      };
+                                      setState({...state,["values"]: newValue });
+                                    }
+                                  }
+                          type="file"
+                          name="fileupload" />
                     <div className="placeholder">hình ảnh</div>
+                    {imageReview && <img style={{maxWidth:"200px"}} srcSet={`${imageReview} 10x`} alt="image" />}
                     <span className="text-danger">
                       {/* {this.state.errors.hinhAnh} */}
                     </span>

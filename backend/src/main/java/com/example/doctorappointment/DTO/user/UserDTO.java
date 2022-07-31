@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserDTO {
+    private int id;
     private String email;
     private boolean isActive;
     private RoleEntity role;

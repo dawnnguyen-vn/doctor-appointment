@@ -5,13 +5,30 @@ import moment from "moment";
 import "moment/locale/vi";
 import { bookingService } from "../services/BookingService";
 import swal from "sweetalert";
+import useLocationForm from "../hooks/useLocationForm";
+import Select from "react-select";
 
 export const BookingPage = () => {
   const { state } = useLocation();
   const { doctor, schedule } = state;
   const navigate = useNavigate();
+  const {
+    stateLocation,
+    onCitySelect,
+    onDistrictSelect,
+    onWardSelect,
+  } = useLocationForm(false);
 
-  console.log(doctor);
+
+  const {
+    cityOptions,
+    districtOptions,
+    wardOptions,
+    selectedCity,
+    selectedDistrict,
+    selectedWard
+  } = stateLocation;
+
 
   const [patient, setPatient] = useState({
     email: "",
@@ -31,19 +48,33 @@ export const BookingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(patient.address===''){
+      swal({
+        title: "Bạn chưa nhập địa chỉ",
+        content:"Bạn chưa nhập địa chỉ",  
+        icon: "error",
+        button: "OK",
+      }).then((result)=>{
+      });
+      return ;
+    }
+
     let dataSubmit = {
       bookingStatus: "NEW",
       doctorId: doctor.id,
+      clinicId: doctor.clinic.id,
       date: schedule.date,
+      scheduleId : schedule.id,
       timeId: schedule.timeId,
       patient: patient,
     };
-    console.log(dataSubmit);
 
+    
+    alert("Đang tiến hành đặt lịch...");
     await bookingService
       .createBooking(dataSubmit)
       .then((result) => {
-        console.log(result);
         swal({
           title: "Đặt lịch thành công !! Vui lòng kiểm tra email để xác nhận lịch hẹn !!",
           content:"Vui lòng kiểm tra email để xác nhận lịch hẹn !!",  
@@ -66,6 +97,9 @@ export const BookingPage = () => {
 
     setPatient(newValues);
   };
+
+  console.log(patient);
+
 
   return (
     <div className="booking">
@@ -184,13 +218,52 @@ export const BookingPage = () => {
 
               <div className="input">
                 <span className="dauvao-bt bt-g bt-g-nguoi"></span>
-                <input
-                  className="input-name"
-                  name="address"
-                  onChange={(e) => handleChangeInput(e)}
-                  type="text"
-                  placeholder="Địa chỉ liên hệ"
-                  autoComplete="address"
+                <Select
+                  name="cityId"
+                  key={`cityId_${selectedCity?.value}`}
+                  isDisabled={cityOptions.length === 0}
+                  options={cityOptions}
+                  onChange={(option) => {
+                    onCitySelect(option);
+                    setPatient({ ...patient, ["address"]: `${option.label}`})
+                  }}
+                  required
+                  placeholder="Tỉnh/Thành"
+                  defaultValue={selectedCity}
+                />
+              </div>
+              <div className="input">
+                <span className="dauvao-bt bt-g bt-g-nguoi"></span>
+                <Select
+                  name="districtId"
+                  key={`districtId_${selectedDistrict?.value}`}
+                  isDisabled={districtOptions.length === 0}
+                  options={districtOptions}
+                  onChange={(option) => {
+                    onDistrictSelect(option)
+                    setPatient({ ...patient, ["address"]: `${option.label},${patient.address}`})
+                    }
+                  }
+                  required
+                  placeholder="Quận/Huyện"
+                  defaultValue={selectedDistrict}
+                />
+              </div>
+              <div className="input">
+                <span className="dauvao-bt bt-g bt-g-nguoi"></span>
+                <Select
+                  name="wardId"
+                  key={`wardId_${selectedWard?.value}`}
+                  isDisabled={wardOptions.length === 0}
+                  options={wardOptions}
+                  placeholder="Phường/Xã"
+                  onChange={(option) => {
+                    onWardSelect(option)
+                    setPatient({ ...patient, ["address"]: `${option.label},${patient.address}`})
+                    }
+                  }
+                  required
+                  defaultValue={selectedWard}
                 />
               </div>
               <div className="input">

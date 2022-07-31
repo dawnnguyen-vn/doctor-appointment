@@ -1,16 +1,13 @@
 package com.example.doctorappointment.service.impl;
 
-import com.example.doctorappointment.DTO.ClinicDTO;
+import com.example.doctorappointment.DTO.clinic.ClinicDTO;
 import com.example.doctorappointment.DTO.MarkdownDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorWriteDTO;
 import com.example.doctorappointment.DTO.user.UserDTO;
 import com.example.doctorappointment.entity.*;
-import com.example.doctorappointment.repository.DoctorRepo;
-import com.example.doctorappointment.repository.MarkdownRepo;
-import com.example.doctorappointment.repository.PositionRepo;
-import com.example.doctorappointment.repository.UserRepo;
+import com.example.doctorappointment.repository.*;
 import com.example.doctorappointment.service.ClinicService;
 import com.example.doctorappointment.service.DoctorService;
 import com.example.doctorappointment.service.SpecialtyService;
@@ -28,6 +25,7 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepo doctorRepo;
     private final DataMapperUtils dataMapperUtils;
     private final ClinicService clinicService;
+    private final ClinicRepo clinicRepo;
     private final SpecialtyService specialtyService;
     private final PositionRepo positionRepo;
     private final MarkdownRepo markdownRepo;
@@ -36,7 +34,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorReadDTO save(DoctorWriteDTO newDoctor) {
-        ClinicEntity clinic = clinicService.findById(newDoctor.getClinicId());
+        ClinicEntity clinic = clinicRepo.findDistinctById(newDoctor.getClinicId());
         SpecialtyEntity specialty = specialtyService.geEntitytById(newDoctor.getSpecialtyId());
         DoctorEntity doctor = dataMapperUtils.map(newDoctor, DoctorEntity.class);
         PositionEntity position = positionRepo.findById(newDoctor.getPositionId());
@@ -48,7 +46,6 @@ public class DoctorServiceImpl implements DoctorService {
         DoctorEntity doctorResult = doctorRepo.save(doctor);
         markdown.setDoctorId(doctorResult.getId());
         markdownRepo.save(markdown);
-        clinic.addDoctor(doctorResult);
         specialty.addDoctor(doctorResult);
         specialtyService.updateSpecialty(newDoctor.getSpecialtyId(),specialty);
         return convertEntityToDTO(doctorResult);
@@ -73,14 +70,13 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorReadDTO update(int doctorId, DoctorWriteDTO newDoctor) {
         DoctorEntity updateDoctor = doctorRepo.findById(doctorId);
-        ClinicEntity clinic = clinicService.findById(newDoctor.getClinicId());
+        ClinicEntity clinic = clinicRepo.findDistinctById(newDoctor.getClinicId());
         SpecialtyEntity specialty = specialtyService.geEntitytById(newDoctor.getSpecialtyId());
         PositionEntity position = positionRepo.findById(newDoctor.getPositionId());
         updateDoctor.setPosition(position);
         updateDoctor.setClinic(clinic);
         updateDoctor.setSpecialty(specialty);
         DoctorEntity doctorResult = doctorRepo.save(updateDoctor);
-        clinic.addDoctor(doctorResult);
         specialty.addDoctor(doctorResult);
         return convertEntityToDTO(doctorResult);
     }
@@ -104,6 +100,24 @@ public class DoctorServiceImpl implements DoctorService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<DoctorReadDTO> findTop5() {
+        List<DoctorEntity> doctorEntity = doctorRepo.findTop5ByOrderByFirstNameAscIdDesc();
+        List<DoctorReadDTO> doctorReadDTOS = doctorEntity.stream()
+                .map(doctor -> convertEntityToDTO(doctor))
+                .collect(Collectors.toList());
+        return doctorReadDTOS;
+    }
+
+    @Override
+    public List<DoctorReadDTO> findByName(String name) {
+        List<DoctorEntity> doctorEntity = doctorRepo.findDoctorEntitiesByFirstNameLike(name);
+        List<DoctorReadDTO> doctorReadDTOS = doctorEntity.stream()
+                .map(doctor -> convertEntityToDTO(doctor))
+                .collect(Collectors.toList());
+        return doctorReadDTOS;
     }
 
 
