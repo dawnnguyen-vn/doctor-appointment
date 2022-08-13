@@ -40,8 +40,8 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingDTO save(BookingDTO bookingDTO) throws UnsupportedEncodingException, MessagingException {
         BookingEntity bookingEntity = convertDTOToEntity(bookingDTO);
-        BookingEntity exits =bookingRepo.findByPatientEmailAndDate(bookingDTO.getPatient().getEmail(), bookingDTO.getDate());
-        if ( exits == null) {
+//        BookingEntity exits =bookingRepo.findByPatientEmailAndDate(bookingDTO.getPatient().getEmail(), bookingDTO.getDate());
+//        if ( exits == null) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             TimeEntity time = timeRepo.findById(bookingDTO.getTimeId());
             String strDate = time.getName() + " " + formatter.format(bookingDTO.getDate());
@@ -52,9 +52,9 @@ public class BookingServiceImpl implements BookingService {
             String subject = "Thông tin đặt lịch khám bệnh";
             emailSenderService.sendEmailHTML(bookingDTO.getPatient().getEmail(), subject, htmlSend);
             return convertEntityToDTO(bookingRepo.save(bookingEntity));
-        }else{
-            return mapper.map(exits,BookingDTO.class);
-        }
+//        }else{
+//            return mapper.map(exits,BookingDTO.class);
+//        }
     }
 
     @Override
@@ -73,6 +73,16 @@ public class BookingServiceImpl implements BookingService {
     public List<BookingDTO> findAll() {
         List<BookingDTO> bookingDTOS = new ArrayList<>();
         List<BookingEntity> bookingEntities = bookingRepo.findAll();
+        bookingEntities.forEach(bookingEntity -> {
+            bookingDTOS.add(convertEntityToDTO(bookingEntity));
+        });
+        return bookingDTOS;
+    }
+
+    @Override
+    public List<BookingDTO> findAllByPatient(String phone) {
+        List<BookingDTO> bookingDTOS = new ArrayList<>();
+        List<BookingEntity> bookingEntities = bookingRepo.findAllByPatient(phone);
         bookingEntities.forEach(bookingEntity -> {
             bookingDTOS.add(convertEntityToDTO(bookingEntity));
         });

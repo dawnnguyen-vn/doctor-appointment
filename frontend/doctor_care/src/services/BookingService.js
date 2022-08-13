@@ -9,6 +9,14 @@ export class BookingService {
       data: booking,
     });
   };
+
+  getBooking = (phone) => {
+    return axios({
+      url: `${domain}/booking/patient/${phone}`,
+      method: "GET",
+    });
+  };
+
   verifyBooking(token) {
     return axios({
       url: `${domain}/booking/verify/${token}`,

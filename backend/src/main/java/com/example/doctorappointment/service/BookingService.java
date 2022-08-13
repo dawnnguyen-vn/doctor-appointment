@@ -12,6 +12,7 @@ public interface BookingService {
 
     BookingDTO verifyBooking(String token);
     List<BookingDTO> findAll();
+    List<BookingDTO> findAllByPatient(String phone);
     String doctorVerifyBooking(int bookingId);
     List<BookingReadDTO> findAllByDoctorIdAndDate(Date date, int doctorId,String status);
     List<BookingReadDTO> findAllByClinicIdAndDate(Date date, int clinicId,String status);

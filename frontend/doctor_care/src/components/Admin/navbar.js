@@ -59,6 +59,9 @@ export const NavBarAdmin = () => {
             <li>
               <Link to={"/admin/schedule"}>Quản lý lịch hẹn</Link>
             </li>
+            <li>
+              <Link to={"/admin/patient"}>Hồ sơ bệnh án</Link>
+            </li>
           </ul>
           ):(
             <ul>

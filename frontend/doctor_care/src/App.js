@@ -20,6 +20,7 @@ import { DetailSpecialTy } from "./pages/specialtyInfo";
 import {Support} from "./pages/support";
 import { ManageClinic } from "./components/Admin/clinic";
 import { ClinicPage } from "./pages/clinicInfo";
+import PatientList from "./components/Admin/PatientList/PatientList";
 
 function App() {
   const LoginPage = lazy(() =>
@@ -78,6 +79,7 @@ function App() {
             <Route path="booking" element={<ManageBooking />} />
             <Route path="clinic" element={<ManageClinic />} />
             <Route path="schedule" element={<ManageSchedule />} />
+            <Route path="patient" element={<PatientList />} />
           </Route>
         </Routes>
       </Suspense>

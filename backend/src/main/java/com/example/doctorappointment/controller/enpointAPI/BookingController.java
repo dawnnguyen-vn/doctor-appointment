@@ -43,6 +43,11 @@ public class BookingController {
         return ResponseEntity.ok().body(bookingService.findAll());
     }
 
+    @GetMapping("/patient/{phone}")
+    public ResponseEntity<List<BookingDTO>> findAllByPatient(@PathVariable String phone) {
+        return ResponseEntity.ok().body(bookingService.findAllByPatient(phone));
+    }
+
 
     @PutMapping("/verify/{token}")
     public ResponseEntity<String> verifyBooking(@PathVariable String token){

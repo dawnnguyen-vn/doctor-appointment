@@ -19,4 +19,9 @@ public class PatientServiceImpl implements PatientService {
     public PatientEntity save(PatientEntity patient) {
         return patientRepo.save(patient);
     }
+
+    @Override
+    public PatientEntity findByPhone(String phone) {
+        return patientRepo.findFirstByPhone(phone);
+    }
 }
